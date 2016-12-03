@@ -29,7 +29,7 @@ public class User {
 	private Long user_id;
 
 	@NotNull
-	private String user_email;
+	private String email;
 
 	@NotNull
 	private String user_password;
@@ -53,7 +53,7 @@ public class User {
 			Date user_birth_date, Date user_registration_date, String user_role) {
 		super();
 		this.user_id = user_id;
-		this.user_email = user_email;
+		this.email = email;
 		this.user_password = user_password;
 		this.user_name = user_name;
 		this.user_surname = user_surname;
@@ -75,12 +75,14 @@ public class User {
 		this.user_id = user_id;
 	}
 
-	public String getUser_email() {
-		return user_email;
+	
+
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUser_email(String user_email) {
-		this.user_email = user_email;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getUser_password() {

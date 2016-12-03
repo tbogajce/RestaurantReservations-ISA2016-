@@ -9,13 +9,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "menu")
 public class Menu {
 	
+	@JsonBackReference("restaurant-menu")
 	@ManyToOne
-	@JoinColumn(name = "restaurant_id", table = "restaurant")
-	private Long restaurant_id;
+	@JoinColumn(name="restaurant_id", referencedColumnName="restaurant_id", nullable=false)
+	private Restaurant restaurant_id;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,7 +33,7 @@ public class Menu {
 	@NotNull
 	private Float menu_meal_rate;
 
-	public Menu(Long restaurant_id, Long menu_meal_id, String menu_meal_description, Float menu_meal_price,
+	public Menu(Restaurant restaurant_id, Long menu_meal_id, String menu_meal_description, Float menu_meal_price,
 			Float menu_meal_rate) {
 		super();
 		this.restaurant_id = restaurant_id;
@@ -40,11 +43,15 @@ public class Menu {
 		this.menu_meal_rate = menu_meal_rate;
 	}
 
-	public Long getRestaurant_id() {
+	public Menu() {
+		super();
+	}
+
+	public Restaurant getRestaurant_id() {
 		return restaurant_id;
 	}
 
-	public void setRestaurant_id(Long restaurant_id) {
+	public void setRestaurant_id(Restaurant restaurant_id) {
 		this.restaurant_id = restaurant_id;
 	}
 
@@ -79,6 +86,8 @@ public class Menu {
 	public void setMenu_meal_rate(Float menu_meal_rate) {
 		this.menu_meal_rate = menu_meal_rate;
 	}
+
+	
 	
 	
 }

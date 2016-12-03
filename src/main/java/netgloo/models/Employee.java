@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "employee")
 public class Employee {
@@ -17,13 +19,15 @@ public class Employee {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long employee_id;
 	
+	@JsonBackReference("user-employee")
 	@ManyToOne
-	@JoinColumn(name = "user_id", table = "user")
-	private Long user_id;
+	@JoinColumn(name="user_id", referencedColumnName="user_id", nullable=false)
+	private User user_id;
 	
+	@JsonBackReference("restaurant-employee")
 	@ManyToOne
-	@JoinColumn(name = "restaurant_id", table = "restaurant")
-	private Long restaurant_id;
+	@JoinColumn(name="restaurant_id", referencedColumnName="restaurant_id", nullable=false)
+	private Restaurant restaurant_id;
 	
 	@NotNull
 	private String employee_role;
@@ -37,7 +41,7 @@ public class Employee {
 	@NotNull
 	private String employee_rate;
 
-	public Employee(Long employee_id, Long user_id, Long restaurant_id, String employee_role,
+	public Employee(Long employee_id, User user_id, Restaurant restaurant_id, String employee_role,
 			String employee_confection_number, String employee_shoe_size, String employee_rate) {
 		super();
 		this.employee_id = employee_id;
@@ -49,6 +53,10 @@ public class Employee {
 		this.employee_rate = employee_rate;
 	}
 
+	public Employee() {
+		super();
+	}
+
 	public Long getEmployee_id() {
 		return employee_id;
 	}
@@ -57,19 +65,19 @@ public class Employee {
 		this.employee_id = employee_id;
 	}
 
-	public Long getUser_id() {
+	public User getUser_id() {
 		return user_id;
 	}
 
-	public void setUser_id(Long user_id) {
+	public void setUser_id(User user_id) {
 		this.user_id = user_id;
 	}
 
-	public Long getRestaurant_id() {
+	public Restaurant getRestaurant_id() {
 		return restaurant_id;
 	}
 
-	public void setRestaurant_id(Long restaurant_id) {
+	public void setRestaurant_id(Restaurant restaurant_id) {
 		this.restaurant_id = restaurant_id;
 	}
 
@@ -104,7 +112,7 @@ public class Employee {
 	public void setEmployee_rate(String employee_rate) {
 		this.employee_rate = employee_rate;
 	}
-	
+
 	
 	
 }

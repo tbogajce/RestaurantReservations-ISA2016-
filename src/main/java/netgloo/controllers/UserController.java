@@ -103,7 +103,7 @@ public class UserController {
 			String user_surname, Date user_birth_date, Date user_registration_date, String user_role) {
 		try {
 			User user = userDao.findOne(user_id);
-			user.setUser_email(user_email);
+			user.setEmail(user_email);
 			user.setUser_password(user_password);
 			user.setUser_name(user_name);
 			user.setUser_surname(user_surname);

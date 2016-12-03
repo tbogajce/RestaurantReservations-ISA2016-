@@ -9,13 +9,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "beverages")
 public class Beverages {
 	
+	@JsonBackReference("restaurant-beverages")
 	@ManyToOne
-	@JoinColumn(name = "restaurant_id", table = "restaurant")
-	private Long restaurant_id;;
+	@JoinColumn(name="restaurant_id", referencedColumnName="restaurant_id", nullable=false)
+	private Restaurant restaurant_id;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,7 +33,7 @@ public class Beverages {
 	@NotNull
 	private Float beverages_price;
 
-	public Beverages(Long restaurant_id, Long beverages_id, String beverages_description, String beverages_name,
+	public Beverages(Restaurant restaurant_id, Long beverages_id, String beverages_description, String beverages_name,
 			Float beverages_price) {
 		super();
 		this.restaurant_id = restaurant_id;
@@ -40,11 +43,15 @@ public class Beverages {
 		this.beverages_price = beverages_price;
 	}
 
-	public Long getRestaurant_id() {
+	public Beverages() {
+		super();
+	}
+
+	public Restaurant getRestaurant_id() {
 		return restaurant_id;
 	}
 
-	public void setRestaurant_id(Long restaurant_id) {
+	public void setRestaurant_id(Restaurant restaurant_id) {
 		this.restaurant_id = restaurant_id;
 	}
 
@@ -79,6 +86,8 @@ public class Beverages {
 	public void setBeverages_price(Float beverages_price) {
 		this.beverages_price = beverages_price;
 	}
+
+
 	
 	
 	

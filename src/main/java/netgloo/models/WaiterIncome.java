@@ -11,13 +11,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "waiterIncome")
 public class WaiterIncome {
 	
+	@JsonBackReference("employee-waiterIncome")
 	@ManyToOne
-	@JoinColumn(name = "employee_id", table = "employee")
-	private Long employee_id;
+	@JoinColumn(name="employee_id", referencedColumnName="employee_id", nullable=false)
+	private Employee employee_id;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,7 +32,7 @@ public class WaiterIncome {
 	@NotNull
 	private Date waiterIncome_date;
 
-	public WaiterIncome(Long employee_id, Long waiterIncome_id, Float waiterIncome_daily, Date waiterIncome_date) {
+	public WaiterIncome(Employee employee_id, Long waiterIncome_id, Float waiterIncome_daily, Date waiterIncome_date) {
 		super();
 		this.employee_id = employee_id;
 		this.waiterIncome_id = waiterIncome_id;
@@ -37,11 +40,15 @@ public class WaiterIncome {
 		this.waiterIncome_date = waiterIncome_date;
 	}
 
-	public Long getEmployee_id() {
+	public WaiterIncome() {
+		super();
+	}
+
+	public Employee getEmployee_id() {
 		return employee_id;
 	}
 
-	public void setEmployee_id(Long employee_id) {
+	public void setEmployee_id(Employee employee_id) {
 		this.employee_id = employee_id;
 	}
 
@@ -68,6 +75,7 @@ public class WaiterIncome {
 	public void setWaiterIncome_date(Date waiterIncome_date) {
 		this.waiterIncome_date = waiterIncome_date;
 	}
+
 	
 	
 	
