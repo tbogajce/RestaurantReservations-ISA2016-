@@ -41,18 +41,19 @@ public class User {
 	private String user_surname;
 
 	@NotNull
-	private Date user_birth_date;
+	private String user_birth_date;
 
 	@NotNull
-	private Date user_registration_date;
+	private String user_registration_date;
 
 	@NotNull
 	private String user_role;
 
-	public User(Long user_id, String user_email, String user_password, String user_name, String user_surname,
-			Date user_birth_date, Date user_registration_date, String user_role) {
+	
+	
+	public User(String email, String user_password, String user_name, String user_surname, String user_birth_date,
+			String user_registration_date, String user_role) {
 		super();
-		this.user_id = user_id;
 		this.email = email;
 		this.user_password = user_password;
 		this.user_name = user_name;
@@ -61,7 +62,7 @@ public class User {
 		this.user_registration_date = user_registration_date;
 		this.user_role = user_role;
 	}
-	
+
 	public User(Long user_id) {
 		super();
 		this.user_id = user_id;
@@ -109,19 +110,21 @@ public class User {
 		this.user_surname = user_surname;
 	}
 
-	public Date getUser_birth_date() {
+
+
+	public String getUser_birth_date() {
 		return user_birth_date;
 	}
 
-	public void setUser_birth_date(Date user_birth_date) {
+	public void setUser_birth_date(String user_birth_date) {
 		this.user_birth_date = user_birth_date;
 	}
 
-	public Date getUser_registration_date() {
+	public String getUser_registration_date() {
 		return user_registration_date;
 	}
 
-	public void setUser_registration_date(Date user_registration_date) {
+	public void setUser_registration_date(String user_registration_date) {
 		this.user_registration_date = user_registration_date;
 	}
 

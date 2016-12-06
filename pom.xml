@@ -6,10 +6,10 @@
   <groupId>netgloo</groupId>
   <artifactId>spring-boot-mysql-springdatajpa-hibernate</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <name>spring-boot-mysql-springdatajpa-hibernate Maven Webapp</name>
+  <url>http://maven.apache.org</url>
 
-  <name>spring-boot-mysql-springdatajpa-hibernate</name>
-  <description>Use Spring Data JPA + Hibernate + MySQL in Spring Boot</description>
-
+  
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
@@ -46,5 +46,5 @@
       </plugin>
     </plugins>
   </build>
-
+  <packaging>war</packaging>
 </project>

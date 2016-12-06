@@ -33,11 +33,12 @@ public class UserController {
 	 */
 	@RequestMapping("/create")
 	@ResponseBody
-	public String create(Long user_id, String user_email, String user_password, String user_name, String user_surname,
-			Date user_birth_date, Date user_registration_date, String user_role) {
+	public String create(String user_email, String user_password, String user_name, String user_surname, String user_role) {
 		User user = null;
+		String user_birth_date = "juce";
+		String user_registration_date = "prekjuce";
 		try {
-			user = new User(user_id, user_email, user_password, user_name, user_surname, user_birth_date,
+			user = new User(user_email, user_password, user_name, user_surname, user_birth_date,
 					user_registration_date, user_role);
 			userDao.save(user);
 		} catch (Exception ex) {
@@ -100,7 +101,7 @@ public class UserController {
 	@RequestMapping("/update")
 	@ResponseBody
 	public String updateUser(Long user_id, String user_email, String user_password, String user_name, 
-			String user_surname, Date user_birth_date, Date user_registration_date, String user_role) {
+			String user_surname, String user_birth_date, String user_registration_date, String user_role) {
 		try {
 			User user = userDao.findOne(user_id);
 			user.setEmail(user_email);

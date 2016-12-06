@@ -14,10 +14,4 @@ public class MainController {
         "<a href='http://netgloo.com/en'>Netgloo</a> :)";
   }
   
-  @RequestMapping("/proba")
-  @ResponseBody
-  public String proba() {
-    return "A jes ga sukno jarane :)";
-  }
-  
 }
