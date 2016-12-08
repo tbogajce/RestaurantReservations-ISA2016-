@@ -1,13 +1,12 @@
 package netgloo.models;
 
-import java.sql.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 /**
  * An entity User composed by three fields (id, email, name). The Entity
@@ -26,7 +25,7 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long user_id;
+	private Integer user_id;
 
 	@NotNull
 	private String email;
@@ -51,6 +50,11 @@ public class User {
 
 	
 	
+	public User() {
+		super();
+	}
+
+
 	public User(String email, String user_password, String user_name, String user_surname, String user_birth_date,
 			String user_registration_date, String user_role) {
 		super();
@@ -63,16 +67,17 @@ public class User {
 		this.user_role = user_role;
 	}
 
-	public User(Long user_id) {
+
+	public User(Integer user_id) {
 		super();
 		this.user_id = user_id;
 	}
 
-	public Long getUser_id() {
+	public Integer getUser_id() {
 		return user_id;
 	}
 
-	public void setUser_id(Long user_id) {
+	public void setUser_id(Integer user_id) {
 		this.user_id = user_id;
 	}
 

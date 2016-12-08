@@ -1,5 +1,10 @@
 body {
     padding-top: 0px;
+    background-image:url(https://farzadkamali.files.wordpress.com/2014/05/back_home.jpg);
+    -webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
 }
 .panel-login {
 	border-color: #ccc;
@@ -96,4 +101,9 @@ body {
 	color: #fff;
 	background-color: #1CA347;
 	border-color: #1CA347;
+}
+
+.container {
+	opacity: 0.95;
+    filter: alpha(opacity=95); /* For IE8 and earlier */
 }
