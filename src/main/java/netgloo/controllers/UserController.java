@@ -1,16 +1,13 @@
 package netgloo.controllers;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,15 +27,6 @@ import netgloo.models.UserProba;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-	
-	// ------------------------
-	// PUBLIC METHODS
-	// ------------------------
-	HttpServletRequest request;
-	
-	HttpServletResponse response;
-	
-	ServletContext ctx;
 	
 	/**
 	 * /create --> Create a new user and save it in the database.
@@ -65,7 +53,7 @@ public class UserController {
 	
 	@RequestMapping(value="/loginUser",  method = RequestMethod.POST,
 		    headers = {"content-type=application/json"})
-	public String loginUser(@RequestBody UserProba user1) {
+	public String loginUser(@RequestBody UserProba user1, HttpServletRequest request) {
 		
 		try {
 			User user = userDao.findByEmail(user1.getEmail());
@@ -73,13 +61,25 @@ public class UserController {
 			String pass = String.valueOf(user.getUser_password());
 			if(email.equals(user1.getEmail()) && pass.equals(user1.getPassword()) ) {
 				request.getSession().setAttribute("user", user );
-				return "SUCCESS";
+				return user.getUser_role();
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return "EXCEPTION";
 		}
 	    return "OK";
+	}
+	
+	@RequestMapping(value="/logoutUser",  method = RequestMethod.GET,
+		    headers = {"content-type=application/json"})
+	public String loginUser(HttpServletRequest request) {
+		
+		try {
+			request.getSession().invalidate();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	    return "logout";
 	}
 	
 	/**

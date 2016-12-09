@@ -35,7 +35,7 @@ $(document).on('submit', '.regForm', function(e) {
 		dataType : "text",
 		data : formToJSONRegistration(email, password, name, surname, birthDate),
 		success: function(data) {
-			window.location.href = "http://localhost:8080/stranica.html";
+			window.location.href = "http://localhost:8080/RegistrationPage.html";
 		}
 	});
 });
@@ -63,7 +63,11 @@ $(document).on('submit', '.loginForm', function(e) {
 		dataType : "text",
 		data : formToJSONLogin(email, password),
 		success: function(data) {
-			window.location.href = "http://localhost:8080/pocetna.html";
+			if(data == "Guest") {
+				window.location.href = "http://localhost:8080/GuestHome.html";
+			} else {
+				window.location.href = "http://localhost:8080/";
+			}
 		}
 	});
 });

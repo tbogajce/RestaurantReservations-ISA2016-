@@ -1,10 +1,5 @@
 body {
     padding-top: 0px;
-    background-image:url(https://farzadkamali.files.wordpress.com/2014/05/back_home.jpg);
-    -webkit-background-size: cover;
-  	-moz-background-size: cover;
-  	-o-background-size: cover;
-  	background-size: cover;
 }
 .panel-login {
 	border-color: #ccc;
