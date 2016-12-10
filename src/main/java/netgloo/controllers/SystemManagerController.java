@@ -1,0 +1,134 @@
+package netgloo.controllers;
+
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import netgloo.dao.SystemManagerDao;
+import netgloo.models.SystemManager;
+import netgloo.models.User;
+import netgloo.models.UserProba;
+
+
+@RestController
+@RequestMapping("/systemManagerController")
+public class SystemManagerController {
+	
+	@Autowired
+	private SystemManagerDao sysMaDao;
+
+	@RequestMapping(value = "/createNewSystemManager", method = RequestMethod.POST, headers = { "content-type=application/json" })
+	public String createSystemManager(@RequestBody SystemManager sm1) {
+
+		try {
+			SystemManager systemManager = null;
+			//String user_reg_date = new SimpleDateFormat("dd-MMM-yyyy").format(new Date());
+			systemManager = new SystemManager(sm1.getSystem_manager_nick_id(),sm1.getManager_email(),sm1.getManager_name(),sm1.getManager_last_name(),sm1.getManager_password());
+			sysMaDao.save(systemManager);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return "EXCEPTION";
+		}
+		return "OK";
+	}
+	
+	@RequestMapping(value = "/loginSystemManager", method = RequestMethod.POST, headers = { "content-type=application/json" })
+	public String loginSystemManager(@RequestBody SystemManager sm1, HttpServletRequest request) {
+		//System.out.println("USLO U SYSTEM MANAGER LOGIN!");
+		try {
+			//SystemManager systemManager = sysMaDao.findBySystem_manager_nick_id(sm1.getSystem_manager_nick_id());
+			SystemManager systemManager = sysMaDao.findOne(sm1.getSystem_manager_nick_id());
+			//System.out.println(systemManager.getSystem_manager_nick_id());
+			String nick = String.valueOf(systemManager.getSystem_manager_nick_id());
+			String pass = String.valueOf(systemManager.getManager_password());
+			if (nick.equals(sm1.getSystem_manager_nick_id()) && pass.equals(sm1.getManager_password())) {
+				request.getSession().setAttribute("systemManager", systemManager);
+				//System.out.println("LOGIN SYSTEM MANAGERA JE USPJESAN!");
+				return "systemManager";
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return "EXCEPTION";
+		}
+		return "OK";
+	}
+	
+	@RequestMapping(value = "/logoutSystemManager", method = RequestMethod.GET, headers = { "content-type=application/json" })
+	public String logoutSystemManager(HttpServletRequest request) {
+
+		try {
+			request.getSession().invalidate();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "logout";
+	}
+	
+	
+	@RequestMapping(value = "/systemManagerNick", method = RequestMethod.GET)
+	public String systemManagerName(HttpServletRequest request) {
+		try {
+			SystemManager systemManager = (SystemManager) request.getSession().getAttribute("systemManager");
+			if (systemManager!=null) {
+				return systemManager.getSystem_manager_nick_id();
+			}
+		} catch (Exception e) {
+			System.out.println("Nema ulogovanog systemManagera - NullPointerException");
+		}
+		return "none";
+	}
+	
+	@RequestMapping(value = "/systemManagerData", method = RequestMethod.GET)
+	public SystemManager systemManagertData(HttpServletRequest request) {
+		try{
+			SystemManager systemManager =(SystemManager) request.getSession().getAttribute("systemManager");
+		return systemManager;
+		} catch (Exception e) {
+			System.out.println("systemManager is not logged in");
+		}
+		return null;
+	}
+	
+	@RequestMapping("/deleteSystemManager")
+	@ResponseBody
+	public String deleteSystemManager(String system_manager_nick_id) {
+		try {
+			SystemManager systemManager = new SystemManager(system_manager_nick_id);
+			sysMaDao.delete(systemManager);
+		} catch (Exception ex) {
+			return "Error deleting systemManager: " + ex.toString();
+		}
+		return "SystemManager succesfully deleted!";
+	}
+	
+
+	@RequestMapping("/updateSystemManager")
+	@ResponseBody
+	public String updateSystemManager(String system_manager_nick_id, String manager_email, String manager_name,
+			String manager_last_name, String manager_password) {
+		try {
+			SystemManager systemManager = sysMaDao.findOne(system_manager_nick_id);
+			systemManager.setSystem_manager_nick_id(system_manager_nick_id);
+			systemManager.setManager_email(manager_email);
+			systemManager.setManager_name(manager_name);
+			systemManager.setManager_last_name(manager_last_name);
+			systemManager.setManager_password(manager_password);
+			sysMaDao.save(systemManager);
+		} catch (Exception ex) {
+			return "Error updating systemManager: " + ex.toString();
+		}
+		return "SystemManager succesfully updated!";
+	}
+	
+}
