@@ -27,61 +27,81 @@ import netgloo.models.UserProba;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-	
+
 	/**
 	 * /create --> Create a new user and save it in the database.
 	 * 
 	 * @return A string describing if the user is succesfully created or not.
 	 */
-	@RequestMapping(value="/createUser",  method = RequestMethod.POST,
-		    headers = {"content-type=application/json"})
+	@RequestMapping(value = "/createUser", method = RequestMethod.POST, headers = { "content-type=application/json" })
 	public String createUser(@RequestBody UserProba user1) {
-		
+
 		try {
-		User user = null;
-		String user_reg_date = new SimpleDateFormat("dd-MMM-yyyy").format(new Date());
-		user = new User(user1.getEmail(), user1.getPassword(), user1.getName(), user1.getSurname(), user1.getBirthDate(), user_reg_date, "Guest");
-		userDao.save(user);
+			User user = null;
+			String user_reg_date = new SimpleDateFormat("dd-MMM-yyyy").format(new Date());
+			user = new User(user1.getEmail(), user1.getPassword(), user1.getName(), user1.getSurname(),
+					user1.getBirthDate().trim(), user_reg_date, "Guest");
+			userDao.save(user);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return "EXCEPTION";
 		}
-	    return "OK";
+		return "OK";
 	}
-	
-	
-	
-	@RequestMapping(value="/loginUser",  method = RequestMethod.POST,
-		    headers = {"content-type=application/json"})
+
+	@RequestMapping(value = "/loginUser", method = RequestMethod.POST, headers = { "content-type=application/json" })
 	public String loginUser(@RequestBody UserProba user1, HttpServletRequest request) {
-		
+
 		try {
 			User user = userDao.findByEmail(user1.getEmail());
 			String email = String.valueOf(user.getEmail());
 			String pass = String.valueOf(user.getUser_password());
-			if(email.equals(user1.getEmail()) && pass.equals(user1.getPassword()) ) {
-				request.getSession().setAttribute("user", user );
+			if (email.equals(user1.getEmail()) && pass.equals(user1.getPassword())) {
+				request.getSession().setAttribute("user", user);
 				return user.getUser_role();
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return "EXCEPTION";
 		}
-	    return "OK";
+		return "OK";
 	}
-	
-	@RequestMapping(value="/logoutUser",  method = RequestMethod.GET,
-		    headers = {"content-type=application/json"})
+
+	@RequestMapping(value = "/logoutUser", method = RequestMethod.GET, headers = { "content-type=application/json" })
 	public String loginUser(HttpServletRequest request) {
-		
+
 		try {
 			request.getSession().invalidate();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-	    return "logout";
+		return "logout";
+	}
+
+	@RequestMapping(value = "/guestName", method = RequestMethod.GET)
+	public String guestName(HttpServletRequest request) {
+		try {
+			User u = (User) request.getSession().getAttribute("user");
+			if (u.getUser_role().equals("Guest")) {
+				return u.getUser_name();
+			}
+		} catch (Exception e) {
+			System.out.println("Nema ulogovanog korisnika - NullPointerException");
+		}
+		return "none";
 	}
 	
+	@RequestMapping(value = "/guestData", method = RequestMethod.GET)
+	public User guestData(HttpServletRequest request) {
+		try{
+		User u =(User) request.getSession().getAttribute("user");
+		return u;
+		} catch (Exception e) {
+			System.out.println("Guest is not logged in");
+		}
+		return null;
+	}
+
 	/**
 	 * /delete --> Delete the user having the passed id.
 	 * 
@@ -135,7 +155,7 @@ public class UserController {
 	 */
 	@RequestMapping("/updateUser")
 	@ResponseBody
-	public String updateUser(Integer user_id, String user_email, String user_password, String user_name, 
+	public String updateUser(Integer user_id, String user_email, String user_password, String user_name,
 			String user_surname, String user_birth_date, String user_registration_date, String user_role) {
 		try {
 			User user = userDao.findOne(user_id);
