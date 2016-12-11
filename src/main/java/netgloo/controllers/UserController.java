@@ -70,7 +70,7 @@ public class UserController {
 	@RequestMapping(value = "/editGuest", method = RequestMethod.POST, headers = { "content-type=application/json" })
 	public String editGuest(@RequestBody UserProba user1, HttpServletRequest request) {
 		try {
-			User user = userDao.findByEmail(user1.getEmail().trim());
+			User user = (User) request.getSession().getAttribute("user");
 			user.setUser_password(user1.getPassword().trim());
 			user.setUser_name(user1.getName().trim());
 			user.setUser_surname(user1.getSurname().trim());
