@@ -1,5 +1,6 @@
 var guestNamePrintURL = "users/guestName";
 var guestData = "users/guestData";
+var editGuest = "users/editGuest";
 
 $( document ).ready(function() {
 	$('#guestProfilePanel').show();
@@ -51,7 +52,7 @@ function guestNamePrint() {
 	});
 }
 
-//---------------------------------ISPISIVANJE PODATAKA KUPCA
+//---------------------------------ISPISIVANJE PODATAKA GOSTA
 function printGuestData() {
 	$.ajax({
 		type : 'GET',
@@ -112,7 +113,66 @@ function render2(data) {
 			});
 }
 
-//---------------------------------KRAJ ISPISIVANJE PODATAKA KUPCA
+//---------------------------------KRAJ ISPISIVANJE PODATAKA GOSTA
+
+//-------------------CUVANJE IZMJENE
+
+$(document).on('submit', '.formGuest', function(e) {
+	e.preventDefault();
+	var email = $(this).find("input[name=email]").val();
+	var password = $(this).find("input[name=pass]").val();
+	var name = $(this).find("input[name=name]").val();
+	var surname = $(this).find("input[name=surname]").val();
+	var birthDate = $(this).find("input[name=birthDate]").val();
+	
+
+	$.ajax({
+		type : 'POST',
+		url : editGuest,
+		contentType : 'application/json',
+		dataType : "text",
+		data : formToJSONEditGuest(email, password, name, surname, birthDate),
+		success : function(data) {
+			if(data=="OK") {
+				
+				toastr.options = {
+						  "closeButton": true,
+						  "debug": false,
+						  "newestOnTop": false,
+						  "progressBar": false,
+						  "positionClass": "toast-top-right",
+						  "preventDuplicates": false,
+						  "onclick": null,
+						  "showDuration": "300",
+						  "hideDuration": "1000",
+						  "timeOut": "5000",
+						  "extendedTimeOut": "1000",
+						  "showEasing": "swing",
+						  "hideEasing": "linear",
+						  "showMethod": "fadeIn",
+						  "hideMethod": "fadeOut"
+						}
+				toastr.info('Guest data have been changed.');
+				printGuestData();
+			}
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("AJAX ERROR: " + errorThrown);
+		}
+	});
+});
+
+function formToJSONEditGuest(email, password, name, surname, birthDate) {
+	return JSON.stringify({
+		"email" : email,
+		"password" : password,
+		"name" : name,
+		"surname" : surname,
+		"birthDate" : birthDate,
+	});
+}
+
+//---------------------KRAJ CUVANJE IZMJENE
 
 
 //----------------------tabela-----------------------

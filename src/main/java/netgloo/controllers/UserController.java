@@ -3,10 +3,9 @@ package netgloo.controllers;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,6 +59,23 @@ public class UserController {
 				request.getSession().setAttribute("user", user);
 				return user.getUser_role();
 			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return "EXCEPTION";
+		}
+		return "OK";
+	}
+	
+	
+	@RequestMapping(value = "/editGuest", method = RequestMethod.POST, headers = { "content-type=application/json" })
+	public String editGuest(@RequestBody UserProba user1, HttpServletRequest request) {
+		try {
+			User user = userDao.findByEmail(user1.getEmail().trim());
+			user.setUser_password(user1.getPassword().trim());
+			user.setUser_name(user1.getName().trim());
+			user.setUser_surname(user1.getSurname().trim());
+			user.setUser_birth_date(user1.getBirthDate().trim());
+			userDao.save(user);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return "EXCEPTION";
