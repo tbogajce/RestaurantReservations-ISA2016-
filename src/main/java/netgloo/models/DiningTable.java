@@ -15,21 +15,99 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name = "diningTable")
 public class DiningTable {
 	
-	@JsonBackReference("restaurant-diningTable")
-	@ManyToOne
-	@JoinColumn(name="restaurant_id", referencedColumnName="restaurant_id", nullable=false)
-	private Restaurant restaurant_id;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long diningTable_id;
+	private Long generalTableID;
+	
+	@JsonBackReference("restaurant-diningTable")
+	@ManyToOne
+	@JoinColumn(name="restaurant", referencedColumnName="restaurant_id", nullable=false)
+	private Restaurant restaurant;
 	
 	@NotNull
-	private String diningTable_segment;
+	private Long tableNumberInRestaurant;
 	
-	@NotNull
-	private String diningTable_area;
+	private Integer numberOfSeats;
+	
+	@JsonBackReference("area-diningTable")
+	@ManyToOne
+	@JoinColumn(name="area", referencedColumnName="areaID", nullable=false)
+	private Area area;
+	
+	@JsonBackReference("segment-diningTable")
+	@ManyToOne
+	@JoinColumn(name="segment", referencedColumnName="segmentID", nullable=false)
+	private Segment segment;
+	
+	private String note;
 
+	public DiningTable(Long generalTableID, Restaurant restaurant, Long tableNumberInRestaurant, Integer numberOfSeats,
+			Area area, Segment segment, String note) {
+		super();
+		this.generalTableID = generalTableID;
+		this.restaurant = restaurant;
+		this.tableNumberInRestaurant = tableNumberInRestaurant;
+		this.numberOfSeats = numberOfSeats;
+		this.area = area;
+		this.segment = segment;
+		this.note = note;
+	}
+
+	public Long getGeneralTableID() {
+		return generalTableID;
+	}
+
+	public void setGeneralTableID(Long generalTableID) {
+		this.generalTableID = generalTableID;
+	}
+
+	public Restaurant getRestaurant() {
+		return restaurant;
+	}
+
+	public void setRestaurant(Restaurant restaurant) {
+		this.restaurant = restaurant;
+	}
+
+	public Long getTableNumberInRestaurant() {
+		return tableNumberInRestaurant;
+	}
+
+	public void setTableNumberInRestaurant(Long tableNumberInRestaurant) {
+		this.tableNumberInRestaurant = tableNumberInRestaurant;
+	}
+
+	public Integer getNumberOfSeats() {
+		return numberOfSeats;
+	}
+
+	public void setNumberOfSeats(Integer numberOfSeats) {
+		this.numberOfSeats = numberOfSeats;
+	}
+
+	public Area getArea() {
+		return area;
+	}
+
+	public void setArea(Area area) {
+		this.area = area;
+	}
+
+	public Segment getSegment() {
+		return segment;
+	}
+
+	public void setSegment(Segment segment) {
+		this.segment = segment;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
 	
 	
 	
