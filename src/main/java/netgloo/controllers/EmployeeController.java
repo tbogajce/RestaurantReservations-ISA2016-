@@ -23,9 +23,9 @@ public class EmployeeController {
 	
 	//NA ZALOST ... EMPLOYEE CE KORISTITI SVOJ EMPLOYEE NICK ALI CE ISTO TAKO KORISTITI STARI USER PASSWORD
 	
-	//@Autowired
-	//private EmployeeDao empDao;
-	/*
+	@Autowired
+	private EmployeeDao empDao;
+	
 	@Autowired
 	private UserDao userDao;
 	
@@ -37,12 +37,13 @@ public class EmployeeController {
 			String email = String.valueOf(user.getEmail());
 			String pass = String.valueOf(user.getUser_password());
 			if (email.equals(user1.getEmail()) && pass.equals(user1.getPassword())) {
-				//request.getSession().setAttribute("user", user);
-				//Employee employee = empDao.findByUserId(user.getUser_id());
-				Query query = session.createQuery("from Stock where stockCode = :code ");
-				query.setParameter("code", "7277");
-				List list = query.list();
-				//Session session = HibernateUtil.getSessionFactory().openSession();
+				request.getSession().setAttribute("user", user);
+				
+				
+				System.out.println(user.getUserId());
+				System.out.println("------------ISPIS ---------------------");
+				Employee employee = empDao.findByUserId(user);
+				
 				if(employee!=null)
 				{
 					System.out.println("KONF BR: "+employee.getEmployee_confection_number());
@@ -67,7 +68,7 @@ public class EmployeeController {
 		}
 		return "logout";
 	}
-	*/
+	
 	/*
 	@RequestMapping(value = "/loginEmployee", method = RequestMethod.POST, headers = { "content-type=application/json" })
 	public String loginEmployee(@RequestBody Employee emp, HttpServletRequest request) {

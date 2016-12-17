@@ -13,6 +13,6 @@ public interface EmployeeDao  extends CrudRepository<Employee, Long>{
 
 	//public List<Friendships> findByLoveGiver(User love_giver);
 	
-	//public Employee findByUser_Id(Integer user_id);
+	public Employee findByUserId(User user);
 	
 }

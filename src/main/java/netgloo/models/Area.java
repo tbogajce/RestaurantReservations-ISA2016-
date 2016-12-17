@@ -37,6 +37,11 @@ public class Area {
 		this.areaSpace = areaSpace;
 		this.note = note;
 	}
+	
+	public Area()
+	{
+		super();
+	}
 
 	public Long getAreaID() {
 		return areaID;
