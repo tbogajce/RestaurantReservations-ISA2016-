@@ -2,6 +2,7 @@ var guestNamePrintURL = "users/guestName";
 var guestData = "users/guestData";
 var editGuest = "users/editGuest";
 
+
 $( document ).ready(function() {
 	$('#guestProfilePanel').show();
 	$('#friendsPanel').hide();

@@ -1,10 +1,213 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<meta charset="ISO-8859-1">
+<title>Guest settings</title>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/logout.js"></script>
+<script type="text/javascript" src="js/toastr.min.js"></script>
+<script type="text/javascript" src="js/GuestSettings.js"></script>
+<script type="text/javascript" src="js/GuestSettingsFriends.js"></script>
+
+<script src="js/bootstrap.min.js"></script>
+<!-- Bootstrap -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/registration.css" rel="stylesheet">
+<link href="css/GuestSettings.css" rel="stylesheet">
+<link href="css/toastr.min.css" rel="stylesheet" />
 </head>
 <body>
-<h1> Hi there good 'ole Employee</h1>
+<!-------------------------------- Header ------------------------------------>
+	<nav class="navbar navbar-default navbar-default"
+		style="border-radius: 0px !important; margin-bottom: 0px;">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+					aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">RestarauntApp</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">			
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">More<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li id="logoutButton"><a href="#">Log out</a></li>
+						</ul></li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+	<!--------------------------------- End Header -------------------------------------------->
+	
+	
+		<!--------------------------------- navigation -------------------------------------------->
+
+	<div class="container-fluid main-container" style="margin-top: 20px">
+		<div class="col-md-2 sidebar">
+			<ul class="nav nav-pills nav-stacked">
+				<li><a href="#" id="guestProfileButton">Guest profile</a></li>
+				<li><a href="#" id="friendsButton">Friends</a></li>
+				<li><a href="#" id="friendRequestsButton">Friend requests </a></li>
+			</ul>
+		</div>
+
+		<div class="col-md-10 content">
+			<div class="panel panel-default" id="guestProfilePanel">  
+				<div class="panel-heading">Guest profile: </div>
+				<div class="panel-body">
+					<!------------------------------------ prvo prikazi tabelu kupac --------------------------------------------->
+					<div class="container" style="margin-left: -60px;">
+
+						<hr>
+
+						<div class="row">
+							<div class="panel panel-primary filterable">
+								<div class="panel-heading">
+									<h3 class="panel-title guestName"></h3>
+								</div>
+								<!-- panel preview -->
+								<div class="col-sm-7" style="margin-left: 200px;">
+									<h4></h4>
+									<div class="panel panel-default">
+										<div class="panel-body form-horizontal payment-form"></div>
+									</div>
+								</div>
+							</div>
+							<!-- / panel preview -->
+
+						</div>
+					</div>
+				</div>
+				<!-------------------------------- END prvo prikazi tabelu kupac --------------------------------------->
+			</div> 
+			
+			<div class="panel panel-default" id="friendsPanel"> 
+				<div class="panel-heading">Friends</div>
+				<div class="panel-body">
+					<!------------------------------------ prvo prikazi tabelu kupac --------------------------------------------->
+				<div class="container" style="margin-left: -60px;">
+
+						<hr>
+
+						<div class="row">
+							<div class="panel panel-primary filterable">
+								<div class="panel-heading">
+									<h3 class="panel-title">Friends: </h3>
+									<div class="pull-right" style="margin-top: -19px;">
+										<button class="btn btn-default btn-xs btn-filter">Filter
+										</button>
+									</div>
+
+								</div>
+								<form class="clearForm" action="" method="post">
+									<table class="table">
+										<thead class="thead">
+											<tr class="filters">
+												<th><input type="text" class="form-control"
+													placeholder="Email" disabled></th>
+												<th><input type="text" class="form-control"
+													placeholder="Name" disabled></th>
+												<th><input type="text" class="form-control"
+													placeholder="Surname" disabled></th>
+												<th><input type="text" class="form-control"
+													placeholder="Birth date" disabled></th>
+													<th> </th>
+											</tr>
+										</thead>
+										<tbody id="friendsData">
+											<!-- guests friends list -->
+										</tbody>
+									</table>
+
+
+
+
+								</form>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-------------------------------- END prvo prikazi tabelu kupac --------------------------------------->
+			</div> 
+	
+	
+			<!-- FRIEND REQUESTS -->
+			<div class="panel panel-default" id="friendRequestsPanel">  <!-- KOMPLETAN PANEL PROIZVODA -->
+				<div class="panel-heading">Friend requests</div>
+				<div class="panel-body">
+				<div class="container" style="margin-left: -60px;">
+
+						<hr>
+
+						<div class="row">
+							<div class="panel panel-primary filterable">
+								<div class="panel-heading">
+									<h3 class="panel-title">Friend requests: </h3>
+									<div class="pull-right" style="margin-top: -19px;">
+										<button class="btn btn-default btn-xs btn-filter">Filter
+										</button>
+									</div>
+
+								</div>
+								<form class="clearForm" action="" method="post">
+									<table class="table">
+										<thead class="thead">
+											<tr class="filters">
+												<th><input type="text" class="form-control"
+													placeholder="Proizvod" disabled></th>
+												<th><input type="text" class="form-control"
+													placeholder="Dostavljac" disabled></th>
+												<th><input type="text" class="form-control"
+													placeholder="Kolicina" disabled></th>
+												<th><input type="text" class="form-control"
+													placeholder="Ukupna cijena" disabled></th>
+												<th><input type="text" class="form-control"
+													placeholder="Otpremljen" disabled></th>
+													<th> </th>
+											</tr>
+										</thead>
+										<tbody id="friendRequestsData">
+											<!-- guests friends list -->
+										</tbody>
+									</table>
+
+
+
+
+								</form>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-------------------------------- END prvo prikazi tabelu kupac --------------------------------------->
+			</div> 
+			
+			<!-- END FRIEND REQUESTS -->
+			</div>
+			
+			
+		</div>
+
+
+
+	<!-------------------------------- End navigation ------------------------------------------->
+	
+	
 </body>
 </html>

@@ -98,6 +98,17 @@ public class UserController {
 		return "logout";
 	}
 	
+	@RequestMapping(value = "/checkRole", method = RequestMethod.GET)
+	public String checkRole(HttpServletRequest request) {
+
+		try {
+			request.getSession().invalidate();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "logout";
+	}
+	
 	@RequestMapping(value = "/getFriends", method = RequestMethod.GET)
 	public ArrayList<User> getFrinds(HttpServletRequest request) {
 		friends.clear();

@@ -4,6 +4,7 @@ var getSysManDataURL = "systemManagerController/systemManagerData";
 var getUpdSysManDataURL = "systemManagerController/updateSystemManager";
 var getIsBigDealURL = "systemManagerController/isBigDeal";
 var getAllSystemManagersURL = "systemManagerController/getSystemManagers";
+var removeSystemManager = "systemManagerController/deleteSystemManager";
 
 $(function() {
 
@@ -255,18 +256,20 @@ function systemManagersPrint(data) {
 	// JAX-RS serializes an empty list as null, and a 'collection of one' as an
 	// object (not an 'array of one')
 	$('#sysManData').empty();
+	var brojac=0;
 	var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
-	$.each(list,
-			function(index, systemManager) {
+	$.each(list,function(index, systemManager) {
 				var tr = $('<tr></tr>');
 				tr.append('<td>' + systemManager.system_manager_nick_id + '</td>' + '<td>'
 						+ systemManager.manager_email + '</td>' + '<td>'
 						+ systemManager.manager_name + '</td>' + '<td>' + systemManager.manager_last_name
-						+ '</td><td>' + '<form class="delSM" > '+
-		                 '<input type="hidden" name="id" value='+ systemManager.system_manager_nick_id +' id="identifikatorID">' +
-		                 ' <input type="submit" class="btn btn-primary btn-sm" role="button" value="Remove"> '+
-		                 '</form></td>' );
+						+ '</td><td>' + 
+						'<form class="delSM'+brojac+'" > '+
+		                 '<input type="hidden" name="idx" value='+ systemManager.system_manager_nick_id +' id="identifikatorID">' +
+		                 ' <input type="submit" class="btn btn-primary btn-sm" role="button" value="Remove"> '
+		                 +'</form></td>' );
 				$('#sysManData').append(tr);
+				brojac=brojac+1;
 			});
 }
 
