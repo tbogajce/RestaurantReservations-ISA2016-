@@ -28,6 +28,8 @@ $(document).on('click', '#friendsButton', function(e) {
 	$('#friendsPanel').show();
 	$('#friendRequestsPanel').hide();
 	
+	printFriends();
+	
 });
 
 $(document).on('click', '#friendRequestsButton', function(e) {

@@ -3,6 +3,8 @@ package netgloo.models;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,12 +18,15 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Friendships implements Serializable {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long friendship_id;
+	
 	@JsonBackReference("user-friendships")
 	@ManyToOne
 	@JoinColumn(name="love_giver", referencedColumnName="user_id", nullable=false)
-	private User love_giver;
+	private User loveGiver;
 	
-	@Id
+	
 	@JsonBackReference("user-friendships")
 	@ManyToOne
 	@JoinColumn(name="love_taker", referencedColumnName="user_id", nullable=false)
@@ -29,21 +34,46 @@ public class Friendships implements Serializable {
 	
 	@NotNull
 	private Boolean friendship_accepted;
-
-	public Friendships(User love_giver, User love_taker, Boolean friendship_accepted) {
+	
+	
+	public Friendships() {
 		super();
-		this.love_giver = love_giver;
+	}
+
+
+
+	public Friendships(User loveGiver, User love_taker, Boolean friendship_accepted) {
+		super();
+		this.loveGiver = loveGiver;
 		this.love_taker = love_taker;
 		this.friendship_accepted = friendship_accepted;
 	}
 
-	public User getLove_giver() {
-		return love_giver;
+
+
+	public Long getFriendship_id() {
+		return friendship_id;
 	}
 
-	public void setLove_giver(User love_giver) {
-		this.love_giver = love_giver;
+
+
+	public void setFriendship_id(Long friendship_id) {
+		this.friendship_id = friendship_id;
 	}
+
+
+
+	public User getLoveGiver() {
+		return loveGiver;
+	}
+
+
+
+	public void setLoveGiver(User loveGiver) {
+		this.loveGiver = loveGiver;
+	}
+
+
 
 	public User getLove_taker() {
 		return love_taker;

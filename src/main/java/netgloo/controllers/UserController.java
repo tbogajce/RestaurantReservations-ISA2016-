@@ -1,11 +1,11 @@
 package netgloo.controllers;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import netgloo.dao.FriendshipsDao;
 import netgloo.dao.UserDao;
+import netgloo.models.Friendships;
 import netgloo.models.User;
 import netgloo.models.UserProba;
 
@@ -26,7 +28,9 @@ import netgloo.models.UserProba;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-
+	
+	ArrayList<User> friends = new ArrayList<User>();
+	
 	/**
 	 * /create --> Create a new user and save it in the database.
 	 * 
@@ -92,6 +96,23 @@ public class UserController {
 			ex.printStackTrace();
 		}
 		return "logout";
+	}
+	
+	@RequestMapping(value = "/getFriends", method = RequestMethod.GET)
+	public ArrayList<User> getFrinds(HttpServletRequest request) {
+		friends.clear();
+		try {
+			User user = (User) request.getSession().getAttribute("user");
+			Integer userID = user.getUser_id();
+			ArrayList<Friendships> fs = (ArrayList<Friendships>) friendshipsDao.findByLoveGiver(user);
+			for(int i=0; i<fs.size(); i++) {
+				friends.add(fs.get(i).getLove_taker());
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return friends;
 	}
 
 	@RequestMapping(value = "/guestName", method = RequestMethod.GET)
@@ -195,5 +216,8 @@ public class UserController {
 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private FriendshipsDao friendshipsDao;
 
 } // class UserController
