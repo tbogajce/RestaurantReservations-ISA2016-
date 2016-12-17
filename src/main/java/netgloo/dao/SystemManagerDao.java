@@ -10,4 +10,6 @@ public interface SystemManagerDao  extends CrudRepository<SystemManager, String>
 
 	//public SystemManager findBySystem_manager_nick_id(String system_manager_nick_id);
 	
+	
+	
 }

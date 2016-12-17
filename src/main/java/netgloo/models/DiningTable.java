@@ -40,9 +40,14 @@ public class DiningTable {
 	private Segment segment;
 	
 	private String note;
+	
+	private Boolean occupied;
+
+
+	
 
 	public DiningTable(Long generalTableID, Restaurant restaurant, Long tableNumberInRestaurant, Integer numberOfSeats,
-			Area area, Segment segment, String note) {
+			Area area, Segment segment, String note, Boolean occupied) {
 		super();
 		this.generalTableID = generalTableID;
 		this.restaurant = restaurant;
@@ -51,7 +56,22 @@ public class DiningTable {
 		this.area = area;
 		this.segment = segment;
 		this.note = note;
+		this.occupied = occupied;
 	}
+
+	
+	
+	public Boolean getOccupied() {
+		return occupied;
+	}
+
+
+
+	public void setOccupied(Boolean occupied) {
+		this.occupied = occupied;
+	}
+
+
 
 	public Long getGeneralTableID() {
 		return generalTableID;

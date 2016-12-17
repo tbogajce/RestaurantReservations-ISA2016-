@@ -65,7 +65,12 @@ $(document).on('submit', '.loginForm', function(e) {
 		success: function(data) {
 			if(data == "Guest") {
 				window.location.href = "http://localhost:8080/GuestHome.html";
-			} else {
+			}
+			else if(data == "Employee")
+				{
+				window.location.href = "http://localhost:8080/EmployeeHome.html";
+				}
+			else {
 				window.location.href = "http://localhost:8080/";
 			}
 		}

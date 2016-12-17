@@ -2,6 +2,7 @@ package netgloo.controllers;
 
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.ServletContext;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import netgloo.dao.SystemManagerDao;
+import netgloo.models.Friendships;
 import netgloo.models.SystemManager;
 import netgloo.models.User;
 import netgloo.models.UserProba;
@@ -27,6 +29,8 @@ public class SystemManagerController {
 	
 	@Autowired
 	private SystemManagerDao sysMaDao;
+	
+	ArrayList<SystemManager> listOfManagers = new ArrayList<SystemManager>();
 
 	@RequestMapping(value = "/createNewSystemManager", method = RequestMethod.POST, headers = { "content-type=application/json" })
 	public String createSystemManager(@RequestBody SystemManager sm1) {
@@ -90,6 +94,82 @@ public class SystemManagerController {
 			ex.printStackTrace();
 		}
 		return "itAintSystemManager";
+	}
+	
+	@RequestMapping(value = "/isBigDeal", method = RequestMethod.GET/*, headers = { "content-type=application/json" }*/)
+	public String isBigDeal(HttpServletRequest request) {
+
+		try {
+			//request.getSession().invalidate();
+			SystemManager sym=null;
+			if(request.getSession().getAttribute("systemManager")!=null)
+			{
+				sym=(SystemManager) request.getSession().getAttribute("systemManager");
+			}
+			 
+			if(sym!=null)
+			{
+				if(sym.getSystem_manager_nick_id().equals("manager1"))
+				{
+					return "da";
+				}
+				else
+				{
+					return "njet";
+				}
+				
+			}
+			else
+			{
+				return "njet";
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "njet";
+	}
+	
+	@RequestMapping(value = "/getSystemManagers", method = RequestMethod.GET)
+	public ArrayList<SystemManager> getSystemManagers(HttpServletRequest request) {
+		//friends.clear();
+		listOfManagers.clear();
+		try {
+			//User user = (User) request.getSession().getAttribute("user");
+			SystemManager sysMa = (SystemManager) request.getSession().getAttribute("systemManager");
+			if(sysMa!=null && sysMa.getSystem_manager_nick_id().equals("manager1"))
+			{
+				//String systemManagerNickString = sys
+				listOfManagers=(ArrayList<SystemManager>) sysMaDao.findAll();
+				
+				int pos=-1;
+				
+				int counter=0;
+				for(SystemManager sm : listOfManagers)
+				{
+					if(sm.getSystem_manager_nick_id().equals("manager1"))
+					{
+						pos=counter;
+						break;
+					}
+					counter++;
+				}
+				if(pos!=-1)
+				{
+					listOfManagers.remove(pos);
+				}
+				
+				return listOfManagers;
+			}
+			//Integer userID = user.getUser_id();
+			//ArrayList<Friendships> fs = (ArrayList<Friendships>) friendshipsDao.findByLoveGiver(user);
+			//for(int i=0; i<fs.size(); i++) {
+			//	friends.add(fs.get(i).getLove_taker());
+			//}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return listOfManagers;
 	}
 	
 	@RequestMapping(value = "/logoutSystemManager", method = RequestMethod.GET, headers = { "content-type=application/json" })
