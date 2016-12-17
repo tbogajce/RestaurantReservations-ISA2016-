@@ -71,6 +71,15 @@ public class OrderedBeverage {
 		this.acceptedTime = acceptedTime;
 		this.doneTime = doneTime;
 	}
+	
+	
+
+	public OrderedBeverage() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 
 	public Integer getOrderedBeverageID() {
 		return orderedBeverageID;

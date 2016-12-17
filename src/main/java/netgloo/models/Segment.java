@@ -45,6 +45,15 @@ public class Segment {
 		this.note = note;
 	}
 
+	
+	
+	public Segment() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+
 	public Long getSegmentID() {
 		return segmentID;
 	}

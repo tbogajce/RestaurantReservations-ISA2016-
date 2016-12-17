@@ -37,6 +37,16 @@ public class CookSpecialization {
 		this.cookSpecializationId = cookSpecializationId;
 		this.specialization = specialization;
 	}
+	
+	
+
+
+	public CookSpecialization() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 
 
 	public Employee getEmployee() {

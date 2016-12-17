@@ -59,6 +59,15 @@ public class GuestsOrder {
 		this.IsPaid = isPaid;
 		this.orderReceivedTime = orderReceivedTime;
 	}
+	
+	
+
+	public GuestsOrder() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 
 	public Integer getOrderID() {
 		return orderID;

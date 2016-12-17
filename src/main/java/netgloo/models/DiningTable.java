@@ -58,9 +58,20 @@ public class DiningTable {
 		this.note = note;
 		this.occupied = occupied;
 	}
+	
+	
 
 	
 	
+	public DiningTable() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+
+
 	public Boolean getOccupied() {
 		return occupied;
 	}

@@ -49,6 +49,15 @@ public class WorkingShift {
 		this.shiftEndTime = shiftEndTime;
 		this.note = note;
 	}
+	
+	
+
+	public WorkingShift() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 
 	public Long getWorkingShiftID() {
 		return workingShiftID;

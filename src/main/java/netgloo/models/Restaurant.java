@@ -52,6 +52,11 @@ public class Restaurant {
 
 	
 	
+	public Restaurant()
+	{
+		super();
+	}
+	
 	public Long getRestaurantId() {
 		return restaurantId;
 	}

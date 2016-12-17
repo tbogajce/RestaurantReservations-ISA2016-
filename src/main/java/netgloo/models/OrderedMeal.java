@@ -72,6 +72,17 @@ public class OrderedMeal {
 	}
 	
 	
+	
+	
+
+	public OrderedMeal() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+
 
 	public Integer getOrderedMealID() {
 		return orderedMealID;
