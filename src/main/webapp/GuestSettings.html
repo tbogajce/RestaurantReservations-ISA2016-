@@ -112,8 +112,9 @@
 								<div class="panel-heading">
 									<h3 class="panel-title">Friends: </h3>
 									<div class="pull-right" style="margin-top: -19px;">
-										<button class="btn btn-default btn-xs btn-filter">Filter
-										</button>
+										<a data-toggle="modal" href="#myModal" class="btn btn-success btn-xs">Add friend</a>
+										&nbsp;
+										<button class="btn btn-default btn-xs btn-filter">Filter</button>
 									</div>
 
 								</div>
@@ -164,8 +165,7 @@
 								<div class="panel-heading">
 									<h3 class="panel-title">Friend requests: </h3>
 									<div class="pull-right" style="margin-top: -19px;">
-										<button class="btn btn-default btn-xs btn-filter">Filter
-										</button>
+										<button class="btn btn-default btn-xs btn-filter">Filter</button>
 									</div>
 
 								</div>
@@ -213,7 +213,39 @@
 
 
 	<!-------------------------------- End navigation ------------------------------------------->
-	
-	
+
+	<!-- MODAL DIALOG -->
+	<div class="modal " id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Add new friend</h4>
+        </div><div class="container"></div>
+        <div class="modal-body">
+         <br>
+			
+			 <input type="text" class="form-control" id="searchFriends" name="searchFr" placeholder="Search by email.."> 
+		     
+		     <br>
+		     <div class="form-group"> 
+				 <select class="friendsCombobox">
+  					
+				</select>
+		     </div> 
+		     
+		     
+		     
+		 </div>
+		
+        
+        <div class="modal-footer">
+          <a href="#" data-dismiss="modal" class="btn btn-sm">Close</a>
+          <a href="#" class="btn btn-primary btn-sm">Save changes</a>
+        </div>
+      </div>
+    </div>
+</div>
+	<!-- END MODAL DIALOG -->
 </body>
 </html>

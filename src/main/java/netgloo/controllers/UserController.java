@@ -3,6 +3,7 @@ package netgloo.controllers;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,9 +29,11 @@ import netgloo.models.UserProba;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-	
+
 	ArrayList<User> friends = new ArrayList<User>();
-	
+	ArrayList<User> friendsCombo = new ArrayList<User>();
+	ArrayList<User> listaSvih2 = new ArrayList<User>();
+
 	/**
 	 * /create --> Create a new user and save it in the database.
 	 * 
@@ -69,8 +72,7 @@ public class UserController {
 		}
 		return "OK";
 	}
-	
-	
+
 	@RequestMapping(value = "/editGuest", method = RequestMethod.POST, headers = { "content-type=application/json" })
 	public String editGuest(@RequestBody UserProba user1, HttpServletRequest request) {
 		try {
@@ -97,7 +99,7 @@ public class UserController {
 		}
 		return "logout";
 	}
-	
+
 	@RequestMapping(value = "/checkRole", method = RequestMethod.GET)
 	public String checkRole(HttpServletRequest request) {
 
@@ -109,6 +111,7 @@ public class UserController {
 		return "logout";
 	}
 	
+
 	@RequestMapping(value = "/getFriends", method = RequestMethod.GET)
 	public ArrayList<User> getFrinds(HttpServletRequest request) {
 		friends.clear();
@@ -116,14 +119,60 @@ public class UserController {
 			User user = (User) request.getSession().getAttribute("user");
 			Integer userID = user.getUser_id();
 			ArrayList<Friendships> fs = (ArrayList<Friendships>) friendshipsDao.findByLoveGiver(user);
-			for(int i=0; i<fs.size(); i++) {
-				friends.add(fs.get(i).getLove_taker());
+			for (int i = 0; i < fs.size(); i++) {
+				if (fs.get(i).getFriendship_accepted() == true)
+					friends.add(fs.get(i).getLove_taker());
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return friends;
+	}
+
+	/**
+	 * Prikaz samo onih prijatelja koje korisnik nema u prijateljima Jedna lista
+	 * sadrzi sve korisnike Druga sadrzi korisnike koji su prijatelji sa
+	 * ulogovanim korisnikom Ako se u listi svih, nalazi neko ko nije u listi
+	 * prijatelja Onda provjeravamo da li se zadati search string, sastoji u
+	 * nekom od mail-ova
+	 */
+	@RequestMapping(value = "/getFriendsCombo", method = RequestMethod.POST, headers = {
+			"content-type=application/json" })
+	public ArrayList<User> getFriendsCombo(@RequestBody UserProba user1, HttpServletRequest request) {
+		friendsCombo.clear();
+		listaSvih2.clear();
+
+		try {
+			System.out.println("email je:  " + user1.getEmail());
+			User user = (User) request.getSession().getAttribute("user");
+			List<User> lu = (List<User>) userDao.findAll();
+			friendsCombo = (ArrayList<User>) lu;
+			List<User> friends2 = (List<User>) getFrinds(request);
+			for (int i = 0; i < lu.size(); i++) {
+				for (int j = 0; j < friends2.size(); j++) {
+					if (lu.get(i).getEmail().equals(friends2.get(j).getEmail())) {
+						listaSvih2.add(lu.get(i));
+						break;
+					}
+				}
+			}
+
+			for (int i = 0; i < lu.size(); i++) {
+				if (lu.get(i).getEmail().equals(user.getEmail().trim())) {
+					listaSvih2.add(lu.get(i));
+				}
+				if (!lu.get(i).getEmail().contains(user1.getEmail().trim())) {
+					listaSvih2.add(lu.get(i));
+				}
+			}
+
+			friendsCombo.removeAll(listaSvih2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return friendsCombo;
 	}
 
 	@RequestMapping(value = "/guestName", method = RequestMethod.GET)
@@ -138,12 +187,12 @@ public class UserController {
 		}
 		return "none";
 	}
-	
+
 	@RequestMapping(value = "/guestData", method = RequestMethod.GET)
 	public User guestData(HttpServletRequest request) {
-		try{
-		User u =(User) request.getSession().getAttribute("user");
-		return u;
+		try {
+			User u = (User) request.getSession().getAttribute("user");
+			return u;
 		} catch (Exception e) {
 			System.out.println("Guest is not logged in");
 		}
@@ -227,7 +276,7 @@ public class UserController {
 
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Autowired
 	private FriendshipsDao friendshipsDao;
 
