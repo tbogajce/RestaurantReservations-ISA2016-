@@ -27,28 +27,28 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer user_id;
+	private Integer userId;
 
 	@NotNull
 	private String email;
 
 	@NotNull
-	private String user_password;
+	private String userPassword;
 
 	@NotNull
-	private String user_name;
+	private String userName;
 
 	@NotNull
-	private String user_surname;
+	private String userSurname;
 
 	@NotNull
-	private String user_birth_date;
+	private String userBirthDate;
 
 	@NotNull
-	private String user_registration_date;
+	private String userRegistrationDate;
 
 	@NotNull
-	private String user_role;
+	private String userRole;
 
 	
 	
@@ -61,29 +61,101 @@ public class User {
 			String user_registration_date, String user_role) {
 		super();
 		this.email = email;
-		this.user_password = user_password;
-		this.user_name = user_name;
-		this.user_surname = user_surname;
-		this.user_birth_date = user_birth_date;
-		this.user_registration_date = user_registration_date;
-		this.user_role = user_role;
+		this.userPassword = user_password;
+		this.userName = user_name;
+		this.userSurname = user_surname;
+		this.userBirthDate = user_birth_date;
+		this.userRegistrationDate = user_registration_date;
+		this.userRole = user_role;
 	}
 
 
 	public User(Integer user_id) {
 		super();
-		this.user_id = user_id;
+		this.userId = user_id;
 	}
 
 	public Integer getUser_id() {
-		return user_id;
+		return userId;
 	}
 
 	public void setUser_id(Integer user_id) {
-		this.user_id = user_id;
+		this.userId = user_id;
 	}
 
 	
+	
+	
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+
+	public String getUserPassword() {
+		return userPassword;
+	}
+
+
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
+	}
+
+
+	public String getUserName() {
+		return userName;
+	}
+
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+
+	public String getUserSurname() {
+		return userSurname;
+	}
+
+
+	public void setUserSurname(String userSurname) {
+		this.userSurname = userSurname;
+	}
+
+
+	public String getUserBirthDate() {
+		return userBirthDate;
+	}
+
+
+	public void setUserBirthDate(String userBirthDate) {
+		this.userBirthDate = userBirthDate;
+	}
+
+
+	public String getUserRegistrationDate() {
+		return userRegistrationDate;
+	}
+
+
+	public void setUserRegistrationDate(String userRegistrationDate) {
+		this.userRegistrationDate = userRegistrationDate;
+	}
+
+
+	public String getUserRole() {
+		return userRole;
+	}
+
+
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
+	}
+
 
 	public String getEmail() {
 		return email;
@@ -94,53 +166,53 @@ public class User {
 	}
 
 	public String getUser_password() {
-		return user_password;
+		return userPassword;
 	}
 
 	public void setUser_password(String user_password) {
-		this.user_password = user_password;
+		this.userPassword = user_password;
 	}
 
 	public String getUser_name() {
-		return user_name;
+		return userName;
 	}
 
 	public void setUser_name(String user_name) {
-		this.user_name = user_name;
+		this.userName = user_name;
 	}
 
 	public String getUser_surname() {
-		return user_surname;
+		return userSurname;
 	}
 
 	public void setUser_surname(String user_surname) {
-		this.user_surname = user_surname;
+		this.userSurname = user_surname;
 	}
 
 
 
 	public String getUser_birth_date() {
-		return user_birth_date;
+		return userBirthDate;
 	}
 
 	public void setUser_birth_date(String user_birth_date) {
-		this.user_birth_date = user_birth_date;
+		this.userBirthDate = user_birth_date;
 	}
 
 	public String getUser_registration_date() {
-		return user_registration_date;
+		return userRegistrationDate;
 	}
 
 	public void setUser_registration_date(String user_registration_date) {
-		this.user_registration_date = user_registration_date;
+		this.userRegistrationDate = user_registration_date;
 	}
 
 	public String getUser_role() {
-		return user_role;
+		return userRole;
 	}
 
 	public void setUser_role(String user_role) {
-		this.user_role = user_role;
+		this.userRole = user_role;
 	}
 
 	

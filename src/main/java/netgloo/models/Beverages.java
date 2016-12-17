@@ -17,74 +17,117 @@ public class Beverages {
 	
 	@JsonBackReference("restaurant-beverages")
 	@ManyToOne
-	@JoinColumn(name="restaurant_id", referencedColumnName="restaurant_id", nullable=false)
-	private Restaurant restaurant_id;
+	@JoinColumn(name="restaurantId", referencedColumnName="restaurantId", nullable=false)
+	private Restaurant restaurantId;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long beverages_id;
+	private Long beveragesId;
 	
 	@NotNull
-	private String beverages_description;
+	private String beveragesDescription;
 	
 	@NotNull
-	private String beverages_name;
+	private String beveragesName;
 	
 	@NotNull
-	private Float beverages_price;
+	private Float beveragesPrice;
 
 	public Beverages(Restaurant restaurant_id, Long beverages_id, String beverages_description, String beverages_name,
 			Float beverages_price) {
 		super();
-		this.restaurant_id = restaurant_id;
-		this.beverages_id = beverages_id;
-		this.beverages_description = beverages_description;
-		this.beverages_name = beverages_name;
-		this.beverages_price = beverages_price;
+		this.restaurantId = restaurant_id;
+		this.beveragesId = beverages_id;
+		this.beveragesDescription = beverages_description;
+		this.beveragesName = beverages_name;
+		this.beveragesPrice = beverages_price;
 	}
 
 	public Beverages() {
 		super();
 	}
+	
+	
+	
+
+	public Restaurant getRestaurantId() {
+		return restaurantId;
+	}
+
+	public void setRestaurantId(Restaurant restaurantId) {
+		this.restaurantId = restaurantId;
+	}
+
+	public Long getBeveragesId() {
+		return beveragesId;
+	}
+
+	public void setBeveragesId(Long beveragesId) {
+		this.beveragesId = beveragesId;
+	}
+
+	public String getBeveragesDescription() {
+		return beveragesDescription;
+	}
+
+	public void setBeveragesDescription(String beveragesDescription) {
+		this.beveragesDescription = beveragesDescription;
+	}
+
+	public String getBeveragesName() {
+		return beveragesName;
+	}
+
+	public void setBeveragesName(String beveragesName) {
+		this.beveragesName = beveragesName;
+	}
+
+	public Float getBeveragesPrice() {
+		return beveragesPrice;
+	}
+
+	public void setBeveragesPrice(Float beveragesPrice) {
+		this.beveragesPrice = beveragesPrice;
+	}
 
 	public Restaurant getRestaurant_id() {
-		return restaurant_id;
+		return restaurantId;
 	}
 
 	public void setRestaurant_id(Restaurant restaurant_id) {
-		this.restaurant_id = restaurant_id;
+		this.restaurantId = restaurant_id;
 	}
 
 	public Long getBeverages_id() {
-		return beverages_id;
+		return beveragesId;
 	}
 
 	public void setBeverages_id(Long beverages_id) {
-		this.beverages_id = beverages_id;
+		this.beveragesId = beverages_id;
 	}
 
 	public String getBeverages_description() {
-		return beverages_description;
+		return beveragesDescription;
 	}
 
 	public void setBeverages_description(String beverages_description) {
-		this.beverages_description = beverages_description;
+		this.beveragesDescription = beverages_description;
 	}
 
 	public String getBeverages_name() {
-		return beverages_name;
+		return beveragesName;
 	}
 
 	public void setBeverages_name(String beverages_name) {
-		this.beverages_name = beverages_name;
+		this.beveragesName = beverages_name;
 	}
 
 	public Float getBeverages_price() {
-		return beverages_price;
+		return beveragesPrice;
 	}
 
 	public void setBeverages_price(Float beverages_price) {
-		this.beverages_price = beverages_price;
+		this.beveragesPrice = beverages_price;
 	}
 
 

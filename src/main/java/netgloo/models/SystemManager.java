@@ -14,19 +14,19 @@ public class SystemManager {
 	
 	
 	@Id
-	private String system_manager_nick_id;
+	private String systemManagerNickId;
 	
 	@NotNull
-	private String manager_email;
+	private String managerEmail;
 	
 	@NotNull
-	private String manager_name;
+	private String managerName;
 	
 	@NotNull
-	private String manager_last_name;
+	private String managerLastName;
 	
 	@NotNull 
-	private String manager_password;
+	private String managerPassword;
 	
 	public SystemManager()
 	{
@@ -36,67 +36,109 @@ public class SystemManager {
 	public SystemManager(String system_manager_nick_id, String manager_email, String manager_name,
 			String manager_last_name, String manager_password) {
 		super();
-		this.system_manager_nick_id = system_manager_nick_id;
-		this.manager_email = manager_email;
-		this.manager_name = manager_name;
-		this.manager_last_name = manager_last_name;
-		this.manager_password = manager_password;
+		this.systemManagerNickId = system_manager_nick_id;
+		this.managerEmail = manager_email;
+		this.managerName = manager_name;
+		this.managerLastName = manager_last_name;
+		this.managerPassword = manager_password;
 	}
 	
 	
 	public SystemManager(String system_manager_nick_id, String manager_password)
 	{
 		super();
-		this.system_manager_nick_id = system_manager_nick_id;
-		this.manager_password = manager_password;
+		this.systemManagerNickId = system_manager_nick_id;
+		this.managerPassword = manager_password;
 	}
 	
 	public SystemManager(String system_manager_nick_id)
 	{
 		super();
-		this.system_manager_nick_id=system_manager_nick_id;
+		this.systemManagerNickId=system_manager_nick_id;
 	}
 	
 	
+	
+	
+
+	public String getSystemManagerNickId() {
+		return systemManagerNickId;
+	}
+
+	public void setSystemManagerNickId(String systemManagerNickId) {
+		this.systemManagerNickId = systemManagerNickId;
+	}
+
+	public String getManagerEmail() {
+		return managerEmail;
+	}
+
+	public void setManagerEmail(String managerEmail) {
+		this.managerEmail = managerEmail;
+	}
+
+	public String getManagerName() {
+		return managerName;
+	}
+
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
+	}
+
+	public String getManagerLastName() {
+		return managerLastName;
+	}
+
+	public void setManagerLastName(String managerLastName) {
+		this.managerLastName = managerLastName;
+	}
+
+	public String getManagerPassword() {
+		return managerPassword;
+	}
+
+	public void setManagerPassword(String managerPassword) {
+		this.managerPassword = managerPassword;
+	}
 
 	public String getSystem_manager_nick_id() {
-		return system_manager_nick_id;
+		return systemManagerNickId;
 	}
 
 	public void setSystem_manager_nick_id(String system_manager_nick_id) {
-		this.system_manager_nick_id = system_manager_nick_id;
+		this.systemManagerNickId = system_manager_nick_id;
 	}
 
 	public String getManager_email() {
-		return manager_email;
+		return managerEmail;
 	}
 
 	public void setManager_email(String manager_email) {
-		this.manager_email = manager_email;
+		this.managerEmail = manager_email;
 	}
 
 	public String getManager_name() {
-		return manager_name;
+		return managerName;
 	}
 
 	public void setManager_name(String manager_name) {
-		this.manager_name = manager_name;
+		this.managerName = manager_name;
 	}
 
 	public String getManager_last_name() {
-		return manager_last_name;
+		return managerLastName;
 	}
 
 	public void setManager_last_name(String manager_last_name) {
-		this.manager_last_name = manager_last_name;
+		this.managerLastName = manager_last_name;
 	}
 
 	public String getManager_password() {
-		return manager_password;
+		return managerPassword;
 	}
 
 	public void setManager_password(String manager_password) {
-		this.manager_password = manager_password;
+		this.managerPassword = manager_password;
 	}
 	
 	

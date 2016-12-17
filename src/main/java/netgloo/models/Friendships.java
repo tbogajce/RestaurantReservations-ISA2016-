@@ -19,46 +19,96 @@ public class Friendships implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long friendship_id;
+	private Long friendshipId;
 	
 	@JsonBackReference("user-friendships")
 	@ManyToOne
-	@JoinColumn(name="love_giver", referencedColumnName="user_id", nullable=false)
+	@JoinColumn(name="loveGiver", referencedColumnName="userId", nullable=false)
 	private User loveGiver;
 	
 	
 	@JsonBackReference("user-friendships")
 	@ManyToOne
-	@JoinColumn(name="love_taker", referencedColumnName="user_id", nullable=false)
-	private User love_taker;
+	@JoinColumn(name="loveTaker", referencedColumnName="userId", nullable=false)
+	private User loveTaker;
 	
 	@NotNull
-	private Boolean friendship_accepted;
+	private Boolean friendshipAccepted;
 	
 	
 	public Friendships() {
 		super();
 	}
+	
+	
+
+
+
+	public Long getFriendshipId() {
+		return friendshipId;
+	}
+
+
+
+
+
+	public void setFriendshipId(Long friendshipId) {
+		this.friendshipId = friendshipId;
+	}
+
+
+
+
+
+	public User getLoveTaker() {
+		return loveTaker;
+	}
+
+
+
+
+
+	public Boolean getFriendshipAccepted() {
+		return friendshipAccepted;
+	}
+
+
+
+
+
+	public void setFriendshipAccepted(Boolean friendshipAccepted) {
+		this.friendshipAccepted = friendshipAccepted;
+	}
+
+
+
+
+
+	public void setLoveTaker(User loveTaker) {
+		this.loveTaker = loveTaker;
+	}
+
+
 
 
 
 	public Friendships(User loveGiver, User love_taker, Boolean friendship_accepted) {
 		super();
 		this.loveGiver = loveGiver;
-		this.love_taker = love_taker;
-		this.friendship_accepted = friendship_accepted;
+		this.loveTaker = love_taker;
+		this.friendshipAccepted = friendship_accepted;
 	}
 
 
 
 	public Long getFriendship_id() {
-		return friendship_id;
+		return friendshipId;
 	}
 
 
 
 	public void setFriendship_id(Long friendship_id) {
-		this.friendship_id = friendship_id;
+		this.friendshipId = friendship_id;
 	}
 
 
@@ -76,19 +126,19 @@ public class Friendships implements Serializable {
 
 
 	public User getLove_taker() {
-		return love_taker;
+		return loveTaker;
 	}
 
 	public void setLove_taker(User love_taker) {
-		this.love_taker = love_taker;
+		this.loveTaker = love_taker;
 	}
 
 	public Boolean getFriendship_accepted() {
-		return friendship_accepted;
+		return friendshipAccepted;
 	}
 
 	public void setFriendship_accepted(Boolean friendship_accepted) {
-		this.friendship_accepted = friendship_accepted;
+		this.friendshipAccepted = friendship_accepted;
 	}
 
 

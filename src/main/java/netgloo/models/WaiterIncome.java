@@ -19,61 +19,95 @@ public class WaiterIncome {
 	
 	@JsonBackReference("employee-waiterIncome")
 	@ManyToOne
-	@JoinColumn(name="employee_id", referencedColumnName="employee_id", nullable=false)
-	private Employee employee_id;
+	@JoinColumn(name="employeeId", referencedColumnName="employeeId", nullable=false)
+	private Employee employeeId;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long waiterIncome_id;
+	private Long waiterIncomeId;
 	
 	@NotNull
-	private Float waiterIncome_daily;
+	private Float waiterIncomeDaily;
 	
 	@NotNull
-	private Date waiterIncome_date;
+	private Date waiterIncomeDate;
 
 	public WaiterIncome(Employee employee_id, Long waiterIncome_id, Float waiterIncome_daily, Date waiterIncome_date) {
 		super();
-		this.employee_id = employee_id;
-		this.waiterIncome_id = waiterIncome_id;
-		this.waiterIncome_daily = waiterIncome_daily;
-		this.waiterIncome_date = waiterIncome_date;
+		this.employeeId = employee_id;
+		this.waiterIncomeId = waiterIncome_id;
+		this.waiterIncomeDaily = waiterIncome_daily;
+		this.waiterIncomeDate = waiterIncome_date;
 	}
 
 	public WaiterIncome() {
 		super();
 	}
+	
+	
+
+	public Employee getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(Employee employeeId) {
+		this.employeeId = employeeId;
+	}
+
+	public Long getWaiterIncomeId() {
+		return waiterIncomeId;
+	}
+
+	public void setWaiterIncomeId(Long waiterIncomeId) {
+		this.waiterIncomeId = waiterIncomeId;
+	}
+
+	public Float getWaiterIncomeDaily() {
+		return waiterIncomeDaily;
+	}
+
+	public void setWaiterIncomeDaily(Float waiterIncomeDaily) {
+		this.waiterIncomeDaily = waiterIncomeDaily;
+	}
+
+	public Date getWaiterIncomeDate() {
+		return waiterIncomeDate;
+	}
+
+	public void setWaiterIncomeDate(Date waiterIncomeDate) {
+		this.waiterIncomeDate = waiterIncomeDate;
+	}
 
 	public Employee getEmployee_id() {
-		return employee_id;
+		return employeeId;
 	}
 
 	public void setEmployee_id(Employee employee_id) {
-		this.employee_id = employee_id;
+		this.employeeId = employee_id;
 	}
 
 	public Long getWaiterIncome_id() {
-		return waiterIncome_id;
+		return waiterIncomeId;
 	}
 
 	public void setWaiterIncome_id(Long waiterIncome_id) {
-		this.waiterIncome_id = waiterIncome_id;
+		this.waiterIncomeId = waiterIncome_id;
 	}
 
 	public Float getWaiterIncome_daily() {
-		return waiterIncome_daily;
+		return waiterIncomeDaily;
 	}
 
 	public void setWaiterIncome_daily(Float waiterIncome_daily) {
-		this.waiterIncome_daily = waiterIncome_daily;
+		this.waiterIncomeDaily = waiterIncome_daily;
 	}
 
 	public Date getWaiterIncome_date() {
-		return waiterIncome_date;
+		return waiterIncomeDate;
 	}
 
 	public void setWaiterIncome_date(Date waiterIncome_date) {
-		this.waiterIncome_date = waiterIncome_date;
+		this.waiterIncomeDate = waiterIncome_date;
 	}
 
 	

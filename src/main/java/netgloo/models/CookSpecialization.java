@@ -19,7 +19,7 @@ public class CookSpecialization {
 
 	@JsonBackReference("employee-cookSpecialization")
 	@ManyToOne
-	@JoinColumn(name="employee", referencedColumnName="employee_id", nullable=false)
+	@JoinColumn(name="employee", referencedColumnName="employeeId", nullable=false)
 	private Employee employee;
 	
 	@Id

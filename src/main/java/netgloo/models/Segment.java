@@ -18,7 +18,7 @@ public class Segment {
 	
 	@JsonBackReference("restaurant-segment")
 	@ManyToOne
-	@JoinColumn(name="restaurant", referencedColumnName="restaurant_id", nullable=false)
+	@JoinColumn(name="restaurant", referencedColumnName="restaurantId", nullable=false)
 	private Restaurant restaurant;
 	
 	@JsonBackReference("area-segment")

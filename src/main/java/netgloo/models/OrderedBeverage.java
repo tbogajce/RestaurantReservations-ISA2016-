@@ -30,12 +30,12 @@ public class OrderedBeverage {
 	
 	@JsonBackReference("employee-orderedBeverage")
 	@ManyToOne
-	@JoinColumn(name="bartender", referencedColumnName="employee_id", nullable=true)
+	@JoinColumn(name="bartender", referencedColumnName="employeeId", nullable=true)
 	private Employee bartender;
 	
 	@JsonBackReference("beverages-orderedBeverage")
 	@ManyToOne
-	@JoinColumn(name="beverage", referencedColumnName="beverages_id", nullable=false)
+	@JoinColumn(name="beverage", referencedColumnName="beveragesId", nullable=false)
 	private Beverages beverage;
 	
 	@NotNull
@@ -76,6 +76,8 @@ public class OrderedBeverage {
 		return orderedBeverageID;
 	}
 
+	
+	
 	public void setOrderedBeverageID(Integer orderedBeverageID) {
 		this.orderedBeverageID = orderedBeverageID;
 	}

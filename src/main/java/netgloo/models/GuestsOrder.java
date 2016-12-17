@@ -24,17 +24,17 @@ public class GuestsOrder {
 
 	@JsonBackReference("restaurant-guestsOrder")
 	@ManyToOne
-	@JoinColumn(name="restaurant", referencedColumnName="restaurant_id", nullable=false)
+	@JoinColumn(name="restaurant", referencedColumnName="restaurantId", nullable=false)
 	private Restaurant restaurant;
 	
 	@JsonBackReference("employee-guestsOrder")
 	@ManyToOne
-	@JoinColumn(name="waiter", referencedColumnName="employee_id", nullable=false)
+	@JoinColumn(name="waiter", referencedColumnName="employeeId", nullable=false)
 	private Employee waiter;
 	
 	@JsonBackReference("user-guestsOrder")
 	@ManyToOne
-	@JoinColumn(name="guest", referencedColumnName="user_id", nullable=false)
+	@JoinColumn(name="guest", referencedColumnName="userId", nullable=false)
 	private User guest;
 	
 	@JsonBackReference("diningTable-guestsOrder")
@@ -63,6 +63,8 @@ public class GuestsOrder {
 	public Integer getOrderID() {
 		return orderID;
 	}
+	
+	
 
 	public void setOrderID(Integer orderID) {
 		this.orderID = orderID;

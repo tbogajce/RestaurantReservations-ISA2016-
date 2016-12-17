@@ -30,12 +30,12 @@ public class OrderedMeal {
 	
 	@JsonBackReference("employee-orderedMeal")
 	@ManyToOne
-	@JoinColumn(name="cook", referencedColumnName="employee_id", nullable=true)
+	@JoinColumn(name="cook", referencedColumnName="employeeId", nullable=true)
 	private Employee cook;
 	
 	@JsonBackReference("menu-orderedMeal")
 	@ManyToOne
-	@JoinColumn(name="menu", referencedColumnName="menu_meal_id", nullable=false)
+	@JoinColumn(name="menu", referencedColumnName="menuMealId", nullable=false)
 	private Menu menu;
 	
 	@NotNull
@@ -70,6 +70,8 @@ public class OrderedMeal {
 		this.acceptedTime = acceptedTime;
 		this.doneTime = doneTime;
 	}
+	
+	
 
 	public Integer getOrderedMealID() {
 		return orderedMealID;

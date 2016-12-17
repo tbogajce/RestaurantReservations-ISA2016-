@@ -22,12 +22,12 @@ public class WorkingShift {
 	
 	@JsonBackReference("restaurant-workingShift")
 	@ManyToOne
-	@JoinColumn(name="restaurant", referencedColumnName="restaurant_id", nullable=false)
+	@JoinColumn(name="restaurant", referencedColumnName="restaurantId", nullable=false)
 	private Restaurant restaurant;
 	
 	@JsonBackReference("employee-workingShift")
 	@ManyToOne
-	@JoinColumn(name="worker", referencedColumnName="employee_id", nullable=false)
+	@JoinColumn(name="worker", referencedColumnName="employeeId", nullable=false)
 	private Employee worker;
 	
 	private Timestamp shiftBeginningTime;

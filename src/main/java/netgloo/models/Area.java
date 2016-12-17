@@ -18,7 +18,7 @@ public class Area {
 	
 	@JsonBackReference("restaurant-area")
 	@ManyToOne
-	@JoinColumn(name="restaurant", referencedColumnName="restaurant_id", nullable=false)
+	@JoinColumn(name="restaurant", referencedColumnName="restaurantId", nullable=false)
 	private Restaurant restaurant;
 	
 	@NotNull
@@ -41,6 +41,8 @@ public class Area {
 	public Long getAreaID() {
 		return areaID;
 	}
+	
+	
 
 	public void setAreaID(Long areaID) {
 		this.areaID = areaID;

@@ -2,6 +2,8 @@ package netgloo.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,10 +22,10 @@ import netgloo.models.UserProba;
 public class EmployeeController {
 	
 	//NA ZALOST ... EMPLOYEE CE KORISTITI SVOJ EMPLOYEE NICK ALI CE ISTO TAKO KORISTITI STARI USER PASSWORD
-	/*
-	@Autowired
-	private EmployeeDao empDao;
 	
+	//@Autowired
+	//private EmployeeDao empDao;
+	/*
 	@Autowired
 	private UserDao userDao;
 	
@@ -36,7 +38,11 @@ public class EmployeeController {
 			String pass = String.valueOf(user.getUser_password());
 			if (email.equals(user1.getEmail()) && pass.equals(user1.getPassword())) {
 				//request.getSession().setAttribute("user", user);
-				Employee employee = empDao.findByUserId(user.getUser_id());
+				//Employee employee = empDao.findByUserId(user.getUser_id());
+				Query query = session.createQuery("from Stock where stockCode = :code ");
+				query.setParameter("code", "7277");
+				List list = query.list();
+				//Session session = HibernateUtil.getSessionFactory().openSession();
 				if(employee!=null)
 				{
 					System.out.println("KONF BR: "+employee.getEmployee_confection_number());

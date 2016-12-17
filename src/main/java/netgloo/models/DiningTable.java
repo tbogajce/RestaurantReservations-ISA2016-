@@ -21,7 +21,7 @@ public class DiningTable {
 	
 	@JsonBackReference("restaurant-diningTable")
 	@ManyToOne
-	@JoinColumn(name="restaurant", referencedColumnName="restaurant_id", nullable=false)
+	@JoinColumn(name="restaurant", referencedColumnName="restaurantId", nullable=false)
 	private Restaurant restaurant;
 	
 	@NotNull
