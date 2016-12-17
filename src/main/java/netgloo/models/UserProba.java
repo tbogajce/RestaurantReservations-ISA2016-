@@ -7,7 +7,10 @@ public class UserProba {
 	private String surname;
 	private String birthDate;
 	
-	
+	public UserProba(String email) {
+		super();
+		this.email = email;
+	}
 	public UserProba(String email, String password) {
 		super();
 		this.email = email;

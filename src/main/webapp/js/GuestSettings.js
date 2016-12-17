@@ -2,6 +2,10 @@ var guestNamePrintURL = "users/guestName";
 var guestData = "users/guestData";
 var editGuest = "users/editGuest";
 
+$('#openBtn').click(function(){
+    $('#myModal').modal({show:true})
+});
+
 $( document ).ready(function() {
 	$('#guestProfilePanel').show();
 	$('#friendsPanel').hide();
@@ -29,7 +33,6 @@ $(document).on('click', '#friendsButton', function(e) {
 	$('#friendRequestsPanel').hide();
 	
 	printFriends();
-	
 });
 
 $(document).on('click', '#friendRequestsButton', function(e) {

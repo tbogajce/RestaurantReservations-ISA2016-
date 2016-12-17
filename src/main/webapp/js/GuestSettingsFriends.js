@@ -1,4 +1,6 @@
 var friendsURL = "users/getFriends";
+//var friendsComboboxURL = "users/getFriendsCombo";
+var friendComboURL = "users/getFriendsCombo";
 
 function printFriends() {
 	$.ajax({
@@ -29,3 +31,39 @@ function friendsPrint(data) {
 				$('#friendsData').append(tr);
 			});
 }
+
+//-------------DODAVANJE U COMBOBOX
+
+$(document).on('change', '#searchFriends', function(e) {
+	console.log('promjena na change');
+	$(".friendsCombobox").empty();
+	var email =$("#searchFriends").val();
+	console.log(email);
+	$.ajax({
+		type : 'POST',
+		url : friendComboURL,
+		contentType : 'application/json',
+		dataType : "json",
+		data : formToJSONCombo(email),
+		success : function(data) {
+			$(".friendsCombobox").empty();
+			var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
+			var friendsCombobox = $(".friendsCombobox");
+			$.each(list, function(index, friendCombo) {
+				var li = $('<option>'+ friendCombo.email +' </option>');
+				$(friendsCombobox).append(li);
+			});
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("AJAX ERROR: " + errorThrown);
+		}
+	});
+});
+
+
+function formToJSONCombo(email) {
+	return JSON.stringify({
+		"email" : email,
+	});
+}
+//---------------END DODAVANJE U COMBOBOX
