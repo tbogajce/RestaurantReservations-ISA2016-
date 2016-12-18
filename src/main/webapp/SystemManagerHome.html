@@ -11,6 +11,16 @@
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/registration.css" rel="stylesheet">
 <title>System Manager Home Page</title>
+<style type="text/css">
+body {
+    background-image:url(http://rosakconsult.com/wp-content/uploads/2016/07/22.jpg);
+    -webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+}
+</style>
+
 </head>
 <body>
 
@@ -33,7 +43,7 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav">
+			<ul class="nav navbar-nav navbar-right">
 				<li id="logoutButton"><a href="#">Log out</a></li>
 			</ul>
 		</div>
@@ -73,8 +83,7 @@
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
-								<h1 id="greetings" style="display: block;">Hello there
-									System Manager</h1>
+								<h1 id="greetings" style="display: block;">Welcome!</h1>
 								<h1 id="errorMessage" class="errorMessage"
 									style="display: none;">You are not the MAIN System Manager</h1>
 								<form id="add-new-rest-form" action="" method="post" role="form"
@@ -86,7 +95,7 @@
 										<thead class="thead">
 											<tr class="filters">
 												<th><input type="text" class="form-control"
-													placeholder="Nick Name" disabled></th>
+													placeholder="Nickname" disabled></th>
 												<th><input type="text" class="form-control"
 													placeholder="Email" disabled></th>
 												<th><input type="text" class="form-control"
@@ -108,7 +117,7 @@
 									role="form" class="newRestManForm" style="display: none;">
 									<div class="form-group">
 										<input type="text" name="rmnick" id="rmnick" tabindex="1"
-											class="form-control" placeholder="Nick Name" value="">
+											class="form-control" placeholder="Nickame" value="">
 									</div>
 
 									<div class="form-group">
@@ -164,13 +173,13 @@
 									</div>
 
 									<div class="form-group">
-										<input type="password" name="rcoordinates" id="rcoordinates"
+										<input type="text" name="rcoordinates" id="rcoordinates"
 											tabindex="3" class="form-control" placeholder="Coordinates"
 											value="">
 									</div>
 
 									<div class="form-group">
-										<input type="password" name="radress" id="radress"
+										<input type="text" name="radress" id="radress"
 											tabindex="4" class="form-control" placeholder="Adress"
 											value="">
 									</div>
@@ -225,13 +234,13 @@
 
 									<div class="form-group">
 										<p>Name:</p>
-										<input type="text" name="ename" id="ename" tabindex="4"
+										<input type="text" name="ename" id="ename" tabindex="3"
 											class="form-control" placeholder="Name" value="">
 									</div>
 
 									<div class="form-group">
 										<p>Surname:</p>
-										<input type="text" name="esurname" id="esurname" tabindex="5"
+										<input type="text" name="esurname" id="esurname" tabindex="4"
 											class="form-control" placeholder="Surname" value="">
 									</div>
 
@@ -251,7 +260,7 @@
 									role="form" class="newSysManForm" style="display: none;">
 									<div class="form-group">
 										<input type="text" name="nick" id="nick" tabindex="5"
-											class="form-control" placeholder="Nick Name" value="">
+											class="form-control" placeholder="Nickname" value="">
 									</div>
 
 									<div class="form-group">

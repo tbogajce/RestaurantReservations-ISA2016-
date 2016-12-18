@@ -348,7 +348,7 @@ $(document)
 				'submit',
 				'.newRestForm',
 				function(e) {
-					//e.preventDefault();
+					e.preventDefault();
 					console.log("Add new Restaurant begin");
 					var name = $(this).find("input[name=rname]").val();
 					var type = $(this).find("input[name=rtype]").val();
@@ -369,7 +369,7 @@ $(document)
 								dataType : "text",
 								data : formToJSONNewRest(name, type,
 										coordinates, adress, rate,
-										visitsnumber, incomes),
+										visitsnumber, income),
 								success : function(data) {
 
 									window.location.href = "http://localhost:8080/SystemManagerHome.html";

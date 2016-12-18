@@ -23,11 +23,11 @@ public class RestaurantController {
 	@RequestMapping(value = "/createNewRestaurant", method = RequestMethod.POST, headers = { "content-type=application/json" })
 	public String createRestaurant(@RequestBody Restaurant r1) {
 		
-		System.out.println("DJES QME");
+		System.out.println("Usao u Restaurant Controller/Create New Restaurant");
 
 		try {
 			Restaurant restaurant = null;
-			restaurant = new Restaurant(r1.getRestaurantId(), r1.getRestaurantName(), r1.getRestaurantType(), 
+			restaurant = new Restaurant(r1.getRestaurantName(), r1.getRestaurantType(), 
 					r1.getRestaurantCoordinates(), r1.getRestaurantAdress(), r1.getRestaurantRate(), 
 					r1.getRestaurantVisitsNumber(), r1.getRestaurantIncome());
 			restDao.save(restaurant);

@@ -49,6 +49,18 @@ public class Restaurant {
 		this.restaurantIncome = restaurantIncome;
 	}
 
+	public Restaurant(String restaurantName, String restaurantType, String restaurantCoordinates,
+			String restaurantAdress, Float restaurantRate, Integer restaurantVisitsNumber, Float restaurantIncome) {
+		super();
+		this.restaurantName = restaurantName;
+		this.restaurantType = restaurantType;
+		this.restaurantCoordinates = restaurantCoordinates;
+		this.restaurantAdress = restaurantAdress;
+		this.restaurantRate = restaurantRate;
+		this.restaurantVisitsNumber = restaurantVisitsNumber;
+		this.restaurantIncome = restaurantIncome;
+	}
+
 	public Restaurant() {
 		super();
 		// TODO Auto-generated constructor stub
