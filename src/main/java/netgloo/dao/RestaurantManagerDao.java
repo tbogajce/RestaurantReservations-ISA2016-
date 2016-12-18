@@ -6,5 +6,5 @@ import netgloo.models.RestaurantManager;
 
 public interface RestaurantManagerDao extends CrudRepository<RestaurantManager, String>{
 
-
+	
 }

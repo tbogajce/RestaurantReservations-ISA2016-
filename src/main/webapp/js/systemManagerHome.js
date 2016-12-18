@@ -348,7 +348,7 @@ $(document)
 				'submit',
 				'.newRestForm',
 				function(e) {
-					e.preventDefault();
+					//e.preventDefault();
 					console.log("Add new Restaurant begin");
 					var name = $(this).find("input[name=rname]").val();
 					var type = $(this).find("input[name=rtype]").val();
@@ -359,6 +359,7 @@ $(document)
 					var visitsnumber = $(this)
 							.find("input[name=rvisitsnumber]").val();
 					var income = $(this).find("input[name=rincome]").val();
+					console.log("Add new Restaurant mid");
 
 					$
 							.ajax({
@@ -374,6 +375,8 @@ $(document)
 									window.location.href = "http://localhost:8080/SystemManagerHome.html";
 								}
 							});
+					
+					console.log("Add new Restaurant end");
 				});
 // *********************************************************************************
 $(document)

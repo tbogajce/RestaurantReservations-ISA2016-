@@ -2,12 +2,11 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Guest settings</title>
+<title>Employee Home</title>
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/logout.js"></script>
 <script type="text/javascript" src="js/toastr.min.js"></script>
-<script type="text/javascript" src="js/GuestSettings.js"></script>
-<script type="text/javascript" src="js/GuestSettingsFriends.js"></script>
+<script type="text/javascript" src="js/EmployeeHome.js"></script>
 
 <script src="js/bootstrap.min.js"></script>
 <!-- Bootstrap -->
@@ -57,15 +56,15 @@
 	<div class="container-fluid main-container" style="margin-top: 20px">
 		<div class="col-md-2 sidebar">
 			<ul class="nav nav-pills nav-stacked">
-				<li><a href="#" id="guestProfileButton">Guest profile</a></li>
-				<li><a href="#" id="friendsButton">Friends</a></li>
-				<li><a href="#" id="friendRequestsButton">Friend requests </a></li>
+				<li><a href="#" id="working-shift-calendar-button">Working Shift Calendar</a></li>
+				<li><a href="#" id="orders-button">Orders</a></li>
+				
 			</ul>
 		</div>
 
 		<div class="col-md-10 content">
-			<div class="panel panel-default" id="guestProfilePanel">  
-				<div class="panel-heading">Guest profile: </div>
+			<div class="panel panel-default" id="workingShiftCalendarPanel">  
+				<div class="panel-heading">Working Shift Calendar: </div>
 				<div class="panel-body">
 					<!------------------------------------ prvo prikazi tabelu kupac --------------------------------------------->
 					<div class="container" style="margin-left: -60px;">
@@ -75,14 +74,32 @@
 						<div class="row">
 							<div class="panel panel-primary filterable">
 								<div class="panel-heading">
-									<h3 class="panel-title guestName"></h3>
+									<h1>Ovo je naslovxx</h1>
 								</div>
+								<div class="panel-body">
 								<!-- panel preview -->
 								<div class="col-sm-7" style="margin-left: 200px;">
-									<h4></h4>
-									<div class="panel panel-default">
-										<div class="panel-body form-horizontal payment-form"></div>
-									</div>
+									<h4>asd</h4>
+									
+										<form id="ws-date-pick-form" action="" method="post" role="form" class="wsDateForm" style="display: none;">
+											<div class="form-group">
+												<input type="date" name="startingDate" id="startingDate" tabindex="6" class="form-control" placeholder="Starting Date" value="">
+											</div>
+											<div class="form-group">
+												<input type="date" name="endingDate" id="endingDate" tabindex="6" class="form-control" placeholder="Ending Date" value="">
+											</div>
+											
+											<div class="form-group">
+												<div class="row">
+													<div class="col-sm-6 col-sm-offset-3">
+														<input type="submit" name="wsDate-submit" id="wsDate-submit" tabindex="7" class="form-control btn btn-success" value="Find Working Shifts">
+													</div>
+												</div>
+											</div>
+											
+										</form>
+									<h4>ooo</h4>
+								</div>
 								</div>
 							</div>
 							<!-- / panel preview -->
@@ -93,8 +110,8 @@
 				<!-------------------------------- END prvo prikazi tabelu kupac --------------------------------------->
 			</div> 
 			
-			<div class="panel panel-default" id="friendsPanel"> 
-				<div class="panel-heading">Friends</div>
+			<div class="panel panel-default" id="OrdersPanel"> 
+				<div class="panel-heading">Orders</div>
 				<div class="panel-body">
 					<!------------------------------------ prvo prikazi tabelu kupac --------------------------------------------->
 				<div class="container" style="margin-left: -60px;">
@@ -104,37 +121,12 @@
 						<div class="row">
 							<div class="panel panel-primary filterable">
 								<div class="panel-heading">
-									<h3 class="panel-title">Friends: </h3>
-									<div class="pull-right" style="margin-top: -19px;">
-										<button class="btn btn-default btn-xs btn-filter">Filter
-										</button>
-									</div>
-
+									<h1 class="panel-title">Ovo je valjda naslov: </h1>
 								</div>
-								<form class="clearForm" action="" method="post">
-									<table class="table">
-										<thead class="thead">
-											<tr class="filters">
-												<th><input type="text" class="form-control"
-													placeholder="Email" disabled></th>
-												<th><input type="text" class="form-control"
-													placeholder="Name" disabled></th>
-												<th><input type="text" class="form-control"
-													placeholder="Surname" disabled></th>
-												<th><input type="text" class="form-control"
-													placeholder="Birth date" disabled></th>
-													<th> </th>
-											</tr>
-										</thead>
-										<tbody id="friendsData">
-											<!-- guests friends list -->
-										</tbody>
-									</table>
-
-
-
-
-								</form>
+								
+								<div class="panel-body">
+									
+								</div>
 
 							</div>
 
@@ -144,59 +136,6 @@
 				<!-------------------------------- END prvo prikazi tabelu kupac --------------------------------------->
 			</div> 
 	
-	
-			<!-- FRIEND REQUESTS -->
-			<div class="panel panel-default" id="friendRequestsPanel">  <!-- KOMPLETAN PANEL PROIZVODA -->
-				<div class="panel-heading">Friend requests</div>
-				<div class="panel-body">
-				<div class="container" style="margin-left: -60px;">
-
-						<hr>
-
-						<div class="row">
-							<div class="panel panel-primary filterable">
-								<div class="panel-heading">
-									<h3 class="panel-title">Friend requests: </h3>
-									<div class="pull-right" style="margin-top: -19px;">
-										<button class="btn btn-default btn-xs btn-filter">Filter
-										</button>
-									</div>
-
-								</div>
-								<form class="clearForm" action="" method="post">
-									<table class="table">
-										<thead class="thead">
-											<tr class="filters">
-												<th><input type="text" class="form-control"
-													placeholder="Proizvod" disabled></th>
-												<th><input type="text" class="form-control"
-													placeholder="Dostavljac" disabled></th>
-												<th><input type="text" class="form-control"
-													placeholder="Kolicina" disabled></th>
-												<th><input type="text" class="form-control"
-													placeholder="Ukupna cijena" disabled></th>
-												<th><input type="text" class="form-control"
-													placeholder="Otpremljen" disabled></th>
-													<th> </th>
-											</tr>
-										</thead>
-										<tbody id="friendRequestsData">
-											<!-- guests friends list -->
-										</tbody>
-									</table>
-
-
-
-
-								</form>
-
-							</div>
-
-						</div>
-					</div>
-				</div>
-				<!-------------------------------- END prvo prikazi tabelu kupac --------------------------------------->
-			</div> 
 			
 			<!-- END FRIEND REQUESTS -->
 			</div>

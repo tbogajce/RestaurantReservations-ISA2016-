@@ -64,11 +64,14 @@ $(document).on('submit', '.loginForm', function(e) {
 		data : formToJSONLogin(email, password),
 		success: function(data) {
 			if(data == "Guest") {
+				console.log("registration begin G");
 				window.location.href = "http://localhost:8080/GuestHome.html";
 			}
 			else if(data == "Employee")
 				{
-				window.location.href = "http://localhost:8080/EmployeeHome.html";
+				console.log("registration begin E");
+				window.location.href = "http://localhost:8080/GuestHome.html";
+				//window.location.href = "http://localhost:8080/EmployeeHome.html";
 				}
 			else {
 				window.location.href = "http://localhost:8080/";

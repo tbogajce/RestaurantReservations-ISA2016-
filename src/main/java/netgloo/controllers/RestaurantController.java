@@ -22,6 +22,8 @@ public class RestaurantController {
 	
 	@RequestMapping(value = "/createNewRestaurant", method = RequestMethod.POST, headers = { "content-type=application/json" })
 	public String createRestaurant(@RequestBody Restaurant r1) {
+		
+		System.out.println("DJES QME");
 
 		try {
 			Restaurant restaurant = null;
