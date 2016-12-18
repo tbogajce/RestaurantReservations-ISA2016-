@@ -129,38 +129,87 @@
 				<!-------------------------------- END prvo prikazi tabelu kupac --------------------------------------->
 			</div> 
 			
-			<div class="panel panel-default" id="OrdersPanel"> 
-				<div class="panel-heading">Orders</div>
+			
+			<div class="panel panel-default" id="OrdersPanel">  
+				<div class="panel-heading">Guest orders: </div>
 				<div class="panel-body">
 					<!------------------------------------ prvo prikazi tabelu kupac --------------------------------------------->
-				<div class="container" style="margin-left: -60px;">
+					<div class="container" style="margin-left: -60px;">
 
 						<hr>
 
 						<div class="row">
 							<div class="panel panel-primary filterable">
 								<div class="panel-heading">
-									<h1 class="panel-title">Ovo je valjda naslov: </h1>
 								</div>
-								
 								<div class="panel-body">
+								<!-- panel preview -->
+								<div class="col-sm-7" style="margin-left: 200px;">
+									<h4>Pick starting and ending date to see working shifts:</h4>
 									
+										<form id="ws-date-pick-form" action="" method="post" role="form" class="wsDateForm" style="display: none;">
+											<div class="form-group">
+												<input type="date" name="startingDate" id="startingDate" tabindex="6" class="form-control" placeholder="Starting Date" value="">
+											</div>
+											<div class="form-group">
+												<input type="date" name="endingDate" id="endingDate" tabindex="6" class="form-control" placeholder="Ending Date" value="">
+											</div>
+											
+											<div class="form-group">
+												<div class="row">
+													<div class="col-sm-6 col-sm-offset-3">
+														<input type="submit" name="wsDate-submit" id="wsDate-submit" tabindex="7" class="form-control btn btn-success" value="Find Working Shifts">
+													</div>
+												</div>
+											</div>
+										</form>
+										<form id="ordersForm" class="workShiftDataForm"
+											role="form" action="" method="post" style="display: none;">
+											<table class="table">
+												<thead class="thead">
+													<tr class="filters">
+													
+														<th><input type="text" class="form-control"
+															placeholder="Ordered" disabled></th>
+														<th><input type="text" class="form-control"
+															placeholder="Quantity" disabled></th>
+														<th><input type="text" class="form-control"
+															placeholder="Note" disabled></th>
+														<th><input type="text" class="form-control"
+															placeholder="is Accepted?" disabled></th>
+														<th><input type="text" class="form-control"
+															placeholder="is Done?" disabled></th>
+														<th><input type="text" class="form-control"
+															placeholder="Employee" disabled></th>
+														<th><input type="text" class="form-control"
+															placeholder="Table" disabled></th>
+														
+													</tr>
+												</thead>
+												<tbody id="workShiftData">
+													<!-- guests friends list -->
+												</tbody>
+											</table>
+										</form>
 								</div>
-
+								</div>
 							</div>
+							<!-- / panel preview -->
 
 						</div>
 					</div>
 				</div>
 				<!-------------------------------- END prvo prikazi tabelu kupac --------------------------------------->
 			</div> 
+			
+			
 	
 			
 			<!-- END FRIEND REQUESTS -->
-			</div>
-			
-			
 		</div>
+			
+			
+	</div>
 
 
 

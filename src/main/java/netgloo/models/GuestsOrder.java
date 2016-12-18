@@ -29,7 +29,7 @@ public class GuestsOrder {
 	
 	@JsonBackReference("employee-guestsOrder")
 	@ManyToOne
-	@JoinColumn(name="waiter", referencedColumnName="employeeId", nullable=false)
+	@JoinColumn(name="waiter", referencedColumnName="employeeId", nullable=true)
 	private Employee waiter;
 	
 	@JsonBackReference("user-guestsOrder")
