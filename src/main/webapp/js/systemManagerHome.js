@@ -6,6 +6,8 @@ var getIsBigDealURL = "systemManagerController/isBigDeal";
 var getAllSystemManagersURL = "systemManagerController/getSystemManagers";
 var removeSystemManager = "systemManagerController/deleteSystemManager";
 
+var newRestManURL = "restaurantManagerController/createNewRestaurantManager";
+
 $(function() {
 
     
@@ -295,6 +297,35 @@ $(document).on('submit', '.newSysManForm', function(e) {
 		}
 	});
 });
+//*********************************************************************************
+//MENADZER RESTORANA
+$(document)
+.on(
+		'submit',
+		'.newRestManForm',
+		function(e) {
+			e.preventDefault();
+			console.log("Add new Restaurant Manager begin");
+			var email = $(this).find("input[name=rmemail]").val();
+			var password = $(this).find("input[name=rmpassword]").val();
+			var name = $(this).find("input[name=rmname]").val();
+			var surname = $(this).find("input[name=rmsurname]").val();
+			var nick = $(this).find("input[name=rmnick]").val();
+			$
+					.ajax({
+						type : 'POST',
+						url : newRestManURL,
+						contentType : 'application/json',
+						dataType : "text",
+						data : formToJSONNewRestMan(nick, email, name,
+								surname, password),
+						success : function(data) {
+
+							window.location.href = "http://localhost:8080/SystemManagerHome.html";
+						}
+					});
+		});
+//*********************************************************************************
 $(document).on('submit', '.editInfoForm', function(e) {
 	e.preventDefault();
 	console.log("Add new System Manager begin");
@@ -325,6 +356,18 @@ function formToJSONNewSysMan(system_manager_nick_id, manager_email, manager_name
 		"manager_password" : manager_password,
 	});
 }
+
+function formToJSONNewRestMan(restaurantManagerNickId, restaurantManagerMail,
+		restaurantManagerName, restaurantManagerSurname, restaurantManagerPassword) {
+	return JSON.stringify({
+		"restaurantManagerNickId" : restaurantManagerNickId,
+		"restaurantManagerMail" : restaurantManagerMail,
+		"restaurantManagerName" : restaurantManagerName,
+		"restaurantManagerSurname" : restaurantManagerSurname,
+		"restaurantManagerPassword" : restaurantManagerPassword,
+	});
+}
+
 /*
 //-----------LOGOVANJE
 $(document).on('submit', '.loginForm', function(e) {
