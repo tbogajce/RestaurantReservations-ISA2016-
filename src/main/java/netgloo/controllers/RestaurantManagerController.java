@@ -21,7 +21,7 @@ public class RestaurantManagerController {
 	ArrayList<RestaurantManager> listOfRestaurantManagers = new ArrayList<RestaurantManager>();
 	
 	@RequestMapping(value = "/createNewRestaurantManager", method = RequestMethod.POST, headers = { "content-type=application/json" })
-	public String createSystemManager(@RequestBody RestaurantManager rm1) {
+	public String createRestaurantManager(@RequestBody RestaurantManager rm1) {
 
 		try {
 			RestaurantManager restaurantManager = null;

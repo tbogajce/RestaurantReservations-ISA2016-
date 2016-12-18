@@ -17,47 +17,48 @@
 	<!-------------------------------- Header ------------------------------------>
 	<nav class="navbar navbar-default navbar-default"
 		style="border-radius: 0px !important; margin-bottom: 0px;">
-		<div class="container-fluid">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-					aria-expanded="false">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#">RestarauntApp</a>
-			</div>
-
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li id="logoutButton"><a href="#">Log out</a></li>
-				</ul>
-			</div>
-			<!-- /.navbar-collapse -->
+	<div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+				aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">RestarauntApp</a>
 		</div>
-		<!-- /.container-fluid -->
-	</nav>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse"
+			id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li id="logoutButton"><a href="#">Log out</a></li>
+			</ul>
+		</div>
+		<!-- /.navbar-collapse -->
+	</div>
+	<!-- /.container-fluid --> </nav>
 	<!--------------------------------- End Header -------------------------------------------->
 
 	<div class="container">
-        <div class="row">
+		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 
 				<div class="panel panel-login">
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-xs-6">
-								<a href="#" id="create-new-system-manager">Add new System Manager</a>
+								<a href="#" id="create-new-system-manager">Add new System
+									Manager</a>
 							</div>
 							<div class="col-xs-6">
 								<a href="#" id="create-new-restaurant">Add new Restaurant</a>
 							</div>
 							<div class="col-xs-6">
-								<a href="#" id="create-new-restaurant-manager">Add new Restaurant Manager</a>
+								<a href="#" id="create-new-restaurant-manager">Add new
+									Restaurant Manager</a>
 							</div>
 							<div class="col-xs-6">
 								<a href="#" id="edit-info">Edit your personal informations</a>
@@ -68,17 +69,19 @@
 						</div>
 						<hr>
 					</div>
-					
+
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
-							<h1 id="greetings" style="display: block;"> Hello there System Manager</h1>
-							<h1 id="errorMessage" class="errorMessage" style="display: none;"> You are not the MAIN System Manager</h1>
-								<form id="add-new-rest-form" action="" method="post" role="form" class="newRestForm" style="display: none;">
-								
-								</form>
-								
-								<form id="remove-sys-man-form" class="removeSysManForm" role="form" action="" method="post" style="display: none;">
+								<h1 id="greetings" style="display: block;">Hello there
+									System Manager</h1>
+								<h1 id="errorMessage" class="errorMessage"
+									style="display: none;">You are not the MAIN System Manager</h1>
+								<form id="add-new-rest-form" action="" method="post" role="form"
+									class="newRestForm" style="display: none;"></form>
+
+								<form id="remove-sys-man-form" class="removeSysManForm"
+									role="form" action="" method="post" style="display: none;">
 									<table class="table">
 										<thead class="thead">
 											<tr class="filters">
@@ -92,7 +95,7 @@
 													placeholder="Surname" disabled></th>
 												<th><input type="text" class="form-control"
 													placeholder="Remove" disabled></th>
-													<th> </th>
+												<th></th>
 											</tr>
 										</thead>
 										<tbody id="sysManData">
@@ -100,100 +103,191 @@
 										</tbody>
 									</table>
 								</form>
-								
-								<form id="add-new-rest-man-form" action="" method="post" role="form" class="newRestManForm" style="display: none;">
+
+								<form id="add-new-rest-man-form" action="" method="post"
+									role="form" class="newRestManForm" style="display: none;">
 									<div class="form-group">
-										<input type="text" name="rmnick" id="rmnick" tabindex="1" class="form-control" placeholder="Nick Name" value="">
+										<input type="text" name="rmnick" id="rmnick" tabindex="1"
+											class="form-control" placeholder="Nick Name" value="">
 									</div>
-									
+
 									<div class="form-group">
-										<input type="text" name="rmemail" id="rmemail" tabindex="2" class="form-control" placeholder="Email" value="">
+										<input type="text" name="rmemail" id="rmemail" tabindex="2"
+											class="form-control" placeholder="Email" value="">
 									</div>
-									
+
 									<div class="form-group">
-										<input type="password" name="rmpassword" id="rmpassword" tabindex="3" class="form-control" placeholder="Password" value="">
+										<input type="password" name="rmpassword" id="rmpassword"
+											tabindex="3" class="form-control" placeholder="Password"
+											value="">
 									</div>
-									
+
 									<div class="form-group">
-										<input type="password" name="rmpasswordRepeat" id="rmpasswordRepeat" tabindex="4" class="form-control" placeholder="Confirm password" value="">
+										<input type="password" name="rmpasswordRepeat"
+											id="rmpasswordRepeat" tabindex="4" class="form-control"
+											placeholder="Confirm password" value="">
 									</div>
-									
+
 									<div class="form-group">
-										<input type="text" name="rmname" id="rmname" tabindex="5" class="form-control" placeholder="Name" value="">
+										<input type="text" name="rmname" id="rmname" tabindex="5"
+											class="form-control" placeholder="Name" value="">
 									</div>
-									
+
 									<div class="form-group">
-										<input type="text" name="rmsurname" id="rmsurname" tabindex="6" class="form-control" placeholder="Surname" value="">
+										<input type="text" name="rmsurname" id="rmsurname"
+											tabindex="6" class="form-control" placeholder="Surname"
+											value="">
 									</div>
-									
+
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-8 col-sm-offset-2">
-												<input type="submit" name="new-sys-man-submit" id="new-sys-man-submit" tabindex="7" class="form-control btn btn-success" value="Add new Restaurant Manager">
+												<input type="submit" name="new-rest-man-submit"
+													id="new-rest-man-submit" tabindex="7"
+													class="form-control btn btn-success"
+													value="Add new Restaurant Manager">
 											</div>
 										</div>
 									</div>
 								</form>
-								
-								<form id="edit-info-form" action="" method="post" role="form" class="editInfoForm" style="display: none;">								
+
+								<form id="restoran" action="" method="post" role="form"
+									class="newRestForm" style="display: none;">
 									<div class="form-group">
-										<p>Email:</p><input type="text" name="eemail" id="eemail" tabindex="1" class="form-control" placeholder="Email" value="">
+										<input type="text" name="rname" id="rname" tabindex="1"
+											class="form-control" placeholder="Name" value="">
 									</div>
-									
+
 									<div class="form-group">
-										<input type="hidden" name="enick" id="enick" tabindex="1" class="form-control" placeholder="" value="">
+										<input type="text" name="rtype" id="rtype" tabindex="2"
+											class="form-control" placeholder="Type" value="">
 									</div>
-									
+
 									<div class="form-group">
-										<p>Password:</p><input type="password" name="epassword" id="epassword" tabindex="2" class="form-control" placeholder="Password" value="">
+										<input type="password" name="rcoordinates" id="rcoordinates"
+											tabindex="3" class="form-control" placeholder="Coordinates"
+											value="">
 									</div>
-									
+
 									<div class="form-group">
-										<p>Name:</p><input type="text" name="ename" id="ename" tabindex="4" class="form-control" placeholder="Name" value="">
+										<input type="password" name="radress" id="radress"
+											tabindex="4" class="form-control" placeholder="Adress"
+											value="">
 									</div>
-									
+
 									<div class="form-group">
-										<p>Surename:</p><input type="text" name="esurname" id="esurname" tabindex="5" class="form-control" placeholder="Surname" value="">
+										<input type="text" name="rrate" id="rrate" tabindex="5"
+											class="form-control" placeholder="Rate" value="">
 									</div>
-									
+
+									<div class="form-group">
+										<input type="text" name="rvisitsnumber" id="rvisitsnumber"
+											tabindex="6" class="form-control" placeholder="Visits number"
+											value="">
+									</div>
+
+									<div class="form-group">
+										<input type="text" name="rincome" id="rincome" tabindex="7"
+											class="form-control" placeholder="Income" value="">
+									</div>
+
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="new-sys-man-submit" id="new-sys-man-submit" tabindex="7" class="form-control btn btn-success" value="Update System Manager Info">
+												<input type="submit" name="new-rest-submit"
+													id="new-rest-submit" tabindex="7"
+													class="form-control btn btn-success"
+													value="Add new Restaurant">
 											</div>
 										</div>
 									</div>
 								</form>
-								
-								<form id="add-new-system-manager-form" action="" method="post" role="form" class="newSysManForm" style="display: none;">
+
+								<form id="edit-info-form" action="" method="post" role="form"
+									class="editInfoForm" style="display: none;">
 									<div class="form-group">
-										<input type="text" name="nick" id="nick" tabindex="5" class="form-control" placeholder="Nick Name" value="">
+										<p>Email:</p>
+										<input type="text" name="eemail" id="eemail" tabindex="1"
+											class="form-control" placeholder="Email" value="">
 									</div>
-									
+
 									<div class="form-group">
-										<input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="Email" value="">
+										<input type="hidden" name="enick" id="enick" tabindex="1"
+											class="form-control" placeholder="" value="">
 									</div>
-									
+
 									<div class="form-group">
-										<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" value="">
+										<p>Password:</p>
+										<input type="password" name="epassword" id="epassword"
+											tabindex="2" class="form-control" placeholder="Password"
+											value="">
 									</div>
-									
+
 									<div class="form-group">
-										<input type="password" name="passwordRepeat" id="passwordRepeat" tabindex="3" class="form-control" placeholder="Confirm password" value="">
+										<p>Name:</p>
+										<input type="text" name="ename" id="ename" tabindex="4"
+											class="form-control" placeholder="Name" value="">
 									</div>
-									
+
 									<div class="form-group">
-										<input type="text" name="name" id="name" tabindex="4" class="form-control" placeholder="Name" value="">
+										<p>Surname:</p>
+										<input type="text" name="esurname" id="esurname" tabindex="5"
+											class="form-control" placeholder="Surname" value="">
 									</div>
-									
-									<div class="form-group">
-										<input type="text" name="surname" id="surname" tabindex="5" class="form-control" placeholder="Surname" value="">
-									</div>
-									
+
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="new-sys-man-submit" id="new-sys-man-submit" tabindex="7" class="form-control btn btn-success" value="Add new System Manager">
+												<input type="submit" name="new-sys-man-submit"
+													id="new-sys-man-submit" tabindex="7"
+													class="form-control btn btn-success"
+													value="Update System Manager Info">
+											</div>
+										</div>
+									</div>
+								</form>
+
+								<form id="add-new-system-manager-form" action="" method="post"
+									role="form" class="newSysManForm" style="display: none;">
+									<div class="form-group">
+										<input type="text" name="nick" id="nick" tabindex="5"
+											class="form-control" placeholder="Nick Name" value="">
+									</div>
+
+									<div class="form-group">
+										<input type="text" name="email" id="email" tabindex="1"
+											class="form-control" placeholder="Email" value="">
+									</div>
+
+									<div class="form-group">
+										<input type="password" name="password" id="password"
+											tabindex="2" class="form-control" placeholder="Password"
+											value="">
+									</div>
+
+									<div class="form-group">
+										<input type="password" name="passwordRepeat"
+											id="passwordRepeat" tabindex="3" class="form-control"
+											placeholder="Confirm password" value="">
+									</div>
+
+									<div class="form-group">
+										<input type="text" name="name" id="name" tabindex="4"
+											class="form-control" placeholder="Name" value="">
+									</div>
+
+									<div class="form-group">
+										<input type="text" name="surname" id="surname" tabindex="5"
+											class="form-control" placeholder="Surname" value="">
+									</div>
+
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-6 col-sm-offset-3">
+												<input type="submit" name="new-sys-man-submit"
+													id="new-sys-man-submit" tabindex="7"
+													class="form-control btn btn-success"
+													value="Add new System Manager">
 											</div>
 										</div>
 									</div>
@@ -205,6 +299,6 @@
 			</div>
 		</div>
 	</div>
-	
+
 </body>
 </html>
