@@ -14,7 +14,7 @@ $(document).on('click', '#logoutButton', function(e) {
 		dataType : "text",
 		success : function(data) {
 			if(data=="logout") {
-				window.location.href = "http://localhost:8080/RegistrationPage.html";
+				window.location.href = "SystemManagerLogin.html";
 			}
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {

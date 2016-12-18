@@ -224,7 +224,7 @@ public class SystemManagerController {
 		return "SystemManager succesfully deleted!";
 	}
 	
-
+	/*
 	@RequestMapping("/updateSystemManager")
 	@ResponseBody
 	public String updateSystemManager(String system_manager_nick_id, String manager_email, String manager_name,
@@ -242,6 +242,7 @@ public class SystemManagerController {
 		}
 		return "SystemManager succesfully updated!";
 	}
+	*/
 	
 	
 	@RequestMapping(value="/updateSystemManager", method = RequestMethod.POST, headers = { "content-type=application/json" })
