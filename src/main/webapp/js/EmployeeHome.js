@@ -2,7 +2,7 @@ var guestNamePrintURL = "users/guestName";
 var guestData = "users/guestData";
 var editGuest = "users/editGuest";
 
-var getWS = "WorkingShiftController/getWorkingShifts";
+var getWS = "workingShiftController/getWorkingShifts";
 
 
 $('#openBtn').click(function(){
@@ -53,6 +53,7 @@ $(document).on('click', '#friendRequestsButton', function(e) {
 
 $(document).on('submit','.wsDateForm',function(e)
 		{
+			e.preventDefault();
 			var startingDate = $(this).find("input[name=startingDate]").val();
 			var endingDate = $(this).find("input[name=endingDate]").val();
 			
@@ -65,12 +66,52 @@ $(document).on('submit','.wsDateForm',function(e)
 						data : formToJSONWSRequest(startingDate,endingDate),
 						success : function(data)
 						{
-							
+							console.log("XXXX1");
+							workingShiftPrint(data);
 						}
 						
-					});
+				});
 				
-		});
+});
+
+function workingShiftPrint(data)
+{
+	$('#workShiftDataForm').show();
+	$('#workShiftData').empty();
+	$('#workShiftData').show();
+	//var brojac = 0;
+	console.log(data);
+	data = $.parseJSON(data);
+	var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
+	$.each(
+					list,
+					function(index, wsofl) {
+						
+						console.log("XXXX2");
+						console.log(wsofl.name);
+						var tr = $('<tr></tr>');
+						tr.append(		'<td>'
+										+ wsofl.name
+										+ '</td>'
+										+ '<td>'
+										+ wsofl.lastName
+										+ '</td>'
+										+ '<td>'
+										+ wsofl.start
+										+ '</td>'
+										+ '<td>'
+										+ wsofl.finish
+										+ '</td>'
+								);
+						
+						$('#workShiftData').append(tr);
+						console.log("XXXX3");
+						//brojac = brojac + 1;
+	});
+	console.log("XXXX4");
+}
+
+
 
 
 function formToJSONWSRequest(startingDate, endingDate)
