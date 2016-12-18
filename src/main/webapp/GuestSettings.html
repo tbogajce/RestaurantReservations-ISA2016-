@@ -8,6 +8,7 @@
 <script type="text/javascript" src="js/toastr.min.js"></script>
 <script type="text/javascript" src="js/GuestSettings.js"></script>
 <script type="text/javascript" src="js/GuestSettingsFriends.js"></script>
+<script type="text/javascript" src="js/GuestSettingsRequest.js"></script>
 
 <script src="js/bootstrap.min.js"></script>
 <!-- Bootstrap -->
@@ -174,16 +175,15 @@
 										<thead class="thead">
 											<tr class="filters">
 												<th><input type="text" class="form-control"
-													placeholder="Proizvod" disabled></th>
+													placeholder="Email" disabled></th>
 												<th><input type="text" class="form-control"
-													placeholder="Dostavljac" disabled></th>
+													placeholder="Name" disabled></th>
 												<th><input type="text" class="form-control"
-													placeholder="Kolicina" disabled></th>
+													placeholder="Surname" disabled></th>
 												<th><input type="text" class="form-control"
-													placeholder="Ukupna cijena" disabled></th>
-												<th><input type="text" class="form-control"
-													placeholder="Otpremljen" disabled></th>
+													placeholder="Birth date" disabled></th>
 													<th> </th>
+													<td> </td>
 											</tr>
 										</thead>
 										<tbody id="friendRequestsData">
@@ -229,19 +229,17 @@
 		     
 		     <br>
 		     <div class="form-group"> 
-				 <select class="friendsCombobox">
+				 <select class="form-control friendsCombobox">
   					
 				</select>
 		     </div> 
-		     
-		     
-		     
+ 
 		 </div>
 		
         
         <div class="modal-footer">
           <a href="#" data-dismiss="modal" class="btn btn-sm">Close</a>
-          <a href="#" class="btn btn-primary btn-sm">Save changes</a>
+          <a href="#" class="btn btn-primary btn-sm addFriendButton">Add friend</a>
         </div>
       </div>
     </div>

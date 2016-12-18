@@ -42,6 +42,8 @@ $(document).on('click', '#friendRequestsButton', function(e) {
 	$('#guestProfilePanel').hide();
 	$('#friendsPanel').hide();
 	$('#friendRequestsPanel').show();
+	
+	printFriendRequests();
 });
 
 

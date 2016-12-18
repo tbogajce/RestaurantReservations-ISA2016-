@@ -1,6 +1,6 @@
 var friendsURL = "users/getFriends";
-//var friendsComboboxURL = "users/getFriendsCombo";
 var friendComboURL = "users/getFriendsCombo";
+var addFriendURL = "users/addFriend";
 
 function printFriends() {
 	$.ajax({
@@ -18,41 +18,96 @@ function friendsPrint(data) {
 	// object (not an 'array of one')
 	$('#friendsData').empty();
 	var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
-	$.each(list,
-			function(index, friend) {
-				var tr = $('<tr></tr>');
-				tr.append('<td>' + friend.email + '</td>' + '<td>'
-						+ friend.user_name + '</td>' + '<td>'
-						+ friend.user_surname + '</td>' + '<td>' + friend.user_birth_date
-						+ '</td><td>' + '<form class="detaljiKupovine" > '+
-		                 '<input type="hidden" name="id" value='+ friend.id +' id="identifikatorID">' +
-		                 ' <input type="submit" class="btn btn-primary btn-sm" role="button" value="Obrisi prijatelja"> '+
-		                 '</form></td>' );
-				$('#friendsData').append(tr);
-			});
+	$.each(list,function(index, friend) {
+						var tr = $('<tr></tr>');
+						tr.append('<td>' + friend.email + '</td>'+ 
+										'<td>' + friend.user_name + '</td>' +
+										'<td>' + friend.user_surname + '</td>' + 
+										'<td>' + friend.user_birth_date + '</td>'+
+										'<td>' + '<form class="removeFriend" > ' + 
+										'<input type="hidden" name="id" value=' + friend.id +'> '+
+										'<input type="submit" class="btn btn-danger btn-sm" role="button" value="Remove from friends"> '
+										+ '</form></td>');
+						$('#friendsData').append(tr);
+					});
 }
 
-//-------------DODAVANJE U COMBOBOX
+// -------------DODAVANJE U COMBOBOX
 
-$(document).on('change', '#searchFriends', function(e) {
-	console.log('promjena na change');
-	$(".friendsCombobox").empty();
-	var email =$("#searchFriends").val();
+$(document).on(
+		'change',
+		'#searchFriends',
+		function(e) {
+			console.log('promjena na change');
+			$(".friendsCombobox").empty();
+			var email = $("#searchFriends").val();
+			$.ajax({
+				type : 'POST',
+				url : friendComboURL,
+				contentType : 'application/json',
+				dataType : "json",
+				data : formToJSONCombo(email),
+				success : function(data) {
+					$(".friendsCombobox").empty();
+					var list = data == null ? []
+							: (data instanceof Array ? data : [ data ]);
+					var friendsCombobox = $(".friendsCombobox");
+					$.each(list, function(index, friendCombo) {
+						var li = $('<option>' + friendCombo.email
+								+ ' </option>');
+						$(friendsCombobox).append(li);
+					});
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown) {
+					alert("AJAX ERROR: " + errorThrown);
+				}
+			});
+		});
+
+function formToJSONCombo(email) {
+	return JSON.stringify({
+		"email" : email,
+	});
+}
+// ---------------END DODAVANJE U COMBOBOX
+
+// ------------DODAVANJE PRIJATELJA
+$(document).on('click', '.addFriendButton', function(e) {
+	console.log('klik na add friend');
+	var email = $('select').children(':selected').text();
 	console.log(email);
 	$.ajax({
 		type : 'POST',
-		url : friendComboURL,
+		url : addFriendURL,
 		contentType : 'application/json',
-		dataType : "json",
+		dataType : "text",
 		data : formToJSONCombo(email),
 		success : function(data) {
-			$(".friendsCombobox").empty();
-			var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
-			var friendsCombobox = $(".friendsCombobox");
-			$.each(list, function(index, friendCombo) {
-				var li = $('<option>'+ friendCombo.email +' </option>');
-				$(friendsCombobox).append(li);
-			});
+			if (data == "OK") {
+
+				toastr.options = {
+					"closeButton" : true,
+					"debug" : false,
+					"newestOnTop" : false,
+					"progressBar" : false,
+					"positionClass" : "toast-top-right",
+					"preventDuplicates" : false,
+					"onclick" : null,
+					"showDuration" : "300",
+					"hideDuration" : "1000",
+					"timeOut" : "5000",
+					"extendedTimeOut" : "1000",
+					"showEasing" : "swing",
+					"hideEasing" : "linear",
+					"showMethod" : "fadeIn",
+					"hideMethod" : "fadeOut"
+				}
+				toastr.info('Friend request sent.');
+				 $('#myModal').find("input,textarea,select,option").val('');
+				 $('#myModal').find("option").empty();
+				 $("#myModal").modal("hide");
+				 
+			}
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			alert("AJAX ERROR: " + errorThrown);
@@ -60,10 +115,4 @@ $(document).on('change', '#searchFriends', function(e) {
 	});
 });
 
-
-function formToJSONCombo(email) {
-	return JSON.stringify({
-		"email" : email,
-	});
-}
-//---------------END DODAVANJE U COMBOBOX
+// -----------KRAJ DODAVANJE PRIJATELJA

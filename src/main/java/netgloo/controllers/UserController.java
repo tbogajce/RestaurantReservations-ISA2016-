@@ -29,10 +29,12 @@ import netgloo.models.UserProba;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-
+	
 	ArrayList<User> friends = new ArrayList<User>();
+	ArrayList<User> friends3 = new ArrayList<User>();
 	ArrayList<User> friendsCombo = new ArrayList<User>();
 	ArrayList<User> listaSvih2 = new ArrayList<User>();
+	ArrayList<User> friendRequest = new ArrayList<User>();
 
 	/**
 	 * /create --> Create a new user and save it in the database.
@@ -110,7 +112,6 @@ public class UserController {
 		}
 		return "logout";
 	}
-	
 
 	@RequestMapping(value = "/getFriends", method = RequestMethod.GET)
 	public ArrayList<User> getFrinds(HttpServletRequest request) {
@@ -128,6 +129,23 @@ public class UserController {
 		}
 
 		return friends;
+	}
+	
+	@RequestMapping(value = "/friendRequest", method = RequestMethod.GET)
+	public ArrayList<User> friendRequest(HttpServletRequest request) {
+		friendRequest.clear();
+		try {
+			User user = (User) request.getSession().getAttribute("user");
+			ArrayList<Friendships> fs = (ArrayList<Friendships>) friendshipsDao.findByLoveGiver(user);
+			for (int i = 0; i < fs.size(); i++) {
+				if (fs.get(i).getFriendship_accepted() == false)
+					friendRequest.add(fs.get(i).getLove_taker());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return friendRequest;
 	}
 
 	/**
@@ -148,7 +166,7 @@ public class UserController {
 			User user = (User) request.getSession().getAttribute("user");
 			List<User> lu = (List<User>) userDao.findAll();
 			friendsCombo = (ArrayList<User>) lu;
-			List<User> friends2 = (List<User>) getFrinds(request);
+			List<User> friends2 = (List<User>) pomocna(request);
 			for (int i = 0; i < lu.size(); i++) {
 				for (int j = 0; j < friends2.size(); j++) {
 					if (lu.get(i).getEmail().equals(friends2.get(j).getEmail())) {
@@ -173,6 +191,35 @@ public class UserController {
 		}
 
 		return friendsCombo;
+	}
+	
+	public ArrayList<User> pomocna(HttpServletRequest request) {
+		friends3.clear();
+		try {
+			User user = (User) request.getSession().getAttribute("user");
+			ArrayList<Friendships> fs = (ArrayList<Friendships>) friendshipsDao.findByLoveGiver(user);
+			for (int i = 0; i < fs.size(); i++) {
+					friends3.add(fs.get(i).getLove_taker());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return friends3;
+	}
+
+	@RequestMapping(value = "/addFriend", method = RequestMethod.POST, headers = {
+			"content-type=application/json" })
+	public String addFriend(@RequestBody UserProba user1, HttpServletRequest request) {
+		try {
+			User user = (User) request.getSession().getAttribute("user");
+			User user2 = userDao.findByEmail(user1.getEmail().trim());
+			Friendships f = new Friendships(user,user2,false);
+			friendshipsDao.save(f);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "OK";
 	}
 
 	@RequestMapping(value = "/guestName", method = RequestMethod.GET)
