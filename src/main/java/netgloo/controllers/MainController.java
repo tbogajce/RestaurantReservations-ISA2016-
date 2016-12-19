@@ -12,5 +12,5 @@ public class MainController {
   public String index() {
     return "Proudly handcrafted by tim6 :)";
   }
-  
+	
 }

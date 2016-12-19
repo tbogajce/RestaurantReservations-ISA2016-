@@ -5,9 +5,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,31 +52,65 @@ public class UserController {
 			User user = null;
 			String user_reg_date = new SimpleDateFormat("dd-MMM-yyyy").format(new Date());
 			user = new User(user1.getEmail(), user1.getPassword(), user1.getName(), user1.getSurname(),
-					user1.getBirthDate().trim(), user_reg_date, "Guest");
+					user1.getBirthDate().trim(), user_reg_date, "Guest",false);
 			userDao.save(user);
+			sendMail(user);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return "EXCEPTION";
 		}
 		return "OK";
 	}
+	
+	public void sendMail(User user) throws MessagingException {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<HTML><BODY style='border-width:0px'>");
+		sb.append("<br><br>");
+		sb.append("Postovanje,");
+		sb.append("<br>");
+		sb.append("<br>");
+		sb.append("Molimo potvrdite mail klikom na link ispod, kako biste nastavili sa koriscenjem aplikacije.");
+		sb.append("<br>");
+		sb.append("<br>");
+		
+		sb.append("<a href=\"http://localhost:8080/users/confirmMail/"+user.getEmail().trim() +"\">Confirm link</a>");
+		sb.append("<BR/>");
+		sb.append("</BODY></HTML>");
+		smtpMailSender.send(user.getEmail().trim(), "Confirm mail from Spring", sb.toString());
+		
+	}
+	
+	@RequestMapping("/confirmMail/{mail}")
+	public String sendMail(@PathVariable("mail") String mail) throws MessagingException {
+		try {
+			System.out.println("STIGAO JE MAIL U KONZOLU: " + mail+".com");
+			String uEmail = mail.trim()+".com";
+			User user = userDao.findByEmail(uEmail);
+			user.setUserStatus(true);
+			userDao.save(user);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		 return "Uspjesna registracija.";
+	}
 
 	@RequestMapping(value = "/loginUser", method = RequestMethod.POST, headers = { "content-type=application/json" })
 	public String loginUser(@RequestBody UserProba user1, HttpServletRequest request) {
 
 		try {
-			User user = userDao.findByEmail(user1.getEmail());
+			User user = userDao.findByEmail(user1.getEmail().trim());
 			String email = String.valueOf(user.getEmail());
 			String pass = String.valueOf(user.getUser_password());
-			if (email.equals(user1.getEmail()) && pass.equals(user1.getPassword())) {
+			if (email.equals(user1.getEmail()) && pass.equals(user1.getPassword()) && user.getUserStatus()==true) {
 				request.getSession().setAttribute("user", user);
 				return user.getUser_role();
+			} else {
+				return "Error during login";
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return "EXCEPTION";
 		}
-		return "OK";
 	}
 
 	@RequestMapping(value = "/editGuest", method = RequestMethod.POST, headers = { "content-type=application/json" })
@@ -368,5 +406,8 @@ public class UserController {
 
 	@Autowired
 	private FriendshipsDao friendshipsDao;
+	
+	@Autowired
+	private SmtpMailSender smtpMailSender;
 
 } // class UserController

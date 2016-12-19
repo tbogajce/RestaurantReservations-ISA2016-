@@ -50,7 +50,8 @@ public class User {
 	@NotNull
 	private String userRole;
 
-	
+	@NotNull
+	private Boolean userStatus;
 	
 	public User() {
 		super();
@@ -58,7 +59,7 @@ public class User {
 
 
 	public User(String email, String user_password, String user_name, String user_surname, String user_birth_date,
-			String user_registration_date, String user_role) {
+			String user_registration_date, String user_role, Boolean userStatus) {
 		super();
 		this.email = email;
 		this.userPassword = user_password;
@@ -67,8 +68,9 @@ public class User {
 		this.userBirthDate = user_birth_date;
 		this.userRegistrationDate = user_registration_date;
 		this.userRole = user_role;
+		this.userStatus = userStatus;
 	}
-
+	
 
 	public User(Integer user_id) {
 		super();
@@ -215,8 +217,18 @@ public class User {
 		this.userRole = user_role;
 	}
 
-	
 
+	public Boolean getUserStatus() {
+		return userStatus;
+	}
+
+
+	public void setUserStatus(Boolean userStatus) {
+		this.userStatus = userStatus;
+	}
+
+	
+	
 	
 	/*
 	 * 
