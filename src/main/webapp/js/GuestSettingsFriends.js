@@ -1,6 +1,7 @@
 var friendsURL = "users/getFriends";
 var friendComboURL = "users/getFriendsCombo";
 var addFriendURL = "users/addFriend";
+var removeFriendURL = "users/removeFriend";
 
 function printFriends() {
 	$.ajax({
@@ -25,7 +26,7 @@ function friendsPrint(data) {
 										'<td>' + friend.user_surname + '</td>' + 
 										'<td>' + friend.user_birth_date + '</td>'+
 										'<td>' + '<form class="removeFriend" > ' + 
-										'<input type="hidden" name="id" value=' + friend.id +'> '+
+										'<input type="hidden" name="friendMail" value=' + friend.email +'> '+
 										'<input type="submit" class="btn btn-danger btn-sm" role="button" value="Remove from friends"> '
 										+ '</form></td>');
 						$('#friendsData').append(tr);
@@ -116,3 +117,24 @@ $(document).on('click', '.addFriendButton', function(e) {
 });
 
 // -----------KRAJ DODAVANJE PRIJATELJA
+
+//----------IZBRISI PRIJATELJA
+$(document).on('click', '.removeFriend', function(e) {
+	e.preventDefault();
+	console.log('izbrisi prijatelja');
+	var email = $(this).find("input[type=hidden]").val();
+	$.ajax({
+		type : 'POST',
+		url : removeFriendURL,
+		contentType : 'application/json',
+		dataType : "text",
+		data : formToJSONCombo(email),
+		success : function(data) {
+			printFriends();
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("AJAX ERROR: " + errorThrown);
+		}
+	});
+});
+//---------END OBRISI PRIJATELJA

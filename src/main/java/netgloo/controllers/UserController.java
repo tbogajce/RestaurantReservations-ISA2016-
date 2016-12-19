@@ -29,7 +29,7 @@ import netgloo.models.UserProba;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-	
+
 	ArrayList<User> friends = new ArrayList<User>();
 	ArrayList<User> friends3 = new ArrayList<User>();
 	ArrayList<User> friendsCombo = new ArrayList<User>();
@@ -130,16 +130,16 @@ public class UserController {
 
 		return friends;
 	}
-	
+
 	@RequestMapping(value = "/friendRequest", method = RequestMethod.GET)
 	public ArrayList<User> friendRequest(HttpServletRequest request) {
 		friendRequest.clear();
 		try {
 			User user = (User) request.getSession().getAttribute("user");
-			ArrayList<Friendships> fs = (ArrayList<Friendships>) friendshipsDao.findByLoveGiver(user);
+			ArrayList<Friendships> fs = (ArrayList<Friendships>) friendshipsDao.findByLoveTaker(user);
 			for (int i = 0; i < fs.size(); i++) {
 				if (fs.get(i).getFriendship_accepted() == false)
-					friendRequest.add(fs.get(i).getLove_taker());
+					friendRequest.add(fs.get(i).getLoveGiver());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -192,14 +192,14 @@ public class UserController {
 
 		return friendsCombo;
 	}
-	
+
 	public ArrayList<User> pomocna(HttpServletRequest request) {
 		friends3.clear();
 		try {
 			User user = (User) request.getSession().getAttribute("user");
 			ArrayList<Friendships> fs = (ArrayList<Friendships>) friendshipsDao.findByLoveGiver(user);
 			for (int i = 0; i < fs.size(); i++) {
-					friends3.add(fs.get(i).getLove_taker());
+				friends3.add(fs.get(i).getLove_taker());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -208,15 +208,57 @@ public class UserController {
 		return friends3;
 	}
 
-	@RequestMapping(value = "/addFriend", method = RequestMethod.POST, headers = {
-			"content-type=application/json" })
+	@RequestMapping(value = "/addFriend", method = RequestMethod.POST, headers = { "content-type=application/json" })
 	public String addFriend(@RequestBody UserProba user1, HttpServletRequest request) {
 		try {
 			User user = (User) request.getSession().getAttribute("user");
 			User user2 = userDao.findByEmail(user1.getEmail().trim());
-			Friendships f = new Friendships(user,user2,false);
+			Friendships f = new Friendships(user, user2, false);
 			friendshipsDao.save(f);
-		} catch(Exception e) {
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "OK";
+	}
+
+	@RequestMapping(value = "/removeFriend", method = RequestMethod.POST, headers = { "content-type=application/json" })
+	public String removeFriend(@RequestBody UserProba user1, HttpServletRequest request) {
+		try {
+			System.out.println("usao u remove friend");
+			User user = (User) request.getSession().getAttribute("user");
+			User user2 = userDao.findByEmail(user1.getEmail().trim());
+			Friendships f = friendshipsDao.findByLoveGiverAndLoveTaker(user, user2);
+			friendshipsDao.delete(f);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "OK";
+	}
+	
+	@RequestMapping(value = "/declineFriend", method = RequestMethod.POST, headers = { "content-type=application/json" })
+	public String declineFriend(@RequestBody UserProba user1, HttpServletRequest request) {
+		try {
+			System.out.println("usao u decline friend");
+			User user = (User) request.getSession().getAttribute("user");
+			User user2 = userDao.findByEmail(user1.getEmail().trim());
+			Friendships f = friendshipsDao.findByLoveGiverAndLoveTaker(user2, user);
+			friendshipsDao.delete(f);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "OK";
+	}
+	
+	@RequestMapping(value = "/acceptFriend", method = RequestMethod.POST, headers = { "content-type=application/json" })
+	public String acceptFriend(@RequestBody UserProba user1, HttpServletRequest request) {
+		try {
+			System.out.println("usao u accept friend");
+			User user = (User) request.getSession().getAttribute("user");
+			User user2 = userDao.findByEmail(user1.getEmail().trim());
+			Friendships f = friendshipsDao.findByLoveGiverAndLoveTaker(user2, user);
+			f.setFriendship_accepted(true);
+			friendshipsDao.save(f);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "OK";
