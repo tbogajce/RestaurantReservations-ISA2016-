@@ -231,7 +231,7 @@ $(document).ready
 
 					} else {
 						// console.log("Ovo se OVAKO izvrsilo");
-						window.location.href = "http://localhost:8080/RegistrationPage.html";
+						window.location.href = "RegistrationPage.html";
 					}
 					// window.location.href =
 					// "http://localhost:8080/SystemManagerHome.html";

@@ -3,6 +3,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/restaurantManagerHome.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -11,11 +12,12 @@
 
 <style type="text/css">
 body {
-    background-image:url(http://prod-aws1-wallpaper-com.s3-eu-west-1.amazonaws.com/main/22_w-amsterdam2_0.jpg);
-    -webkit-background-size: cover;
-  	-moz-background-size: cover;
-  	-o-background-size: cover;
-  	background-size: cover;
+	background-image:
+		url(http://prod-aws1-wallpaper-com.s3-eu-west-1.amazonaws.com/main/22_w-amsterdam2_0.jpg);
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 </style>
 
@@ -24,29 +26,158 @@ body {
 	<!-------------------------------- Header ------------------------------------>
 	<nav class="navbar navbar-default navbar-default"
 		style="border-radius: 0px !important; margin-bottom: 0px;">
-	<div class="container-fluid">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-				aria-expanded="false">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="#">RestarauntApp</a>
-		</div>
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+					aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">RestarauntApp</a>
+			</div>
 
-		<!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse"
-			id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav navbar-right">
-				<li id="logoutButton"><a href="RestaurantManagerLogin.html">Log out</a></li>
-			</ul>
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right">
+					<li id="logoutButton"><a href="RestaurantManagerLogin.html">Log
+							out</a></li>
+				</ul>
+			</div>
 		</div>
-		<!-- /.navbar-collapse -->
-	</div>
-	<!-- /.container-fluid --> </nav>
+	</nav>
 	<!--------------------------------- End Header -------------------------------------------->
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+
+				<div class="panel panel-login">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-6">
+								<a href="#" id="create-new-employee">Add new Employee</a>
+							</div>
+							<div class="col-xs-6">
+								<a href="#" id="create-new-provider">Add new Provider</a>
+							</div>
+
+						</div>
+						<hr>
+					</div>
+
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-lg-12">
+								<h1 id="greetings" style="display: block;">Welcome!</h1>
+								<form id="add-new-provider-form" action="" method="post"
+									role="form" class="newProviderForm" style="display: none;">
+									<div class="form-group">
+										<input type="text" name="pnick" id="pnick" tabindex="1"
+											class="form-control" placeholder="Nickame" value="">
+									</div>
+
+									<div class="form-group">
+										<input type="text" name="pemail" id="pemail" tabindex="2"
+											class="form-control" placeholder="Email" value="">
+									</div>
+
+									<div class="form-group">
+										<input type="password" name="ppassword" id="ppassword"
+											tabindex="3" class="form-control" placeholder="Password"
+											value="">
+									</div>
+
+									<div class="form-group">
+										<input type="password" name="ppasswordRepeat"
+											id="ppasswordRepeat" tabindex="4" class="form-control"
+											placeholder="Confirm password" value="">
+									</div>
+
+									<div class="form-group">
+										<input type="text" name="pname" id="pname" tabindex="5"
+											class="form-control" placeholder="Name" value="">
+									</div>
+
+									<div class="form-group">
+										<input type="text" name="psurname" id="psurname" tabindex="6"
+											class="form-control" placeholder="Surname" value="">
+									</div>
+
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-8 col-sm-offset-2">
+												<input type="submit" name="new-provider-submit"
+													id="new-provider-submit" tabindex="7"
+													class="form-control btn btn-success"
+													value="Add new Provider">
+											</div>
+										</div>
+									</div>
+								</form>
+
+								<form id="add-new-employee-form" action="" method="post"
+									role="form" class="newEmployeeForm" style="display: none;">
+									<div class="form-group">
+										<input type="text" name="enick" id="enick" tabindex="1"
+											class="form-control" placeholder="Nickame" value="">
+									</div>
+
+									<div class="form-group">
+										<input type="text" name="eemail" id="eemail" tabindex="2"
+											class="form-control" placeholder="Email" value="">
+									</div>
+
+									<div class="form-group">
+										<input type="password" name="epassword" id="epassword"
+											tabindex="3" class="form-control" placeholder="Password"
+											value="">
+									</div>
+
+									<div class="form-group">
+										<input type="password" name="epasswordRepeat"
+											id="epasswordRepeat" tabindex="4" class="form-control"
+											placeholder="Confirm password" value="">
+									</div>
+
+									<div class="form-group">
+										<input type="text" name="ename" id="ename" tabindex="5"
+											class="form-control" placeholder="Name" value="">
+									</div>
+
+									<div class="form-group">
+										<input type="text" name="esurname" id="esurname" tabindex="6"
+											class="form-control" placeholder="Surname" value="">
+									</div>
+
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-8 col-sm-offset-2">
+												<input type="submit" name="new-employee-submit"
+													id="new-employee-submit" tabindex="7"
+													class="form-control btn btn-success"
+													value="Add new Employee">
+											</div>
+										</div>
+									</div>
+								</form>
+
+
+
+
+							</div>
+						</div>
+					</div>
+
+
+
+
+
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
