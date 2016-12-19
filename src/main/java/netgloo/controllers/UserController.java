@@ -39,6 +39,16 @@ public class UserController {
 	ArrayList<User> friendsCombo = new ArrayList<User>();
 	ArrayList<User> listaSvih2 = new ArrayList<User>();
 	ArrayList<User> friendRequest = new ArrayList<User>();
+	
+
+	@Autowired
+	private UserDao userDao;
+
+	@Autowired
+	private FriendshipsDao friendshipsDao;
+	
+	@Autowired
+	private SmtpMailSender smtpMailSender;
 
 	/**
 	 * /create --> Create a new user and save it in the database.
@@ -401,13 +411,5 @@ public class UserController {
 	// PRIVATE FIELDS
 	// ------------------------
 
-	@Autowired
-	private UserDao userDao;
-
-	@Autowired
-	private FriendshipsDao friendshipsDao;
-	
-	@Autowired
-	private SmtpMailSender smtpMailSender;
 
 } // class UserController

@@ -3,6 +3,7 @@ var guestData = "users/guestData";
 var editGuest = "users/editGuest";
 
 var getWS = "workingShiftController/getWorkingShifts";
+var getOrders = "guestsOrderController/getOrders";
 
 
 $('#openBtn').click(function(){
@@ -37,6 +38,23 @@ $(document).on('click', '#orders-button', function(e) {
 	$('#workingShiftCalendarPanel').hide();
 	$('#ws-date-pick-form').hide();
 	$('#OrdersPanel').show();
+	
+	$.ajax(
+			{
+				type:'POST',
+				url:getOrders,
+				//contentType : 'application/json',
+				dataType : "text",
+				//data : formToJSONWSRequest(startingDate,endingDate),
+				success : function(data)
+				{
+					
+					ordersPrint(data);
+					//console.log("XXXX1");
+					//workingShiftPrint(data);
+				}
+				
+		});
 	//$('#friendRequestsPanel').hide();
 	
 	//printFriends();
@@ -73,6 +91,75 @@ $(document).on('submit','.wsDateForm',function(e)
 				});
 				
 });
+
+
+function ordersPrint(data)
+{
+	$('#ordersForm').show();
+	$('#orderedData').empty();
+	$('#orderedData').show();
+	//var brojac = 0;
+	console.log(data);
+	data = $.parseJSON(data);
+	var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
+	$.each(
+					list,
+					function(index, wsofl) {
+						
+						
+						var whatWasOrdered =wsofl.whatWasOrdered;
+						var quantity = wsofl.quantity;
+						var note = wsofl.note;
+						var accepted = wsofl.accepted;
+						var done = wsofl.done;
+						var employee = wsofl.employee;
+						var table = wsofl.table;
+						var orderId = wsofl.orderId;
+						
+						if(accepted =="")
+							{
+								accepted="Something";
+							}
+						if(done =="")
+							{
+								done="Something2"
+							}
+						
+						
+						
+						console.log("XXXX2");
+						console.log(wsofl.name);
+						var tr = $('<tr></tr>');
+						tr.append(		'<td>'
+										+ whatWasOrdered
+										+ '</td>'
+										+ '<td>'
+										+ quantity
+										+ '</td>'
+										+ '<td>'
+										+ note
+										+ '</td>'
+										+ '<td>'
+										+ accepted
+										+ '</td>'
+										+ '<td>'
+										+ done
+										+ '</td>'
+										+ '<td>'
+										+ employee
+										+ '</td>'
+										+ '<td>'
+										+ table
+										+ '</td>'
+										
+								);
+						
+						$('#orderedData').append(tr);
+						console.log("XXXX3");
+						//brojac = brojac + 1;
+	});
+	console.log("XXXX4");
+}
 
 function workingShiftPrint(data)
 {
