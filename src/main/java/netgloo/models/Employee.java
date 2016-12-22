@@ -24,6 +24,7 @@ public class Employee {
 	@JoinColumn(name="userId", referencedColumnName="userId", nullable=false)
 	private User userId;
 	
+	
 	@JsonBackReference("restaurant-employee")
 	@ManyToOne
 	@JoinColumn(name="restaurantId", referencedColumnName="restaurantId", nullable=false)

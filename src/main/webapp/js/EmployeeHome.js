@@ -118,11 +118,20 @@ function ordersPrint(data)
 						
 						if(accepted =="")
 							{
-								accepted="Something";
+							accepted='<form id="acceptedForm" action="" method="post" role="form" class="acceptedForm" >'
+								+'<input type="hidden" id="orderID" value="'+orderId+'" >'
+								+'<input type="submit" name="accepted-submit" id="accepted-submit" tabindex="7" class="form-control btn btn-success" value="Accept">'
+								+'</form>';
+								//Console.
+								//accepted="Something";
 							}
 						if(done =="")
 							{
-								done="Something2"
+								//done="Something2"
+								done='<form id="doneForm" action="" method="post" role="form" class="doneForm" >'
+									+'<input type="hidden" id="orderID" value="'+orderId+'" >'
+									+'<input type="submit" name="done-submit" id="done-submit" tabindex="7" class="form-control btn btn-success" value="Done">'
+									+'</form>';
 							}
 						
 						
