@@ -202,41 +202,40 @@ $(document).ready
 	$('#create-new-system-manager').removeClass('active');
 	$('#create-new-restaurant').removeClass('active');
 	$('#edit-info').addClass('active');
-	var apc = $
-			.ajax({
-				type : 'GET',
-				url : getSysManDataURL,
-				// contentType : 'application/json',
-				dataType : "text",
-				// citavo nista ne saljem... jasno
-				// data : formToJSONNewSysMan(nick, email, name, surname,
-				// password),
-				success : function(data) {
-					console.log(data);
-					if (data.length != 0) {
-						data = $.parseJSON(data)
-						// console.log("Ovo se izvrsilo");
-						// console.log(data)
-						// console.log(data.manager_email)
-						// $('edit-info-form').find("input[name=nick]").val(data.manager_email);
-						// $('edit-info-form').find("input[name=nick]").val(data.manager_email);
-						// $('.editInfo').find("input[name=nick]").prop('value',data.manager_email);
-						// $('.editInfo').find("input[name=nick]").prop('placeholder',data.manager_email);
-						$('#eemail').val(data.manager_email);
-						$('#enick').val(data.system_manager_nick_id);
-						$('#epassword').val(data.manager_password);
-						$('#ename').val(data.manager_name);
-						$('#esurname').val(data.manager_last_name);
-						// console.log(data.manager_email)
+	var apc = $.ajax({
+		type : 'GET',
+		url : getSysManDataURL,
+		// contentType : 'application/json',
+		dataType : "text",
+		// citavo nista ne saljem... jasno
+		// data : formToJSONNewSysMan(nick, email, name, surname,
+		// password),
+		success : function(data) {
+			console.log(data);
+			if (data.length != 0) {
+				data = $.parseJSON(data)
+				// console.log("Ovo se izvrsilo");
+				// console.log(data)
+				// console.log(data.manager_email)
+				// $('edit-info-form').find("input[name=nick]").val(data.manager_email);
+				// $('edit-info-form').find("input[name=nick]").val(data.manager_email);
+				// $('.editInfo').find("input[name=nick]").prop('value',data.manager_email);
+				// $('.editInfo').find("input[name=nick]").prop('placeholder',data.manager_email);
+				$('#eemail').val(data.manager_email);
+				$('#enick').val(data.system_manager_nick_id);
+				$('#epassword').val(data.manager_password);
+				$('#ename').val(data.manager_name);
+				$('#esurname').val(data.manager_last_name);
+				// console.log(data.manager_email)
 
-					} else {
-						// console.log("Ovo se OVAKO izvrsilo");
-						window.location.href = "RegistrationPage.html";
-					}
-					// window.location.href =
-					// "http://localhost:8080/SystemManagerHome.html";
-				}
-			});
+			} else {
+				// console.log("Ovo se OVAKO izvrsilo");
+				window.location.href = "RegistrationPage.html";
+			}
+			// window.location.href =
+			// "http://localhost:8080/SystemManagerHome.html";
+		}
+	});
 }
 
 function printSystemManagers() {
@@ -287,124 +286,101 @@ function systemManagersPrint(data) {
 					});
 }
 
-$(document)
-		.on(
-				'submit',
-				'.newSysManForm',
-				function(e) {
-					e.preventDefault();
-					console.log("Add new System Manager begin");
-					var email = $(this).find("input[name=email]").val();
-					var password = $(this).find("input[name=password]").val();
-					var name = $(this).find("input[name=name]").val();
-					var surname = $(this).find("input[name=surname]").val();
-					var nick = $(this).find("input[name=nick]").val();
-					$
-							.ajax({
-								type : 'POST',
-								url : newSysManURL,
-								contentType : 'application/json',
-								dataType : "text",
-								data : formToJSONNewSysMan(nick, email, name,
-										surname, password),
-								success : function(data) {
+$(document).on('submit', '.newSysManForm', function(e) {
+	e.preventDefault();
+	console.log("Add new System Manager begin");
+	var email = $(this).find("input[name=email]").val();
+	var password = $(this).find("input[name=password]").val();
+	var name = $(this).find("input[name=name]").val();
+	var surname = $(this).find("input[name=surname]").val();
+	var nick = $(this).find("input[name=nick]").val();
+	$.ajax({
+		type : 'POST',
+		url : newSysManURL,
+		contentType : 'application/json',
+		dataType : "text",
+		data : formToJSONNewSysMan(nick, email, name, surname, password),
+		success : function(data) {
 
-									window.location.href = "http://localhost:8080/SystemManagerHome.html";
-								}
-							});
-				});
+			window.location.href = "SystemManagerHome.html";
+		}
+	});
+});
 // *********************************************************************************
 // MENADZER RESTORANA
-$(document)
-		.on(
-				'submit',
-				'.newRestManForm',
-				function(e) {
-					e.preventDefault();
-					console.log("Add new Restaurant Manager begin");
-					var email = $(this).find("input[name=rmemail]").val();
-					var password = $(this).find("input[name=rmpassword]").val();
-					var name = $(this).find("input[name=rmname]").val();
-					var surname = $(this).find("input[name=rmsurname]").val();
-					var nick = $(this).find("input[name=rmnick]").val();
-					$
-							.ajax({
-								type : 'POST',
-								url : newRestManURL,
-								contentType : 'application/json',
-								dataType : "text",
-								data : formToJSONNewRestMan(nick, email, name,
-										surname, password),
-								success : function(data) {
+$(document).on('submit', '.newRestManForm', function(e) {
+	e.preventDefault();
+	console.log("Add new Restaurant Manager begin");
+	var email = $(this).find("input[name=rmemail]").val();
+	var password = $(this).find("input[name=rmpassword]").val();
+	var name = $(this).find("input[name=rmname]").val();
+	var surname = $(this).find("input[name=rmsurname]").val();
+	var nick = $(this).find("input[name=rmnick]").val();
+	$.ajax({
+		type : 'POST',
+		url : newRestManURL,
+		contentType : 'application/json',
+		dataType : "text",
+		data : formToJSONNewRestMan(nick, email, name, surname, password),
+		success : function(data) {
 
-									window.location.href = "http://localhost:8080/SystemManagerHome.html";
-								}
-							});
-				});
+			window.location.href = "SystemManagerHome.html";
+		}
+	});
+});
 // *********************************************************************************
 // RESTORAN
-$(document)
-		.on(
-				'submit',
-				'.newRestForm',
-				function(e) {
-					e.preventDefault();
-					console.log("Add new Restaurant begin");
-					var name = $(this).find("input[name=rname]").val();
-					var type = $(this).find("input[name=rtype]").val();
-					var coordinates = $(this).find("input[name=rcoordinates]")
-							.val();
-					var adress = $(this).find("input[name=radress]").val();
-					var rate = $(this).find("input[name=rrate]").val();
-					var visitsnumber = $(this)
-							.find("input[name=rvisitsnumber]").val();
-					var income = $(this).find("input[name=rincome]").val();
-					console.log("Add new Restaurant mid");
+$(document).on(
+		'submit',
+		'.newRestForm',
+		function(e) {
+			e.preventDefault();
+			console.log("Add new Restaurant begin");
+			var name = $(this).find("input[name=rname]").val();
+			var type = $(this).find("input[name=rtype]").val();
+			var coordinates = $(this).find("input[name=rcoordinates]").val();
+			var adress = $(this).find("input[name=radress]").val();
+			var rate = $(this).find("input[name=rrate]").val();
+			var visitsnumber = $(this).find("input[name=rvisitsnumber]").val();
+			var income = $(this).find("input[name=rincome]").val();
+			console.log("Add new Restaurant mid");
 
-					$
-							.ajax({
-								type : 'POST',
-								url : newRestURL,
-								contentType : 'application/json',
-								dataType : "text",
-								data : formToJSONNewRest(name, type,
-										coordinates, adress, rate,
-										visitsnumber, income),
-								success : function(data) {
+			$.ajax({
+				type : 'POST',
+				url : newRestURL,
+				contentType : 'application/json',
+				dataType : "text",
+				data : formToJSONNewRest(name, type, coordinates, adress, rate,
+						visitsnumber, income),
+				success : function(data) {
 
-									window.location.href = "http://localhost:8080/SystemManagerHome.html";
-								}
-							});
-					
-					console.log("Add new Restaurant end");
-				});
+					window.location.href = "SystemManagerHome.html";
+				}
+			});
+
+			console.log("Add new Restaurant end");
+		});
 // *********************************************************************************
-$(document)
-		.on(
-				'submit',
-				'.editInfoForm',
-				function(e) {
-					e.preventDefault();
-					console.log("Add new System Manager begin");
-					var email = $(this).find("input[name=eemail]").val();
-					var password = $(this).find("input[name=epassword]").val();
-					var name = $(this).find("input[name=ename]").val();
-					var surname = $(this).find("input[name=esurname]").val();
-					var nick = $(this).find("input[name=enick]").val();
-					$
-							.ajax({
-								type : 'POST',
-								url : getUpdSysManDataURL,
-								contentType : 'application/json',
-								dataType : "text",
-								data : formToJSONNewSysMan(nick, email, name,
-										surname, password),
-								success : function(data) {
+$(document).on('submit', '.editInfoForm', function(e) {
+	e.preventDefault();
+	console.log("Add new System Manager begin");
+	var email = $(this).find("input[name=eemail]").val();
+	var password = $(this).find("input[name=epassword]").val();
+	var name = $(this).find("input[name=ename]").val();
+	var surname = $(this).find("input[name=esurname]").val();
+	var nick = $(this).find("input[name=enick]").val();
+	$.ajax({
+		type : 'POST',
+		url : getUpdSysManDataURL,
+		contentType : 'application/json',
+		dataType : "text",
+		data : formToJSONNewSysMan(nick, email, name, surname, password),
+		success : function(data) {
 
-									window.location.href = "http://localhost:8080/SystemManagerHome.html";
-								}
-							});
-				});
+			window.location.href = "SystemManagerHome.html";
+		}
+	});
+});
 
 function formToJSONNewSysMan(system_manager_nick_id, manager_email,
 		manager_name, manager_last_name, manager_password) {
