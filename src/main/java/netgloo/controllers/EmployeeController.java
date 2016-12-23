@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import netgloo.dao.EmployeeDao;
 import netgloo.dao.UserDao;
 import netgloo.models.Employee;
+import netgloo.models.PassImmitation;
 import netgloo.models.SystemManager;
 import netgloo.models.User;
 import netgloo.models.UserProba;
@@ -28,6 +29,34 @@ public class EmployeeController {
 	
 	@Autowired
 	private UserDao userDao;
+	
+	@RequestMapping(value = "/hasChangedPass", method = RequestMethod.POST)
+	public String hasChgangedPass(HttpServletRequest request) {
+		try {
+			Employee emp = (Employee) request.getSession().getAttribute("employee");
+			if(emp!=null)
+			{
+				if(emp.getChangedPass()==false)
+				{
+					System.out.println("NO");
+					return "no";
+				}
+				else
+				{
+					System.out.println("YES");
+					return "yes";
+				}
+			}
+			else
+			{
+				return "yes";
+			}
+			//request.getSession().invalidate();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "yes";
+	}
 	
 	@RequestMapping(value = "/loginEmployee", method = RequestMethod.POST, headers = { "content-type=application/json" })
 	public String loginEmployee(@RequestBody UserProba user1, HttpServletRequest request) {
@@ -51,6 +80,33 @@ public class EmployeeController {
 				}
 				return user.getUser_role();
 			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return "EXCEPTION";
+		}
+		return "OK";
+	}
+	
+	@RequestMapping(value = "/changePass", method = RequestMethod.POST, headers = { "content-type=application/json" })
+	public String changePass(@RequestBody PassImmitation paIm, HttpServletRequest request) {
+
+		try {
+				System.out.println(paIm.getNewPassword());
+				Employee emp =(Employee) request.getSession().getAttribute("employee");
+				if(emp!=null)
+				{
+					User usr = emp.getUserId();
+					usr.setUserPassword(paIm.getNewPassword());
+					emp.setChangedPass(true);
+					
+					userDao.save(usr);
+					empDao.save(emp);
+				}
+				else
+				{
+					
+				}
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return "EXCEPTION";

@@ -5,6 +5,10 @@ var editGuest = "users/editGuest";
 var getWS = "workingShiftController/getWorkingShifts";
 var getOrders = "guestsOrderController/getOrders";
 
+var hasChangedPass = "employeeController/hasChangedPass";
+
+var changePass = "employeeController/changePass";
+
 
 $('#openBtn').click(function(){
     $('#myModal').modal({show:true})
@@ -15,6 +19,39 @@ $( document ).ready(function() {
 	//$('#guestProfilePanel').show();
 	$('#workingShiftCalendarPanel').hide();
 	$('#OrdersPanel').hide();
+	$('#changePasswordPanel').hide();
+	$('#changePassForm').hide();
+	console.log("Uslo do ovde..")
+	$.ajax(
+			{
+				type:'POST',
+				url:hasChangedPass,
+				//contentType : 'application/json',
+				dataType : "text",
+				//data : formToJSONWSRequest(startingDate,endingDate),
+				success : function(data)
+				{
+					console.log(data)
+					if(data=="no")
+						{
+							$('#working-shift-calendar-button').hide();
+							$('#orders-button').hide();
+							$('#changePasswordPanel').show();
+							$('#changePassForm').show();
+							//$('#working-shift-calendar-button').hide();
+							//$('#orders-button').hide();
+						}
+					else if(data=="yes")
+						{
+							$('#working-shift-calendar-button').show();
+							$('#orders-button').show();
+						}
+					//ordersPrint(data);
+					//console.log("XXXX1");
+					//workingShiftPrint(data);
+				}
+				
+		});
 	
 	//guestNamePrint();
 	//printGuestData();
@@ -86,6 +123,35 @@ $(document).on('submit','.wsDateForm',function(e)
 						{
 							console.log("XXXX1");
 							workingShiftPrint(data);
+						}
+						
+				});
+				
+});
+
+$(document).on('submit','.changePassForm',function(e)
+		{
+			e.preventDefault();
+			//var startingDate = $(this).find("input[name=startingDate]").val();
+			//var endingDate = $(this).find("input[name=endingDate]").val();
+			
+			var newPass = $(this).find("input[name=newPass]").val();
+			
+			$.ajax(
+					{
+						type:'POST',
+						url:changePass,
+						contentType : 'application/json',
+						dataType : "text",
+						data : formatToPassword(newPass),
+						success : function(data)
+						{
+							console.log("Izmjena passworda");
+							$('#working-shift-calendar-button').show();
+							$('#orders-button').show();
+							$('#changePasswordPanel').hide();
+							$('#changePassForm').hide();
+							//workingShiftPrint(data);
 						}
 						
 				});
@@ -208,6 +274,15 @@ function workingShiftPrint(data)
 }
 
 
+function formatToPassword(newPass)
+{
+	return JSON.stringify(
+			{
+				"newPassword":newPass
+			}
+			
+	);
+}
 
 
 function formToJSONWSRequest(startingDate, endingDate)

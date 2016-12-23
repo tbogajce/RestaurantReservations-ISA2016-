@@ -1,5 +1,6 @@
 package netgloo.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -41,24 +42,46 @@ public class Employee {
 	
 	@NotNull
 	private String employeeRate;
+	
+	@Column(nullable=true)
+	private Boolean changedPass;
 
-	public Employee(Long employee_id, User user_id, Restaurant restaurant_id, String employee_role,
-			String employee_confection_number, String employee_shoe_size, String employee_rate) {
+	
+
+	public Employee(Long employeeId, User userId, Restaurant restaurantId, String employeeRole,
+			String employeeConfectionNumber, String employeeShoeSize, String employeeRate, Boolean changedPass) {
 		super();
-		this.employeeId = employee_id;
-		this.userId = user_id;
-		this.restaurantId = restaurant_id;
-		this.employeeRole = employee_role;
-		this.employeeConfectionNumber = employee_confection_number;
-		this.employeeShoeSize = employee_shoe_size;
-		this.employeeRate = employee_rate;
+		this.employeeId = employeeId;
+		this.userId = userId;
+		this.restaurantId = restaurantId;
+		this.employeeRole = employeeRole;
+		this.employeeConfectionNumber = employeeConfectionNumber;
+		this.employeeShoeSize = employeeShoeSize;
+		this.employeeRate = employeeRate;
+		this.changedPass = changedPass;
 	}
+
+
 
 	public Employee() {
 		super();
 	}
 	
 	
+	
+	
+
+	public Boolean getChangedPass() {
+		return changedPass;
+	}
+
+
+
+	public void setChangedPass(Boolean changedPass) {
+		this.changedPass = changedPass;
+	}
+
+
 
 	public Long getEmployeeId() {
 		return employeeId;
