@@ -7,9 +7,58 @@
 <script type="text/javascript" src="js/logout.js"></script>
 
 <script src="js/bootstrap.min.js"></script>
+<script src="js/fabric.js"></script>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/registration.css" rel="stylesheet">
+<script>
+$(document).on('submit', '#tableBookingForm', function(e) {
+	  // Does some stuff and logs the event to the console
+	  		e.preventDefault();
+	  		var people = document.getElementById('peopleNum').value ;
+	  		console.log(people);
+            var canvas = new fabric.Canvas('canvas');
+            
+          	var num = 0;
+          	var top = 0;
+          	var brojac = 0;
+          	for(var i=1; i<=5; i++, num+=70) {
+          		for(var j=1; j<=4; j++, top+=70) {
+          			brojac++;
+          			if(people > brojac)
+          				var boja= 'green';
+          			else 
+          				var boja = 'red';
+          			if(j==1)
+          				top=0;
+          				
+          		var circle1 = new fabric.Circle({
+                	  radius: 25,
+                	  fill: boja
+                	});
+                  
+                  var text = new fabric.Text(brojac.toString(), {
+                  	  fontSize: 30,
+                  	  left: 17 ,
+                  	  top: 7  
+                  	});
+                	
+                	var group = new fabric.Group([ circle1, text ], {
+                	  left: 10 + num,
+                      top: 10 +top,
+                      lockMovementX :true,
+                      lockMovementY : true,
+                      lockScalingX : true,
+                      lockScalingY : true,
+                      lockRotation : true
+                	});
+                	canvas.add(group);
+          		}
+          	}
+          	
+
+});
+</script>
 </head>
 <body>
 
@@ -53,6 +102,85 @@
 		<!-- /.container-fluid -->
 	</nav>
 	<!--------------------------------- End Header -------------------------------------------->
+	
+	
+	<header class="panel-heading clearfix" style="width:800px; margin:auto">
+			<div class="form-center"><h4> FILL DATA FOR YOUR RESERVATION </h4></div>
+	</header>
+	
+	<div class="panel-body">
+	
+		<section class="pjRbSection">
 
+			<div class="pjRbSectionBody">
+				<div class="pjRbForm pjRbFormSearch">
+					<form id="tableBookingForm" action="" method="post">
+						<input type="hidden" name="step" value="1">
+						
+						<div class="row" >
+							
+							<div class="col-xs-2">
+								<div>
+									<label> <h5> Restaurant:</h5></label>
+									
+									<div class="form-group">
+										<select style="width:125px" class="form-control">
+  											<option value="kafemat">Kafemat</option>
+  											<option value="camelot">Camelot</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-xs-2">
+								<div>
+									<label> <h5> Date:</h5></label>
+									<div id="pjRbCalendarLocale" style="display: none;" data-months="January_February_March_April_May_June_July_August_September_October_November_December" data-days="Su_Mo_Tu_We_Th_Fr_Sa"></div>
+									<div class="form-group">
+										<input type="date" id="dateField" name="date" min="2017-01-01" max="2064-01-01" class="form-control" >
+									</div>
+								</div>
+							</div>
+
+							<div class="col-xs-2">
+								<div>
+									<label> <h5> Time: </h5></label>
+									<div>
+											<div class="form-group">
+												<input type="time" name="time" value="10:00" class="form-control" min="09:00:00" max="23:00:00">
+											</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-xs-2">
+								<div>
+									<label> <h5> People: </h5> </label>
+									
+									<div class="form-group">
+										<input type="number" id="peopleNum" name="people" class="form-control" min="1" max="20" step="1">
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-xs-2">
+								<div>
+									<label> </label>
+									
+									<div class="form-group">
+										<input type="submit" class="form-control btn btn-primary " value="Check availability" >
+									</div>
+								</div>
+							</div>
+
+						</div>
+						
+					</form>
+				</div>
+			</div>
+		</section>
+		
+	</div>
+	<canvas id="canvas" width="450" height="300"></canvas>
 </body>
 </html>
