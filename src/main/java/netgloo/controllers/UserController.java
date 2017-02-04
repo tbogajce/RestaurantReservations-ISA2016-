@@ -262,7 +262,9 @@ public class UserController {
 			User user = (User) request.getSession().getAttribute("user");
 			User user2 = userDao.findByEmail(user1.getEmail().trim());
 			Friendships f = new Friendships(user, user2, false);
+			//Friendships f1 = new Friendships(user2, user, false);
 			friendshipsDao.save(f);
+			//friendshipsDao.save(f1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -276,7 +278,9 @@ public class UserController {
 			User user = (User) request.getSession().getAttribute("user");
 			User user2 = userDao.findByEmail(user1.getEmail().trim());
 			Friendships f = friendshipsDao.findByLoveGiverAndLoveTaker(user, user2);
+			Friendships f1 = friendshipsDao.findByLoveGiverAndLoveTaker(user2, user);
 			friendshipsDao.delete(f);
+			friendshipsDao.delete(f1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -290,7 +294,9 @@ public class UserController {
 			User user = (User) request.getSession().getAttribute("user");
 			User user2 = userDao.findByEmail(user1.getEmail().trim());
 			Friendships f = friendshipsDao.findByLoveGiverAndLoveTaker(user2, user);
+			Friendships f1 = friendshipsDao.findByLoveGiverAndLoveTaker(user, user2);
 			friendshipsDao.delete(f);
+			friendshipsDao.delete(f1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -305,7 +311,10 @@ public class UserController {
 			User user2 = userDao.findByEmail(user1.getEmail().trim());
 			Friendships f = friendshipsDao.findByLoveGiverAndLoveTaker(user2, user);
 			f.setFriendship_accepted(true);
+			Friendships f1 = new Friendships(user, user2, true);
+			
 			friendshipsDao.save(f);
+			friendshipsDao.save(f1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
