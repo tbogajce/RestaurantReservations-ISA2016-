@@ -3,6 +3,10 @@ package netgloo.models;
 public class OrderImmitation {
 	
 	private Integer orderId;
+	
+	
+	// m - meal, b - beverage
+	private String whatIsIt;
 
 	private String whatWasOrdered;
 	
@@ -24,7 +28,7 @@ public class OrderImmitation {
 	}
 
 	public OrderImmitation(Integer orderId,String whatWasOrdered, Integer quantity, String note, String accepted, String done,
-			String employee, Long table) {
+			String employee, Long table,String whatIsIt) {
 		super();
 		this.orderId=orderId;
 		this.whatWasOrdered = whatWasOrdered;
@@ -34,9 +38,26 @@ public class OrderImmitation {
 		this.done = done;
 		this.employee = employee;
 		this.table = table;
+		this.whatIsIt=whatIsIt;
+	}
+	
+	public OrderImmitation(Integer orderId,String whatIsIt)
+	{
+		super();
+		this.orderId=orderId;
+		this.whatIsIt=whatIsIt;
 	}
 	
 	
+	
+
+	public String getWhatIsIt() {
+		return whatIsIt;
+	}
+
+	public void setWhatIsIt(String whatIsIt) {
+		this.whatIsIt = whatIsIt;
+	}
 
 	public Integer getOrderId() {
 		return orderId;

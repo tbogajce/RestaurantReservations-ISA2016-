@@ -4,6 +4,8 @@ var editGuest = "users/editGuest";
 
 var getWS = "workingShiftController/getWorkingShifts";
 var getOrders = "guestsOrderController/getOrders";
+var acceptedOrder = "guestsOrderController/acceptedOrder";
+var doneOrder = "guestsOrderController/doneOrder";
 
 var hasChangedPass = "employeeController/hasChangedPass";
 
@@ -97,6 +99,30 @@ $(document).on('click', '#orders-button', function(e) {
 	//printFriends();
 });
 
+function showOrdersx()
+{
+	$('#workingShiftCalendarPanel').hide();
+	$('#ws-date-pick-form').hide();
+	$('#OrdersPanel').show();
+	
+	$.ajax(
+			{
+				type:'POST',
+				url:getOrders,
+				//contentType : 'application/json',
+				dataType : "text",
+				//data : formToJSONWSRequest(startingDate,endingDate),
+				success : function(data)
+				{
+					
+					ordersPrint(data);
+					//console.log("XXXX1");
+					//workingShiftPrint(data);
+				}
+				
+		});
+}
+
 /*
 $(document).on('click', '#friendRequestsButton', function(e) {
 	$('.guestName').empty();
@@ -167,6 +193,7 @@ function ordersPrint(data)
 	//var brojac = 0;
 	console.log(data);
 	data = $.parseJSON(data);
+	var brojacxx=0;
 	var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
 	$.each(
 					list,
@@ -181,24 +208,57 @@ function ordersPrint(data)
 						var employee = wsofl.employee;
 						var table = wsofl.table;
 						var orderId = wsofl.orderId;
+						var whatIsIt = wsofl.whatIsIt;
 						
 						if(accepted =="")
 							{
-							accepted='<form id="acceptedForm" action="" method="post" role="form" class="acceptedForm" >'
-								+'<input type="hidden" id="orderID" value="'+orderId+'" >'
-								+'<input type="submit" name="accepted-submit" id="accepted-submit" tabindex="7" class="form-control btn btn-success" value="Accept">'
+							/*
+							accepted = ' <script language = "text/javascript">'
+								+	'var acceptedOrder = "guestsOrderController/acceptedOrder";'
+								+	'$(document).on("submit","acceptedForm'+orderId+'",function(e)'
+								+	'{'
+								+	'e.preventDefault();'
+								+	'console.log("OVO SE KAO POZVALO NESTO xx");'
+								+	'var orderxxID = $(this).find("input[name=orderIDh]").val();'
+								+	'$.ajax({'
+								+	'type: "POST" , url:acceptedOrder,'
+								+	'contentType : "application/json",'
+								
+								+	'data : formatToOrderID(orderId),'
+								+	'success : function()'
+								+	'{'
+								+	'console.log("OVO SE KAO POZVALO NESTO");'
+								+	'showOrdersx()'
+								+	'}'
+								+	'});'
+								+	'});'
+								+ '</script> ';
+								*/
+								
+							accepted=/*accepted+*/' <form id="acceptedForm" action="" method="post" role="form" class="acceptedForm" >'
+								+'<input type="hidden" id="orderIDh" name="orderIDh" value="'+orderId+'" >'
+								+'<input type="hidden" id="whatIsIt" name="whatIsIt" value="'+whatIsIt+'" >'
+								+'<input type="submit" name="accepted-submit" id="accepted-submit" tabindex="7" role="button" class="form-control btn btn-success" value="Accept">'
 								+'</form>';
 								//Console.
 								//accepted="Something";
+							
+							done="";
+							
+							
 							}
-						if(done =="")
+						else
 							{
-								//done="Something2"
-								done='<form id="doneForm" action="" method="post" role="form" class="doneForm" >'
-									+'<input type="hidden" id="orderID" value="'+orderId+'" >'
-									+'<input type="submit" name="done-submit" id="done-submit" tabindex="7" class="form-control btn btn-success" value="Done">'
-									+'</form>';
+								if(done =="")
+								{
+									//done="Something2"
+									done='<form id="doneForm" action="" method="post" role="form" class="doneForm" >'
+										+'<input type="hidden" id="orderID" name="orderIDh" value="'+orderId+'" >'
+										+'<input type="submit" name="done-submit" role="button" id="done-submit" tabindex="7" class="form-control btn btn-success" value="Done">'
+										+'</form>';
+								}
 							}
+						
 						
 						
 						
@@ -235,6 +295,52 @@ function ordersPrint(data)
 	});
 	console.log("XXXX4");
 }
+
+
+$(document).on('click', '.acceptedForm',function(e)
+{
+	e.preventDefault();
+	console.log('accepted this thingy thing');
+	var orderxxID = $(this).find("input[name=orderIDh]").val();
+	var whatIsItxx = $(this).find("input[name=whatIsIt]").val();
+	console.log(orderxxID);
+	console.log(whatIsItxx);
+	$.ajax({
+		type:'POST',
+		url: acceptedOrder,
+		contentType:'application/json',
+		data: formatToOrderID(orderxxID),
+		success : function()
+		{
+			showOrdersx();
+		}
+		
+	});
+	
+});
+
+$(document).on('click', '.doneForm',function(e)
+		{
+			e.preventDefault();
+			console.log('accepted this thingy thing');
+			var orderxxID = $(this).find("input[name=orderIDh]").val();
+			var whatIsItxx = $(this).find("input[name=whatIsIt]").val();
+			console.log(orderxxID);
+			console.log(whatIsItxx);
+			$.ajax({
+				type:'POST',
+				url: doneOrder,
+				contentType:'application/json',
+				data: formatToOrderID(orderxxID),
+				success : function()
+				{
+					showOrdersx();
+				}
+				
+			});
+			
+		});
+
 
 function workingShiftPrint(data)
 {
@@ -281,6 +387,15 @@ function formatToPassword(newPass)
 				"newPassword":newPass
 			}
 			
+	);
+}
+
+function formatToOrderID(orderxxxx)
+{
+	return JSON.stringify(
+			{
+				"orderId":orderxxxx	
+			}
 	);
 }
 
