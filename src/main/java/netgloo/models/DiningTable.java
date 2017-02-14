@@ -1,5 +1,6 @@
 package netgloo.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,15 +40,33 @@ public class DiningTable {
 	@JoinColumn(name="segment", referencedColumnName="segmentID", nullable=false)
 	private Segment segment;
 	
+	@Column(nullable =true)
 	private String note;
 	
+	
 	private Boolean occupied;
+	
+	
+	//s lijeva na desno
+	@Column(name="positionX", nullable =true)
+	private int positionX;
+	
+	
+	//ozgo ka dole
+	@Column(name = "positionY", nullable =true)
+	private int positionY;
 
 
 	
 
+	
+	
+	
+
+	
+	
 	public DiningTable(Long generalTableID, Restaurant restaurant, Long tableNumberInRestaurant, Integer numberOfSeats,
-			Area area, Segment segment, String note, Boolean occupied) {
+			Area area, Segment segment, String note, Boolean occupied, int positionX, int positionY) {
 		super();
 		this.generalTableID = generalTableID;
 		this.restaurant = restaurant;
@@ -57,12 +76,46 @@ public class DiningTable {
 		this.segment = segment;
 		this.note = note;
 		this.occupied = occupied;
+		this.positionX = positionX;
+		this.positionY = positionY;
 	}
-	
-	
 
-	
-	
+
+
+
+
+	public int getPositionX() {
+		return positionX;
+	}
+
+
+
+
+
+	public void setPositionX(int positionX) {
+		this.positionX = positionX;
+	}
+
+
+
+
+
+	public int getPositionY() {
+		return positionY;
+	}
+
+
+
+
+
+	public void setPositionY(int positionY) {
+		this.positionY = positionY;
+	}
+
+
+
+
+
 	public DiningTable() {
 		super();
 		// TODO Auto-generated constructor stub

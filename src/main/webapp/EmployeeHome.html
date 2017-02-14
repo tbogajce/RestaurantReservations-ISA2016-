@@ -58,6 +58,7 @@
 			<ul class="nav nav-pills nav-stacked">
 				<li><a href="#" id="working-shift-calendar-button">Working Shift Calendar</a></li>
 				<li><a href="#" id="orders-button">Orders</a></li>
+				<li><a href="#" id="tables-button">View Tables</a></li>
 				
 			</ul>
 		</div>
@@ -201,6 +202,68 @@
 												</tbody>
 											</table>
 										</form>
+								</div>
+								</div>
+							</div>
+							<!-- / panel preview -->
+
+						</div>
+					</div>
+				</div>
+				<!-------------------------------- END prvo prikazi tabelu kupac --------------------------------------->
+			</div> 
+			
+			
+			
+			<div class="panel panel-default" id="TablesPanel">  
+				<div class="panel-heading">Tables panel: </div>
+				<div class="panel-body">
+					<!------------------------------------ prvo prikazi tabelu kupac --------------------------------------------->
+					<div class="container" style="margin-left: -60px;">
+
+						<hr>
+
+						<div class="row">
+							<div class="panel panel-primary filterable">
+								<div class="panel-heading">
+								</div>
+								<div class="panel-body">
+								<!-- panel preview -->
+								<div class="col-sm-7" style="margin-left: 200px;">
+									<h4>Select area:</h4>
+									
+										<form id="area-pick-form" action="" method="post" role="form" class="areaForm" style="display: none;">
+											
+											
+											
+											<select  id="areaSelect" name="areaSelect">
+  												
+											</select>
+												
+											
+											
+											<div class="form-group">
+												<div class="row">
+													<div class="col-sm-6 col-sm-offset-3">
+														<input type="submit" name="area-submit" id="area-submit" tabindex="7" class="form-control btn btn-success" value="See Area tables">
+													</div>
+												</div>
+											</div>
+										</form>		
+																	
+										<div>
+										
+										<table class="table" border="4">
+										
+										<tbody id="tablesData">
+													<!-- guests friends list -->
+										</tbody>
+										
+										</table>
+										
+										
+										</div>
+										
 								</div>
 								</div>
 							</div>

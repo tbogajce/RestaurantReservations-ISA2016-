@@ -1,5 +1,6 @@
 package netgloo.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -24,19 +25,63 @@ public class Area {
 	@NotNull
 	private String areaName;
 	
-	@NotNull
-	private String areaSpace;
 	
-	private String note;
-
-	public Area(Long areaID, Restaurant restaurant, String areaName, String areaSpace, String note) {
+	//DO NOT USE THIS ANYMORE
+	//@NotNull
+	//private String areaSpace;
+	
+	
+	
+	// s lijeva na desno koliko celija
+	@Column(name = "spaceX", nullable =true)
+	private int spaceX;
+	
+	
+	//ozgo ka dole koliko celija
+	@Column(name = "spaceY",nullable =true)
+	private int spaceY;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public Area(Long areaID, Restaurant restaurant, String areaName, int spaceX, int spaceY, String note) {
 		super();
 		this.areaID = areaID;
 		this.restaurant = restaurant;
 		this.areaName = areaName;
-		this.areaSpace = areaSpace;
+		this.spaceX = spaceX;
+		this.spaceY = spaceY;
 		this.note = note;
 	}
+	
+	
+
+	public int getSpaceX() {
+		return spaceX;
+	}
+
+	public void setSpaceX(int spaceX) {
+		this.spaceX = spaceX;
+	}
+
+	public int getSpaceY() {
+		return spaceY;
+	}
+
+	public void setSpaceY(int spaceY) {
+		this.spaceY = spaceY;
+	}
+
+
+
+	private String note;
+
+
 	
 	public Area()
 	{
@@ -69,13 +114,7 @@ public class Area {
 		this.areaName = areaName;
 	}
 
-	public String getAreaSpace() {
-		return areaSpace;
-	}
 
-	public void setAreaSpace(String areaSpace) {
-		this.areaSpace = areaSpace;
-	}
 
 	public String getNote() {
 		return note;

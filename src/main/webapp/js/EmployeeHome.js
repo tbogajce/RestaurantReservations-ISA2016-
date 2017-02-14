@@ -7,6 +7,9 @@ var getOrders = "guestsOrderController/getOrders";
 var acceptedOrder = "guestsOrderController/acceptedOrder";
 var doneOrder = "guestsOrderController/doneOrder";
 
+var getAreas = "tablesAndBillController/getAreas";
+var getAreaTables = "tablesAndBillController/getAreaTables";
+
 var hasChangedPass = "employeeController/hasChangedPass";
 
 var changePass = "employeeController/changePass";
@@ -23,14 +26,16 @@ $( document ).ready(function() {
 	$('#OrdersPanel').hide();
 	$('#changePasswordPanel').hide();
 	$('#changePassForm').hide();
+	$('#TablesPanel').hide();
+	$('#area-pick-form').hide();
 	console.log("Uslo do ovde..")
 	$.ajax(
 			{
 				type:'POST',
 				url:hasChangedPass,
-				//contentType : 'application/json',
+				
 				dataType : "text",
-				//data : formToJSONWSRequest(startingDate,endingDate),
+				
 				success : function(data)
 				{
 					console.log(data)
@@ -38,37 +43,83 @@ $( document ).ready(function() {
 						{
 							$('#working-shift-calendar-button').hide();
 							$('#orders-button').hide();
+							$('#tables-button').hide();
+							$('#area-pick-form').hide();
 							$('#changePasswordPanel').show();
 							$('#changePassForm').show();
-							//$('#working-shift-calendar-button').hide();
-							//$('#orders-button').hide();
+							
 						}
 					else if(data=="yes")
 						{
 							$('#working-shift-calendar-button').show();
 							$('#orders-button').show();
+							$('#tables-button').show();
 						}
-					//ordersPrint(data);
-					//console.log("XXXX1");
-					//workingShiftPrint(data);
+					
 				}
 				
 		});
 	
-	//guestNamePrint();
-	//printGuestData();
+	
 });
 
 $(document).on('click', '#working-shift-calendar-button', function(e) {
-	//$('.guestName').empty();
+	
 	$('#workingShiftCalendarPanel').show();
 	$('#ws-date-pick-form').show();
-	
 	$('#OrdersPanel').hide();
-	//$('#friendRequestsPanel').hide();
+	$('#TablesPanel').hide();
+	$('#area-pick-form').hide();
 	
-	//guestNamePrint();
-	//printGuestData();
+	
+});
+
+$(document).on('click', '#tables-button',function(e){
+	
+	//console.log("Uslo u tables thingy")
+	//e.preventDefault();
+	$('#workingShiftCalendarPanel').hide();
+	$('#ws-date-pick-form').hide();
+	$('#OrdersPanel').hide();
+	
+	
+	
+	console.log("Uslo u tables thingy")
+	$.ajax(
+	
+			{
+				type:'POST',
+				url:getAreas,
+				dataType:"text",
+				success : function(data)
+				{
+					console.log(data);
+					data = $.parseJSON(data);
+					
+					var text="";
+					$('#areaSelect').empty();
+					
+					var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
+					$.each(
+									list,
+									function(index, wsofl) {
+										
+										var areaName = wsofl.areaName;
+										var restaurantName = wsofl.restaurantName;
+										var areaID = wsofl.areaID;
+										var restaurantID = wsofl.restaurantID;
+										
+										text= ' <option value="'+areaID+'">'+areaName+', '+restaurantName+'</option>';
+										$('#areaSelect').append(text);
+									}
+						);
+					
+					
+				}
+			}
+	);
+	$('#TablesPanel').show();
+	$('#area-pick-form').show();
 	
 });
 
@@ -76,27 +127,23 @@ $(document).on('click', '#orders-button', function(e) {
 	//$('.guestName').empty();
 	$('#workingShiftCalendarPanel').hide();
 	$('#ws-date-pick-form').hide();
+	$('#TablesPanel').hide();
 	$('#OrdersPanel').show();
+	$('#area-pick-form').hide();
 	
 	$.ajax(
 			{
 				type:'POST',
 				url:getOrders,
-				//contentType : 'application/json',
 				dataType : "text",
-				//data : formToJSONWSRequest(startingDate,endingDate),
 				success : function(data)
 				{
-					
 					ordersPrint(data);
-					//console.log("XXXX1");
-					//workingShiftPrint(data);
+
 				}
 				
 		});
-	//$('#friendRequestsPanel').hide();
-	
-	//printFriends();
+
 });
 
 function showOrdersx()
@@ -104,6 +151,8 @@ function showOrdersx()
 	$('#workingShiftCalendarPanel').hide();
 	$('#ws-date-pick-form').hide();
 	$('#OrdersPanel').show();
+	$('#TablesPanel').hide();
+	$('#area-pick-form').hide();
 	
 	$.ajax(
 			{
@@ -154,6 +203,234 @@ $(document).on('submit','.wsDateForm',function(e)
 				});
 				
 });
+
+
+$(document).on('submit','.areaForm',function(e)
+		{
+			e.preventDefault();
+			
+			var e = document.getElementById("areaSelect");
+			var areaID = e.options[e.selectedIndex].value;
+			
+			$.ajax(
+					{
+						type:'POST',
+						url:getAreaTables,
+						contentType : 'application/json',
+						dataType : "text",
+						data : formatToAreaImmitation(areaID),
+						success : function(data)
+						{
+							console.log("USLO U OVO ZA STOLOVE");
+							//workingShiftPrint(data);
+							
+							printTables(data);
+						}
+				});	
+});
+
+function printTables(data)
+{
+	console.log(data);
+	data = $.parseJSON(data);
+	var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
+	
+	var areaSizeX;
+	var areaSizeY;
+	
+	$.each(list,function(index,wsofl)
+	{
+		areaSizeX=wsofl.areaSizeX;
+		areaSizeY=wsofl.areaSizeY;
+	});
+	
+	
+	console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+	console.log(areaSizeX);
+	console.log(areaSizeY);
+	
+	var listx=[];
+	
+	
+	$.each(
+					list,
+					function(index, wsofl) {
+						
+						var isOccupied = wsofl.occupied;
+						var positionX = wsofl.positionX;
+						var positionY = wsofl.positionY;
+						var tableID = wsofl.generalTableID;
+						var resTableID = wsofl.resTableID;
+						
+						var singleTable = {};
+							singleTable['isOccupied']=isOccupied;
+							singleTable['positionX']=positionX;
+							singleTable['positionY']=positionY;
+							singleTable['tableID']=tableID;
+							singleTable['resTableID'] = resTableID;
+							
+							listx.push(singleTable);
+						
+						
+/*
+						var listOfObjects = [];
+						var a = ["car", "bike", "scooter"];
+						a.forEach(function(entry) {
+						    var singleObj = {}
+						    singleObj['type'] = 'vehicle';
+						    singleObj['value'] = entry;
+						    listOfObjects.push(singleObj);
+						});
+
+						console.log(listOfObjects);
+*/
+						
+/*
+						var list = [
+						    { date: '12/1/2011', reading: 3, id: 20055 },
+						    { date: '13/1/2011', reading: 5, id: 20053 },
+						    { date: '14/1/2011', reading: 6, id: 45652 }
+						];
+
+						and then access it:
+
+						alert(list[1].date);
+
+*/
+						
+						console.log("-----------");
+						console.log(isOccupied);
+						console.log(positionX);
+						console.log(positionY);
+						console.log(tableID);
+						
+						//var tr = $('<tr></tr>');
+						//tr.append()
+						
+						/*
+						console.log("XXXX2");
+						console.log(wsofl.name);
+						var tr = $('<tr></tr>');
+						tr.append(		'<td>'
+										+ wsofl.name
+										+ '</td>'
+										+ '<td>'
+										+ wsofl.lastName
+										+ '</td>'
+										+ '<td>'
+										+ wsofl.start
+										+ '</td>'
+										+ '<td>'
+										+ wsofl.finish
+										+ '</td>'
+								);
+						
+						$('#workShiftData').append(tr);
+						console.log("XXXX3");
+						//brojac = brojac + 1;
+						*/
+	});
+	
+	
+	/*for (i = 0; i < cars.length; i++) {
+    text += cars[i] + "<br>";
+}*/
+	
+	$('#tablesData').empty();
+	
+	for( var i = 0; i< areaSizeX; i++)
+		{
+			var tr = $('<tr></tr>');
+			for(var j = 0; j<areaSizeY; j++)
+				{
+				
+					var naslo=false;
+					var id;
+					var oc;
+					
+					
+					// OVO JE ID STOLA U RESTORANU ....
+					//podsjecanje : svaki sto ima svoj generalni ID ali isto tako ima i ID koji sluzi samo estetski za prikaz u restoranu ... cisto da ne bi pisalo za neki restoran da ima sto broj 7765 ili tako nesto... znaci ovo je estetika samo i nema nikakvu vecu funkcionalnost
+					
+					var resTID;
+					listx.some(function(thingy)
+					{
+						var x = thingy.positionX;
+						console.log("x = "+x);
+						var y = thingy.positionY;
+						console.log("y = "+y);
+						
+						if(x==i && y==j)
+							{
+								naslo=true;
+								id= thingy.tableID
+								oc =  thingy.isOccupied;
+								resTID = thingy.resTableID;
+								return true;
+								
+								
+							}
+						else
+							{
+								naslo=false;
+								
+							}
+					});
+					
+					if(naslo==true)
+						{
+						
+						if(oc==true)
+							{
+							var tekstic = '<td height="60",width="60", bgcolor="#FF0000"><form id="tableForm" action="" method="post" role="form" class="tableForm" >'
+								+'<input type="hidden" id="tableID" name="tableID" value="'+id+'" >'
+								+'<input type="hidden" id="oc" name="oc" value="'+oc+'" >'
+								+'<input type="submit" name="tab-submit" id="tab-submit" tabindex="7" role="button" class="form-control btn btn-success" value="'+resTID+'">'
+								+'</form></td>';
+							}
+						else
+							{
+							var tekstic = '<td height="60",width="60", bgcolor="#7FFF00"><form id="tableForm" action="" method="post" role="form" class="tableForm" >'
+								+'<input type="hidden" id="tableID" name="tableID" value="'+id+'" >'
+								+'<input type="hidden" id="oc" name="oc" value="'+oc+'" >'
+								+'<input type="submit" name="tab-submit" id="tab-submit" tabindex="7" role="button" class="form-control btn btn-success" value="'+resTID+'">'
+								+'</form></td>';
+							}
+						
+						
+						
+							//var text= ' <td>Thingy</td>'
+							console.log("jednako");
+							tr.append(tekstic)
+						}
+					else
+						{
+							tr.append('<td bgcolor="#696969", height="60",width="60"></td>')
+						}
+				
+				
+				}
+			$('#tablesData').append(tr);
+		
+		}
+	
+	
+	
+	console.log("XXXX4");
+	console.log(listx);
+}
+
+
+function formatToAreaImmitation(areaID)
+{
+	return JSON.stringify(
+			{
+				"areaID":areaID	
+			}
+	);
+}
+
+
 
 $(document).on('submit','.changePassForm',function(e)
 		{
@@ -338,6 +615,43 @@ $(document).on('click', '.doneForm',function(e)
 				}
 				
 			});
+			
+		});
+
+//tableForm
+
+$(document).on('click', '.tableForm',function(e)
+		{
+			e.preventDefault();
+			//console.log('accepted this thingy thing');
+			var tableID = $(this).find("input[name=tableID]").val();
+			var oc = $(this).find("input[name=oc]").val();
+			//console.log(orderxxID);
+			//console.log(whatIsItxx);
+			
+			if(oc==true)
+				{
+					alert("ovaj sto je zauzet ... eto...");
+				}
+			else
+				{
+					alert("ovaj sto nije zauzet ... ");
+				}
+			
+			
+			/*
+			$.ajax({
+				type:'POST',
+				url: doneOrder,
+				contentType:'application/json',
+				data: formatToOrderID(orderxxID),
+				success : function()
+				{
+					showOrdersx();
+				}
+				
+			});
+			*/
 			
 		});
 
