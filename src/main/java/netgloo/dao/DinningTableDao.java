@@ -19,5 +19,6 @@ public interface DinningTableDao extends CrudRepository<DiningTable, Long>{
 	//public ArrayList<DiningTable> findAllByArea(Long areaID);
 	
 	public ArrayList<DiningTable> findAllByArea(Area area);
+	public DiningTable findByGeneralTableID(Long generalTableID);
 
 }

@@ -60,6 +60,11 @@ public class Restaurant {
 		this.restaurantVisitsNumber = restaurantVisitsNumber;
 		this.restaurantIncome = restaurantIncome;
 	}
+	
+	public Restaurant(Long restaurantId) {
+		super();
+		this.restaurantId = restaurantId;
+	}
 
 	public Restaurant() {
 		super();
