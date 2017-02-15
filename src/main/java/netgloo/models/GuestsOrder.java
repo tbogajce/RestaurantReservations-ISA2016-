@@ -45,6 +45,11 @@ public class GuestsOrder {
 	@Column(nullable=true)
 	private Boolean IsPaid;
 	
+	@JsonBackReference("tableReservation-guestsOrder")
+	@ManyToOne
+	@JoinColumn(name="tableReservation", referencedColumnName="tableReservationId", nullable=false)
+	private TableReservation tableReservation;
+	
 	
 	private Timestamp orderReceivedTime;
 
