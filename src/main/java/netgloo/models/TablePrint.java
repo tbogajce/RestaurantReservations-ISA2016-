@@ -10,6 +10,23 @@ public class TablePrint {
 	public int areaSizeX;
 	public int areaSizeY;
 	public Long resTableID;
+	public Long areaID;
+	
+	
+	
+	
+	public Long getResTableID() {
+		return resTableID;
+	}
+	public void setResTableID(Long resTableID) {
+		this.resTableID = resTableID;
+	}
+	public Long getAreaID() {
+		return areaID;
+	}
+	public void setAreaID(Long areaID) {
+		this.areaID = areaID;
+	}
 	public Long getGeneralTableID() {
 		return generalTableID;
 	}
@@ -47,7 +64,7 @@ public class TablePrint {
 		this.areaSizeY = areaSizeY;
 	}
 	public TablePrint(Long generalTableID, boolean occupied, int positionX, int positionY, int areaSizeX,
-			int areaSizeY, Long resTableID) {
+			int areaSizeY, Long resTableID, Long areaID) {
 		super();
 		this.generalTableID = generalTableID;
 		this.occupied = occupied;
@@ -56,6 +73,7 @@ public class TablePrint {
 		this.areaSizeX = areaSizeX;
 		this.areaSizeY = areaSizeY;
 		this.resTableID=resTableID;
+		this.areaID=areaID;
 	}
 	
 	

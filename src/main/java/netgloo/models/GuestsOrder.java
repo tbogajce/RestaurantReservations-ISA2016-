@@ -34,7 +34,7 @@ public class GuestsOrder {
 	
 	@JsonBackReference("user-guestsOrder")
 	@ManyToOne
-	@JoinColumn(name="guest", referencedColumnName="userId", nullable=false)
+	@JoinColumn(name="guest", referencedColumnName="userId", nullable=true)
 	private User guest;
 	
 	@JsonBackReference("diningTable-guestsOrder")
@@ -47,7 +47,7 @@ public class GuestsOrder {
 	
 	@JsonBackReference("tableReservation-guestsOrder")
 	@ManyToOne
-	@JoinColumn(name="tableReservation", referencedColumnName="tableReservationId", nullable=false)
+	@JoinColumn(name="tableReservation", referencedColumnName="tableReservationId", nullable=true)
 	private TableReservation tableReservation;
 	
 	

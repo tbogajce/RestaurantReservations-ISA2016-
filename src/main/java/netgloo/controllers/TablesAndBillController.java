@@ -40,6 +40,19 @@ public class TablesAndBillController {
 	private ArrayList<AreaImmitation> areasList = new ArrayList<AreaImmitation>();
 	
 	
+	@RequestMapping(value = "/occupyTable", method = RequestMethod.POST)
+	public void  occupyTable(@RequestBody TablePrint  tp, HttpServletRequest request)
+	{
+		Long idStola  = tp.generalTableID;
+		DiningTable dtable = dtDao.findOne(idStola);
+		dtable.setOccupied(true);
+		System.out.println(dtable.getGeneralTableID());
+		dtDao.save(dtable);
+		
+		//return "ok";
+	}
+	
+	
 	@RequestMapping(value = "/getAreas", method = RequestMethod.POST)
 	public ArrayList<AreaImmitation> getAreas(HttpServletRequest request) {
 		//friends.clear();
@@ -82,7 +95,7 @@ public class TablesAndBillController {
 		
 		for(DiningTable dt: dtList)
 		{
-			tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant()));
+			tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID()));
 		}
 		
 		for(DiningTable dt: dtList)

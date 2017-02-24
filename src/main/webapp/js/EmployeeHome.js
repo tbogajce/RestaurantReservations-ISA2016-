@@ -14,6 +14,8 @@ var hasChangedPass = "employeeController/hasChangedPass";
 
 var changePass = "employeeController/changePass";
 
+var occupyTableThingUrl = "tablesAndBillController/occupyTable";
+
 
 $('#openBtn').click(function(){
     $('#myModal').modal({show:true})
@@ -73,6 +75,11 @@ $(document).on('click', '#working-shift-calendar-button', function(e) {
 	
 	
 });
+
+
+
+	
+
 
 $(document).on('click', '#tables-button',function(e){
 	
@@ -205,6 +212,29 @@ $(document).on('submit','.wsDateForm',function(e)
 });
 
 
+function printTables2(areaID)
+{
+	//e.preventDefault();
+	$.ajax(
+			{
+				type:'POST',
+				url:getAreaTables,
+				contentType : 'application/json',
+				dataType : "text",
+				data : formatToAreaImmitation(areaID),
+				success : function(data)
+				{
+					//e.preventDefault();
+					console.log("USLO U OVO ZA STOLOVE");
+					//workingShiftPrint(data);
+					
+					console.log(" Print Tables 2")
+					printTables(data);
+				}
+		});	
+}
+
+
 $(document).on('submit','.areaForm',function(e)
 		{
 			e.preventDefault();
@@ -261,6 +291,7 @@ function printTables(data)
 						var positionY = wsofl.positionY;
 						var tableID = wsofl.generalTableID;
 						var resTableID = wsofl.resTableID;
+						var aID = wsofl.areaID;
 						
 						var singleTable = {};
 							singleTable['isOccupied']=isOccupied;
@@ -268,6 +299,7 @@ function printTables(data)
 							singleTable['positionY']=positionY;
 							singleTable['tableID']=tableID;
 							singleTable['resTableID'] = resTableID;
+							singleTable['areaID'] = aID;
 							
 							listx.push(singleTable);
 						
@@ -366,6 +398,7 @@ function printTables(data)
 								id= thingy.tableID
 								oc =  thingy.isOccupied;
 								resTID = thingy.resTableID;
+								areaID = thingy.areaID;
 								return true;
 								
 								
@@ -385,6 +418,7 @@ function printTables(data)
 							var tekstic = '<td height="60",width="60", bgcolor="#FF0000"><form id="tableForm" action="" method="post" role="form" class="tableForm" >'
 								+'<input type="hidden" id="tableID" name="tableID" value="'+id+'" >'
 								+'<input type="hidden" id="oc" name="oc" value="'+oc+'" >'
+								+'<input type="hidden" id="areaID" name="areaID" value="'+areaID+'" >'
 								+'<input type="submit" name="tab-submit" id="tab-submit" tabindex="7" role="button" class="form-control btn btn-success" value="'+resTID+'">'
 								+'</form></td>';
 							}
@@ -393,6 +427,7 @@ function printTables(data)
 							var tekstic = '<td height="60",width="60", bgcolor="#7FFF00"><form id="tableForm" action="" method="post" role="form" class="tableForm" >'
 								+'<input type="hidden" id="tableID" name="tableID" value="'+id+'" >'
 								+'<input type="hidden" id="oc" name="oc" value="'+oc+'" >'
+								+'<input type="hidden" id="areaID" name="areaID" value="'+areaID+'" >'
 								+'<input type="submit" name="tab-submit" id="tab-submit" tabindex="7" role="button" class="form-control btn btn-success" value="'+resTID+'">'
 								+'</form></td>';
 							}
@@ -618,27 +653,88 @@ $(document).on('click', '.doneForm',function(e)
 			
 		});
 
-//tableForm
+$(document).on('click', '.zauzmiSto',function(e)
+{
+	e.preventDefault();
+	var tableID = $(this).find("input[name=tableIDw]").val();
+	var areaID = $(this).find("input[name=areaID]").val();
+	console.log("zauzmi Sto");
+	console.log(areaID);
+	$.ajax({
+		type:'POST',
+		url : occupyTableThingUrl,
+		contentType:'application/json',
+		dataType : "text",
+		data: formatToTablePrintID(tableID),
+		success : function(data)
+		{
+			console.log("ovoe");
+			//$('#tablesData').empty();
+			printTables2(areaID);
+			$('#choseWhat').empty();
+			console.log("ovoe 2");
+			
+		}	
+	});
+		
+});
 
 $(document).on('click', '.tableForm',function(e)
 		{
+			//console.log("did something")
+			console.log("JEL SE POZOVE UOPSTE OVO?")
 			e.preventDefault();
 			//console.log('accepted this thingy thing');
 			var tableID = $(this).find("input[name=tableID]").val();
 			var oc = $(this).find("input[name=oc]").val();
+			var areaID = $(this).find("input[name=areaID]").val();
 			//console.log(orderxxID);
 			//console.log(whatIsItxx);
 			
-			if(oc==true)
-				{
-					alert("ovaj sto je zauzet ... eto...");
-				}
-			else
-				{
-					alert("ovaj sto nije zauzet ... ");
-				}
+			
+			console.log(typeof oc);
+			
+			if(oc=="true")
+			{
+			//console.log("OC JE TRUE");
+			//console.log("zasto se ne izvrsi");
+				$('#choseWhat').empty();
+			//alert("ovaj sto je zauzet ... eto...");
+			
+			//$('#choseWhat').empty();
+			}
+			else if(oc == "false")
+			{
+				//console.log("OC JE FALSE");
+				//alert("ovaj sto nije zauzet x ... ");
+				$('#choseWhat').empty();
+				tekst_za_append='<form id="zauzmiSto" action="" method="post" role="form" class="zauzmiSto" >'
+					+'<input type="hidden" id="tableIDw" name="tableIDw" value="'+tableID+'" >'
+					+'<input type="hidden" id="areaID" name="areaID" value="'+areaID+'" >'
+					+'<input type="submit" name="zauzmiSto-submit" role="button" id="zauzmiSto-submit" tabindex="7" class="form-control btn btn-success" value="Occupy Table">'
+					+'</form>';
+				
+				$('#choseWhat').append(tekst_za_append);
+				console.log("Wut mate? u wut?");
+				//$('#choseWhat').show();	
+			}
 			
 			
+			console.log(areaID);
+			console.log(oc);
+			
+			/*
+			if(oc=="true")
+				{
+				
+					console.log("STVARNI TRUE");
+					
+				}
+			else if(oc== "false")
+				{
+					console.log("STVARNI FALSE");
+				}
+				*/
 			/*
 			$.ajax({
 				type:'POST',
@@ -691,6 +787,16 @@ function workingShiftPrint(data)
 						//brojac = brojac + 1;
 	});
 	console.log("XXXX4");
+}
+
+function formatToTablePrintID(idXXX)
+{
+	return JSON.stringify(
+			{
+				"generalTableID":idXXX
+			}
+			);
+	
 }
 
 
