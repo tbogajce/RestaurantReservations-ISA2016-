@@ -16,6 +16,17 @@ var changePass = "employeeController/changePass";
 
 var occupyTableThingUrl = "tablesAndBillController/occupyTable";
 
+var seeAllTableOrders = "tablesAndBillController/seeAllTableOrders";
+var removeSomeOrder = "tablesAndBillController/removeSomeOrder";
+var getAllRestaurantBeverages = "tablesAndBillController/getAllRestaurantBeverages";
+var getAllRestaurantMeals = "tablesAndBillController/getAllRestaurantMeals";
+var addNewSomeOrder = "tablesAndBillController/addNewSomeOrder";
+
+var createBill = "tablesAndBillController/createBill";
+
+
+var goidforever;
+
 
 $('#openBtn').click(function(){
     $('#myModal').modal({show:true})
@@ -215,6 +226,7 @@ $(document).on('submit','.wsDateForm',function(e)
 function printTables2(areaID)
 {
 	//e.preventDefault();
+	$('#seeTableOrdersDiv').hide();
 	$.ajax(
 			{
 				type:'POST',
@@ -239,6 +251,7 @@ $(document).on('submit','.areaForm',function(e)
 		{
 			e.preventDefault();
 			
+			$('#seeTableOrdersDiv').hide();
 			var e = document.getElementById("areaSelect");
 			var areaID = e.options[e.selectedIndex].value;
 			
@@ -292,6 +305,7 @@ function printTables(data)
 						var tableID = wsofl.generalTableID;
 						var resTableID = wsofl.resTableID;
 						var aID = wsofl.areaID;
+						//var guestsOrder = wsofl.guestsOrder;
 						
 						var singleTable = {};
 							singleTable['isOccupied']=isOccupied;
@@ -300,6 +314,8 @@ function printTables(data)
 							singleTable['tableID']=tableID;
 							singleTable['resTableID'] = resTableID;
 							singleTable['areaID'] = aID;
+							//singleTable['guestsOrder'] = guestsOrder;
+							
 							
 							listx.push(singleTable);
 						
@@ -335,6 +351,7 @@ function printTables(data)
 						console.log(positionX);
 						console.log(positionY);
 						console.log(tableID);
+						//console.log(guestsOrder)
 						
 						//var tr = $('<tr></tr>');
 						//tr.append()
@@ -379,6 +396,7 @@ function printTables(data)
 					var naslo=false;
 					var id;
 					var oc;
+					//var guestsOrderx;
 					
 					
 					// OVO JE ID STOLA U RESTORANU ....
@@ -399,6 +417,7 @@ function printTables(data)
 								oc =  thingy.isOccupied;
 								resTID = thingy.resTableID;
 								areaID = thingy.areaID;
+								//guestsOrderx = thingy.guestsOrder;
 								return true;
 								
 								
@@ -419,6 +438,7 @@ function printTables(data)
 								+'<input type="hidden" id="tableID" name="tableID" value="'+id+'" >'
 								+'<input type="hidden" id="oc" name="oc" value="'+oc+'" >'
 								+'<input type="hidden" id="areaID" name="areaID" value="'+areaID+'" >'
+								//+'<input type="hidden" id="guestsOrderx" name="guestsOrderx" value="'+guestsOrderx+'" >'
 								+'<input type="submit" name="tab-submit" id="tab-submit" tabindex="7" role="button" class="form-control btn btn-success" value="'+resTID+'">'
 								+'</form></td>';
 							}
@@ -679,6 +699,297 @@ $(document).on('click', '.zauzmiSto',function(e)
 		
 });
 
+$(document).on('click', '.ponistiOrder',function(e)
+		{
+			e.preventDefault();
+			//var tableID = $(this).find("input[name=tableIDw]").val();
+			//var areaID = $(this).find("input[name=areaID]").val();
+			var orderIDZaPonistenje = $(this).find("input[name=orderIDZaPonistenje]").val();
+			var foodOrDrink = $(this).find("input[name=foodOrDrink]").val();
+			var table = $(this).find("input[name=table]").val();
+			//console.log("zauzmi Sto");
+			//console.log(areaID);
+			$.ajax({
+				type:'POST',
+				url : removeSomeOrder,
+				contentType:'application/json',
+				dataType : "text",
+				data: formatToOrderImmitationxy(orderIDZaPonistenje,foodOrDrink,table),
+				success : function(data)
+				{
+					printTableOrders(data);
+					
+				}	
+			});
+				
+		});
+
+$(document).on('click', '.dnnbForm',function(e)
+		{
+			e.preventDefault();
+			$.ajax({
+				type:'POST',
+				url : getAllRestaurantBeverages,
+				dataType : "text",
+				success : function(data)
+				{
+					//printTableOrders(data);
+					console.log(data);
+					data = $.parseJSON(data);
+					var list = data == null ? [] : (data instanceof Array ? data : [data]);
+					var tr = $('<tr></tr>');
+					var t1 = '<form id="saveNewOrderB" action="" method="post" role="form" class="saveNewOrderB" >'
+						+ '<td><select  id="beverageSelect" name="beverageSelect"></select></td>'
+						+ '<td>Quantity: <input type="number" name="Quantity"></td>'
+						+ '<td>Note: <input type="text" name = "note"></td>'			
+						+'<td><input type="submit" name="saveNewOrderB-submit" role="button" id="saveNewOrderB-submit" tabindex="7" class="form-control btn btn-success" value="SAVE">'
+						+ '<input type="hidden" id="goidforever" name="goidforever" value="'+goidforever+'" ></td>'
+						+'</form>';
+					tr.append(t1);
+					$('#tablesData2').append(tr);
+					$.each(list,function(index,wsofl)
+							{
+								text= ' <option value="'+wsofl.beveragesId+'">'+wsofl.beveragesName+'</option>';
+								$('#beverageSelect').append(text);
+						
+							});
+				}	
+			});
+				
+		});
+
+
+$(document).on('submit', '.saveNewOrderB',function(e)
+		{
+			e.preventDefault();
+			//console.log("OJHAAAAAAAAAAAAAAAAAAAAAAXXX")
+			console.log("OJHAAAAAAAAAAAAAAAAAAAAAA XXX")
+			//e.preventDefault();
+			//var tableID = $(this).find("input[name=tableIDw]").val();
+			//var areaID = $(this).find("input[name=areaID]").val();
+			
+			//var gico = $(this).find("input[name=goidforever]").val();
+			var gico = goidforever;
+			console.log("GICO ::::::::::::");
+			console.log(gico);
+			
+			var exw = document.getElementById("beverageSelect");
+			console.log(exw);
+			var bevId = exw.options[exw.selectedIndex].value;
+			var quantity = $(this).find("input[name=Quantity]").val();
+			var note = $(this).find("input[name=note]").val();
+			
+			console.log("OJHAAAAAAAAAAAAAAAAAAAAAA")
+			
+			//console.log("zauzmi Sto");
+			//console.log(areaID);
+			$.ajax({
+				type:'POST',
+				url : addNewSomeOrder,
+				contentType:'application/json',
+				dataType : "text",
+				data: formatToOrderImmitationasd(gico,bevId,quantity,note,"b"),
+				success : function(data)
+				{
+					printTableOrders(data);
+					
+				}	
+			});
+				
+		});
+
+$(document).on('submit', '.saveNewOrderM',function(e)
+		{
+			e.preventDefault();
+			//var tableID = $(this).find("input[name=tableIDw]").val();
+			//var areaID = $(this).find("input[name=areaID]").val();
+			
+			var gico = $(this).find("input[name=goidforever]").val();
+			var exw = document.getElementById("mealsSelect");
+			console.log(exw);
+			var bevId = exw.options[exw.selectedIndex].value;
+			var quantity = $(this).find("input[name=Quantity]").val();
+			var note = $(this).find("input[name=note]").val();
+			
+			console.log("OJHAAAAAAAAAAAAAAAAAAAAAA")
+			
+			//console.log("zauzmi Sto");
+			//console.log(areaID);
+			$.ajax({
+				type:'POST',
+				url : addNewSomeOrder,
+				contentType:'application/json',
+				dataType : "text",
+				data: formatToOrderImmitationasd(gico,bevId,quantity,note,"m"),
+				success : function(data)
+				{
+					printTableOrders(data);
+					
+				}	
+			});
+				
+		});
+
+
+
+function formatToOrderImmitationasd(gico, bevId,quantity,note, wii)
+{
+	return JSON.stringify(
+			{
+				"guestOrderID" : gico,
+				"whatWasOrderedId" : bevId,
+				"quantity" : quantity,
+				"note" : note,
+				"whatIsIt" : wii
+			}
+	);
+}
+
+
+$(document).on('click', '.dnnmForm',function(e)
+		{
+			e.preventDefault();
+			$.ajax({
+				type:'POST',
+				url : getAllRestaurantMeals,
+				dataType : "text",
+				success : function(data)
+				{
+					//printTableOrders(data);
+					console.log(data);
+					data = $.parseJSON(data);
+					var list = data == null ? [] : (data instanceof Array ? data : [data]);
+					var tr = $('<tr></tr>');
+					var t1 = '<form id="saveNewOrderM" action="" method="post" role="form" class="saveNewOrderM" >'
+						+ '<td><select  id="mealsSelect" name="mealsSelect"></select></td>'
+						+ '<td>Quantity: <input type="number" name="Quantity"></td>'
+						+ '<td>Note: <input type="text" name = "note"></td>'			
+						+ '<td><input type="submit" name="saveNewOrderM-submit" role="button" id="saveNewOrderM-submit" tabindex="7" class="form-control btn btn-success" value="SAVE">'
+						+ '<input type="hidden" id="goidforever" name="goidforever" value="'+goidforever+'" ></td>'
+						+'</form>';
+					tr.append(t1);
+					$('#tablesData2').append(tr);
+					$.each(list,function(index,wsofl)
+							{
+								text= ' <option value="'+wsofl.menuMealId+'">'+wsofl.menuMealDescription+'</option>';
+								$('#mealsSelect').append(text);
+						
+							});
+				}	
+			});
+				
+		});
+
+
+
+
+
+
+function printTableOrders(data)
+{
+	//e.preventDefault();
+	console.log(data);
+	data = $.parseJSON(data);
+	var list = data == null ? [] : (data instanceof Array ? data : [data]);
+	
+	
+	$('#tablesData2').empty();
+	$('#seeTableOrdersDiv').show();
+	var goid;
+	var tid;
+	$.each(list,function(index,wsofl)
+			{
+				console.log("RADI nesto..");
+				var tr = $('<tr></tr>');
+				goid = wsofl.guestOrderID;
+				tid = wsofl.table;
+				
+				if(wsofl.whatWasOrdered != null)
+					{
+					
+					
+				tekstic = "<td>"+wsofl.whatWasOrdered+"</td>"
+						+"<td> Quantity: "+wsofl.quantity +"</td>"
+						+"<td> Note: "+ wsofl.note + "</td>"
+						+'<td><form id="ponistiOrder" action="" method="post" role="form" class="ponistiOrder" >'
+						+'<input type="hidden" id="orderIDZaPonistenje" name="orderIDZaPonistenje" value="'+wsofl.orderId+'" >'
+						+'<input type="hidden" id="foodOrDrink" name="foodOrDrink" value="'+wsofl.whatIsIt+'" >'
+						+'<input type="hidden" id="table" name="table" value="'+wsofl.table+'" >'
+						+'<input type="submit" name="ponisti-submit" role="button" id="ponisti-submit" tabindex="7" class="form-control btn btn-success" value="Remove">'
+						+'</form></td>';
+				tr.append(tekstic);
+				$('#tablesData2').append(tr);
+					}
+				
+			});
+	
+	goidforever = goid;
+	
+	$('#dvijeOpcije').empty();
+	var dugmeZaDodavanjeNovogJela = '<form id="dnnmForm" action="" method="post" role="form" class="dnnmForm" >'
+	+'<input type="hidden" id="guestOrderID" name="guestOrderID" value="'+goid+'" >'
+	//+'<input type="hidden" id="table" name="table" value="'+tid+'" >'
+	+'<input type="submit" name="dnnForm-submit" role="button" id="dnnForm-submit" tabindex="7" class="form-control btn btn-success" value="Add new Meal">'
+	+'</form>';
+	
+	var dugmeZaDodavanjeNovogPica = '<form id="dnnbForm" action="" method="post" role="form" class="dnnbForm" >'
+		+'<input type="hidden" id="guestOrderID" name="guestOrderID" value="'+goid+'" >'
+		//+'<input type="hidden" id="table" name="table" value="'+tid+'" >'
+		+'<input type="submit" name="dnnForm-submit" role="button" id="dnnForm-submit" tabindex="7" class="form-control btn btn-success" value="Add new Beverage">'
+		+'</form>';
+	
+	var dugmeZaKreirajRacun ='<div><form id="kreirajRacun" action="" method="post" role="form" class="kreirajRacun" >'
+	+'<input type="hidden" id="guestOrderID" name="guestOrderID" value="'+goid+'" >'
+	//+'<input type="hidden" id="table" name="table" value="'+tid+'" >'
+	+'<input type="submit" name="kreirajRacun-submit" role="button" id="kreirajRacun-submit" tabindex="7" class="form-control btn btn-success" value="Create BILL and unoccupy table">'
+	+'</form></div>';
+	
+	console.log(dugmeZaKreirajRacun);
+	
+	$('#dvijeOpcije').append(dugmeZaDodavanjeNovogJela);
+	$('#dvijeOpcije').append(dugmeZaDodavanjeNovogPica);
+	$('#dvijeOpcije').append(dugmeZaKreirajRacun);
+	
+	$('#dvijeOpcije').show();
+	$('#tablesData2').show();
+	$('#seeTableOrdersDiv').show();
+	
+}
+
+$(document).on('click', '.kreirajRacun',function(e)
+		{
+			e.preventDefault();
+			//var tableID = $(this).find("input[name=tableIDw]").val();
+			//var areaID = $(this).find("input[name=areaID]").val();
+			
+			var gico = $(this).find("input[name=guestOrderID]").val();
+			//var exw = document.getElementById("mealsSelect");
+			//console.log(exw);
+			//var bevId = exw.options[exw.selectedIndex].value;
+			//var quantity = $(this).find("input[name=Quantity]").val();
+			//var note = $(this).find("input[name=note]").val();
+			
+			console.log("OJHAAAAAAAAAAAAAAAAAAAAAA")
+			
+			//console.log("zauzmi Sto");
+			//console.log(areaID);
+			$.ajax({
+				type:'POST',
+				url : createBill,
+				contentType:'application/json',
+				dataType : "text",
+				data: formatToOrderImmitationasd(gico,1,1,"wut",""),
+				success : function(data)
+				{
+					//printTableOrders(data);
+					
+				}	
+			});
+				
+		});
+
+
+
 $(document).on('click', '.tableForm',function(e)
 		{
 			//console.log("did something")
@@ -688,17 +999,43 @@ $(document).on('click', '.tableForm',function(e)
 			var tableID = $(this).find("input[name=tableID]").val();
 			var oc = $(this).find("input[name=oc]").val();
 			var areaID = $(this).find("input[name=areaID]").val();
+			//var guestsOrderx = $(this).find("input[name=guestsOrderx]").val();
 			//console.log(orderxxID);
 			//console.log(whatIsItxx);
 			
 			
 			console.log(typeof oc);
+			$('#seeTableOrdersDiv').hide();
+			//console.log(guestsOrderx);
 			
 			if(oc=="true")
 			{
 			//console.log("OC JE TRUE");
 			//console.log("zasto se ne izvrsi");
 				$('#choseWhat').empty();
+				
+				$.ajax({
+					type:'POST',
+					url : seeAllTableOrders,
+					contentType:'application/json',
+					dataType : "text",
+					data: formatToTablePrintID(tableID),
+					success : function(data)
+					{
+						console.log("OVO SE POSLALO DA VIDI ALL TABLE ORDERS");
+						//$('#tablesData').empty();
+						printTableOrders(data);
+						
+						$('#seeTableOrdersDiv').show();
+						
+						
+						//printTables2(areaID);
+						//$('#choseWhat').empty();
+						//console.log("ovoe 2");
+						
+					}	
+				});
+				
 			//alert("ovaj sto je zauzet ... eto...");
 			
 			//$('#choseWhat').empty();
@@ -707,6 +1044,8 @@ $(document).on('click', '.tableForm',function(e)
 			{
 				//console.log("OC JE FALSE");
 				//alert("ovaj sto nije zauzet x ... ");
+				//$('#seeTableOrdersDiv').empty();
+				$('#seeTableOrdersDiv').hide();
 				$('#choseWhat').empty();
 				tekst_za_append='<form id="zauzmiSto" action="" method="post" role="form" class="zauzmiSto" >'
 					+'<input type="hidden" id="tableIDw" name="tableIDw" value="'+tableID+'" >'
@@ -715,6 +1054,7 @@ $(document).on('click', '.tableForm',function(e)
 					+'</form>';
 				
 				$('#choseWhat').append(tekst_za_append);
+				
 				console.log("Wut mate? u wut?");
 				//$('#choseWhat').show();	
 			}
@@ -815,6 +1155,22 @@ function formatToOrderID(orderxxxx)
 	return JSON.stringify(
 			{
 				"orderId":orderxxxx	
+			}
+	);
+}
+
+function formatToOrderImmitationxy(orderIDZaPonistenje,foodOrDrink,table)
+{
+	/*
+	var orderIDZaPonistenje = $(this).find("input[name=orderIDZaPonistenje]").val();
+	var foodOrDrink = $(this).find("input[name=foodOrDrink]").val();
+	var table = $(this).find("input[name=table]").val();
+	*/
+	return JSON.stringify(
+			{
+				"orderId":orderIDZaPonistenje,
+				"whatIsIt":foodOrDrink,
+				"table":table
 			}
 	);
 }

@@ -10,6 +10,8 @@ public class OrderImmitation {
 
 	private String whatWasOrdered;
 	
+	private Long whatWasOrderedId;
+	
 	private Integer quantity;
 	
 	private String note;
@@ -21,6 +23,12 @@ public class OrderImmitation {
 	private String employee;
 	
 	private Long table;
+	
+	private int guestOrderID;
+	
+	
+	//yes - jeste novo, no - nije novo
+	private String novitet;
 
 	public OrderImmitation() {
 		super();
@@ -50,6 +58,32 @@ public class OrderImmitation {
 	
 	
 	
+	
+	
+
+	public Long getWhatWasOrderedId() {
+		return whatWasOrderedId;
+	}
+
+	public void setWhatWasOrderedId(Long whatWasOrderedId) {
+		this.whatWasOrderedId = whatWasOrderedId;
+	}
+
+	public int getGuestOrderID() {
+		return guestOrderID;
+	}
+
+	public void setGuestOrderID(int guestOrderID) {
+		this.guestOrderID = guestOrderID;
+	}
+
+	public String getNovitet() {
+		return novitet;
+	}
+
+	public void setNovitet(String novitet) {
+		this.novitet = novitet;
+	}
 
 	public String getWhatIsIt() {
 		return whatIsIt;

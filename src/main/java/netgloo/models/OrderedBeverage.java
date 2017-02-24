@@ -44,7 +44,7 @@ public class OrderedBeverage {
 	@Column(nullable=true)
 	private String orderedBeverageNote;
 	
-	//@Column(nullable=true)
+	@Column(nullable=true)
 	private Boolean IsAccepted;
 	
 	@Column(nullable=true)
@@ -70,6 +70,15 @@ public class OrderedBeverage {
 		this.IsDone = isDone;
 		this.acceptedTime = acceptedTime;
 		this.doneTime = doneTime;
+	}
+	
+	public OrderedBeverage(GuestsOrder guestsOrder,  Beverages beverage,
+			Integer quantity, String orderedBeverageNote) {
+		super();
+		this.guestsOrder = guestsOrder;
+		this.beverage = beverage;
+		this.quantity = quantity;
+		this.orderedBeverageNote = orderedBeverageNote;
 	}
 	
 	

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import netgloo.models.DiningTable;
 import netgloo.models.GuestsOrder;
 import netgloo.models.OrderedBeverage;
 import netgloo.models.OrderedMeal;
@@ -30,4 +31,12 @@ public interface GuestsOrderDao extends CrudRepository<GuestsOrder, Integer>{
 	   on customers.customer_id = orders.customer_id
 	where customer_id = 3
 	*/
+	
+	//@Query("Select go from GuestsOrder go where diningTable = :dt")
+	//public GuestsOrder findOneByDiningTable(@Param("dt") DiningTable dt);
+	//@Query("Select goo from GuestsOrder goo where goo.orderID = (select goo2.orderID from GuestsOrder goo2 where goo2.diningTable = :dtab order by goo2.orderReceivedTime desc limit 1)")
+	public ArrayList<GuestsOrder> findAllByDiningTable(DiningTable diningTable);
+	
+	//public GuestsOrder findBydiningTable(DiningTable dt);
+	
 }

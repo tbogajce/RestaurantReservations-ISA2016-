@@ -71,6 +71,15 @@ public class OrderedMeal {
 		this.doneTime = doneTime;
 	}
 	
+	public OrderedMeal(GuestsOrder guestsOrder, Menu menu, Integer quantity,
+			String orderedMealNote) {
+		super();
+		this.guestsOrder = guestsOrder;
+		this.menu = menu;
+		this.quantity = quantity;
+		this.orderedMealNote = orderedMealNote;
+	}
+	
 	
 	
 	
