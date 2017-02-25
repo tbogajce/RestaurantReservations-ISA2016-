@@ -49,13 +49,28 @@ public class EmployeeController {
 			}
 			else
 			{
-				return "yes";
+				return "nijeCovjek";
 			}
 			//request.getSession().invalidate();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		return "yes";
+		return "nijeCovjek";
+	}
+	
+	@RequestMapping(value = "/isKonobar", method = RequestMethod.POST)
+	public String isKonobar(HttpServletRequest request) {
+		
+		Employee emp = (Employee) request.getSession().getAttribute("employee");
+		//System.out.println(emp.getEmployee_role());
+		
+		if(emp!=null && emp.getEmployee_role().equals("Waiter"))
+		{
+			System.out.println("USLO JE U OVO JESTE");
+			return "jeste";
+		}
+
+		return "nije";
 	}
 	
 	@RequestMapping(value = "/loginEmployee", method = RequestMethod.POST, headers = { "content-type=application/json" })

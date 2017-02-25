@@ -13,6 +13,8 @@ var getAreaTables = "tablesAndBillController/getAreaTables";
 
 var hasChangedPass = "employeeController/hasChangedPass";
 
+var isKonobar = "employeeController/isKonobar";
+
 var changePass = "employeeController/changePass";
 
 var occupyTableThingUrl = "tablesAndBillController/occupyTable";
@@ -35,6 +37,37 @@ $('#openBtn').click(function(){
 });
 
 
+function provjeraskaFunkcija()
+{
+	console.log("USLO U OVO NEKO YES");
+	$.ajax(
+			{
+				type:'POST',
+				url:isKonobar,
+				dataType : "text",
+				success : function(data)
+				{
+					console.log("DATA1");
+					console.log(data);
+					if(data=="jeste")
+						{
+							console.log("USLO U JESTE");
+							$('#working-shift-calendar-button').show();
+							$('#orders-button').show();
+							$('#tables-button').show();
+						}
+					else
+						{
+							console.log("USLO U NIJE");
+							$('#working-shift-calendar-button').show();
+							$('#orders-button').show();
+							$('#tables-button').hide();
+						}
+				}
+				
+			});
+}
+
 $( document ).ready(function() {
 	//$('#guestProfilePanel').show();
 	$('#workingShiftCalendarPanel').hide();
@@ -53,6 +86,8 @@ $( document ).ready(function() {
 				
 				success : function(data)
 				{
+					
+					
 					console.log(data)
 					if(data=="no")
 						{
@@ -66,9 +101,17 @@ $( document ).ready(function() {
 						}
 					else if(data=="yes")
 						{
-							$('#working-shift-calendar-button').show();
-							$('#orders-button').show();
-							$('#tables-button').show();
+						
+							provjeraskaFunkcija();
+							
+						
+							
+						}
+					else if(data=="nijeCovjek")
+						{
+						$('#working-shift-calendar-button').hide();
+						$('#orders-button').hide();
+						$('#tables-button').hide();
 						}
 					
 				}

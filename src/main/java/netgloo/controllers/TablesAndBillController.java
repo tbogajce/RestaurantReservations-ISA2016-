@@ -129,21 +129,26 @@ public class TablesAndBillController {
 		areasList.clear();
 		
 		try {
-			
+
 			Employee emp = (Employee) request.getSession().getAttribute("employee");
-			ArrayList<Area> al = new ArrayList<Area>();
-			al = aDao.findAllByRestaurant(emp.getRestaurantId());
-			
-			for(Area a : al)
+			if(emp!=null)
 			{
-				areasList.add(new AreaImmitation(a.getAreaName(),a.getRestaurant().getRestaurantName(),a.getAreaID(),a.getRestaurant().getRestaurantId()));
-			}
-			
-			for(AreaImmitation a : areasList)
-			{
-				System.out.println("AREA: " + a.getAreaName() +" , - r: " + a.getRestaurantName());
-			}
-			
+
+
+				ArrayList<Area> al = new ArrayList<Area>();
+				al = aDao.findAllByRestaurant(emp.getRestaurantId());
+
+				for(Area a : al)
+				{
+					areasList.add(new AreaImmitation(a.getAreaName(),a.getRestaurant().getRestaurantName(),a.getAreaID(),a.getRestaurant().getRestaurantId()));
+				}
+
+				for(AreaImmitation a : areasList)
+				{
+					System.out.println("AREA: " + a.getAreaName() +" , - r: " + a.getRestaurantName());
+				}
+			}		
+
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
