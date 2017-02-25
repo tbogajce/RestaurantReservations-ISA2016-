@@ -9,6 +9,8 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/fabric.js"></script>
 <script src="js/guestHome.js"></script>
+<script src="js/guestHomeInvite.js"></script>
+
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/registration.css" rel="stylesheet">
@@ -64,6 +66,7 @@
 		<div class="col-md-2 sidebar">
 			<ul class="nav nav-pills nav-stacked">
 				<li><a href="#" id="reservationButton">Reservation</a></li>
+				<li><a href="#" id="callFriendButton">Call friend</a></li>
 			</ul>
 		</div>
 
@@ -145,8 +148,76 @@
 				</div>
 				<!-------------------------------- END prvo prikazi tabelu kupac --------------------------------------->
 			</div> 
+			<!--  PODJELA PANELA -------------------------------- -->
+					<div class="panel panel-default" id="callFriendPanel">  
+				<div class="panel-heading">CALL FRIEND TO TABLE: </div>
+				<div class="panel-body">
+					<!------------------------------------ prvo prikazi tabelu kupac --------------------------------------------->
+					<div class="container" style="margin-left: -10px;">
 
+						<hr>
 
+						<div class="row">
+							<div class="panel panel-primary filterable">
+								<div class="panel-heading">
+									<h3 class="panel-title"></h3>
+								</div>
+								<!-- panel preview -->
+								<div class="col-sm-7" style="margin-left: 200px;">
+									<h4></h4>
+									<div class="panel panel-default">
+										<div class="panel-body form-horizontal payment-form">
+										<!--  TU SE DODAJE TABELA -->
+										
+										
+												<form class="formCallFriend"> 
+															
+											<div class="form-group"> 
+											 <label for="concept" class="col-sm-3 control-label">Restaurant reservation:</label>
+											<div class="col-sm-9"> 
+												<select class="form-control selectReservedRestaurant" name="restaurantInvite" style="width: 125px">
+
+												</select> 
+											</div> 
+										</div>
+										<div class="form-group"> 
+										 <label for="concept" class="col-sm-3 control-label">Date</label>
+										<div class="col-sm-9"> 
+											<input type="text" class="form-control" name="dateInvite" readonly> 
+										</div> 
+									</div>
+									<div class="form-group"> 
+									 <label for="concept" class="col-sm-3 control-label">Time</label>
+									<div class="col-sm-9"> 
+										<input type="text" class="form-control" name="timeInvite" readonly> 
+										</div> 
+											</div>
+											<div class="form-group"> 
+											 <label for="concept" class="col-sm-3 control-label">Select friend:</label>
+											<div class="col-sm-9"> 
+												<select class="form-control selectFriend" name="selectFriend1" style="width: 125px">
+
+												</select> 
+											</div> 
+										</div>
+
+									
+									<button class="btn btn-success btn-block callFriend" type="submit">Send invite</button>
+									</form>
+										
+										
+										
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- / panel preview -->
+
+						</div>
+					</div>
+				</div>
+				<!-------------------------------- END prvo prikazi tabelu kupac --------------------------------------->
+			</div> 
 			</div>
 			
 			

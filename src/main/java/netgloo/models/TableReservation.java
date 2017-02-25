@@ -49,6 +49,8 @@ public class TableReservation {
 	public TableReservation() {
 		super();
 	}
+
+
 	public TableReservation(Restaurant restaurantId, String date, String time, Integer hours, DiningTable diningTable, User user) {
 		super();
 		this.restaurantId = restaurantId;

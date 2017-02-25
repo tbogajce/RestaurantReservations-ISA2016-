@@ -6,13 +6,24 @@ var restaurantReservation = "tableReservation/restaurantReservation";
 
 $( document ).ready(function() {
 	$('#tableReservationPanel').show();
+	$('#callFriendPanel').hide();
 	restaurantCombo22();
 });
 
 $(document).on('click', '#reservationButton', function(e) {
 	$('#tableReservationPanel').show();
+	$('#callFriendPanel').hide();
 	restaurantCombo22();
 
+});
+
+
+$(document).on('click', '#callFriendButton', function(e) {
+	$('#callFriendPanel').show();
+	$('#tableReservationPanel').hide();
+	
+	tableReservationInvite();
+	getAllFriends1();
 });
 
 $(document).on('change', '.selectRestaurant', function(e) {

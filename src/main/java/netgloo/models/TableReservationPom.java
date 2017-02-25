@@ -1,6 +1,7 @@
 package netgloo.models;
 
 public class TableReservationPom {
+	public String tableReservationId;
 	public String restaurantId;
 	public String date;
 	public String time;
@@ -16,6 +17,12 @@ public class TableReservationPom {
 		this.time = time;
 		this.hours = hours;
 		this.diningTableId = diningTableId;
+	}
+	
+	
+	public TableReservationPom(String tableReservationId) {
+		super();
+		this.tableReservationId = tableReservationId;
 	}
 	public String getRestaurantId() {
 		return restaurantId;
@@ -46,6 +53,12 @@ public class TableReservationPom {
 	}
 	public void setDiningTableId(String diningTableId) {
 		this.diningTableId = diningTableId;
+	}
+	public String getTableReservationId() {
+		return tableReservationId;
+	}
+	public void setTableReservationId(String tableReservationId) {
+		this.tableReservationId = tableReservationId;
 	}
 	
 	
