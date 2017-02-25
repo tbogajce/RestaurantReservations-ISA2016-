@@ -16,8 +16,11 @@ import netgloo.dao.FriendshipsDao;
 import netgloo.dao.InviteFriendDao;
 import netgloo.dao.RestaurantDao;
 import netgloo.dao.TableReservationDao;
+import netgloo.dao.UserDao;
 import netgloo.models.DiningTable;
 import netgloo.models.Friendships;
+import netgloo.models.InviteFriend;
+import netgloo.models.InviteFriendPom;
 import netgloo.models.Restaurant;
 import netgloo.models.TableReservation;
 import netgloo.models.TableReservationPom;
@@ -38,6 +41,9 @@ public class TableReservationController {
 	
 	@Autowired
 	private DinningTableDao dinningTableDao;
+	
+	@Autowired
+	private UserDao userDao;
 	
 	@Autowired
 	private FriendshipsDao friendshipsDao;
@@ -102,11 +108,6 @@ public class TableReservationController {
 	
 	@RequestMapping(value = "/restaurantReservation", method = RequestMethod.POST, headers = { "content-type=application/json" })
 	public String restaurantReservation(@RequestBody TableReservationPom tableReservationPom, HttpServletRequest request) {
-		System.out.println(tableReservationPom.getRestaurantId());
-		System.out.println(tableReservationPom.getDate());
-		System.out.println(tableReservationPom.getTime());
-		System.out.println(tableReservationPom.getHours());
-		System.out.println(tableReservationPom.getDiningTableId());
 		
 		try {
 			User user = (User) request.getSession().getAttribute("user");
@@ -116,6 +117,24 @@ public class TableReservationController {
 			TableReservation tableReservation = new TableReservation(restaurant, tableReservationPom.getDate(),
 					tableReservationPom.getTime(), Integer.parseInt(tableReservationPom.getHours()), diningTable, user);
 			tableReservationDao.save(tableReservation);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "OK";
+	}
+	
+	@RequestMapping(value = "/sendInvite", method = RequestMethod.POST, headers = { "content-type=application/json" })
+	public String sendInvite(@RequestBody InviteFriendPom inviteFriendPom, HttpServletRequest request) {
+		
+		try {
+			User user = userDao.findByEmail(inviteFriendPom.getEmail());
+			String id = inviteFriendPom.getTableReservationId();
+			TableReservation tableReservation = tableReservationDao.findByTableReservationId(Integer.parseInt(id));
+			
+
+			InviteFriend inviteFriend = new InviteFriend(tableReservation, user, false);
+			inviteFriendDao.save(inviteFriend);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

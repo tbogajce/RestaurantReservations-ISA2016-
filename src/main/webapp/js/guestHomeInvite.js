@@ -1,6 +1,7 @@
 var restaurantTableReser = "tableReservation/getReservedRestaurant";
 var reservedRestaurantURL = "tableReservation/getReservedRestaurantData";
 var getAllFriends = "tableReservation/getAllFriends"
+var sendInvite = "tableReservation/sendInvite"
 
 $(document).on('change', '.selectReservedRestaurant', function(e) {
 	getData1();
@@ -75,12 +76,43 @@ function getAllFriends1() {
 			var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
 			var selectRestaurant = $(".selectFriend");
 			$.each(list, function(index, user) {
-				var li = $('<option value="'+user.userId+'">' + user.userName + ' </option>');
+				var li = $('<option value="'+user.email+'">' + user.userName + ' </option>');
 				$(selectRestaurant).append(li);
 			});
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			alert("AJAX ERROR: " + errorThrown);
 		}
+	});
+}
+
+
+$(document).on('submit', '.formCallFriend', function(e) {
+	e.preventDefault();
+	var tableReservationId=$('.selectReservedRestaurant').find(":selected").val();
+	var email =$('.selectFriend').find(":selected").val();
+	
+	console.log(tableReservationId + " " + email )
+	$.ajax({
+		type : 'POST',
+		url : sendInvite,
+		contentType : 'application/json',
+		dataType : "text",
+		data : formToJSONInvite(tableReservationId, email),
+		success : function(data) {
+				
+			location.reload(true);
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("AJAX ERROR: " + errorThrown);
+		}
+	});
+	
+});
+
+function formToJSONInvite(tableReservationId, email) {
+	return JSON.stringify({
+		"tableReservationId" : tableReservationId,
+		"email" : email,
 	});
 }
