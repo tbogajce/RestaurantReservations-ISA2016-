@@ -1,45 +1,29 @@
 package netgloo.models;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-@Entity
-@Table(name="restaurantManager")
-public class RestaurantManager {
+public class RestaurantManagerPom {
 	
-	@Id
 	private String restaurantManagerNickId;
 	
-	@NotNull
 	private String restaurantManagerMail;
 	
-	@NotNull
 	private String restaurantManagerName;
 	
-	@NotNull
 	private String restaurantManagerSurname;
 	
-	@NotNull 
 	private String restaurantManagerPassword;
 	
-	@JsonBackReference("restaurant-restaurantManager")
-	@ManyToOne
-	@JoinColumn(name="restaurantId", referencedColumnName="restaurantId", nullable=false)
-	private Restaurant restaurantId;
+	private String restaurantId;
 
-	public RestaurantManager() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public RestaurantManager(String restaurantManagerNickId, String restaurantManagerMail, String restaurantManagerName,
-			String restaurantManagerSurname, String restaurantManagerPassword, Restaurant restaurantId) {
+	public RestaurantManagerPom(String restaurantManagerNickId, String restaurantManagerMail,
+			String restaurantManagerName, String restaurantManagerSurname, String restaurantManagerPassword,
+			String restaurantId) {
 		super();
 		this.restaurantManagerNickId = restaurantManagerNickId;
 		this.restaurantManagerMail = restaurantManagerMail;
@@ -47,6 +31,11 @@ public class RestaurantManager {
 		this.restaurantManagerSurname = restaurantManagerSurname;
 		this.restaurantManagerPassword = restaurantManagerPassword;
 		this.restaurantId = restaurantId;
+	}
+
+	public RestaurantManagerPom() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public String getRestaurantManagerNickId() {
@@ -89,14 +78,14 @@ public class RestaurantManager {
 		this.restaurantManagerPassword = restaurantManagerPassword;
 	}
 
-	public Restaurant getRestaurantId() {
+	public String getRestaurantId() {
 		return restaurantId;
 	}
 
-	public void setRestaurantId(Restaurant restaurantId) {
+	public void setRestaurantId(String restaurantId) {
 		this.restaurantId = restaurantId;
 	}
-
+	
 	
 	
 	

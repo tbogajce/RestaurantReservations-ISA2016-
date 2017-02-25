@@ -316,12 +316,14 @@ $(document).on('submit', '.newRestManForm', function(e) {
 	var name = $(this).find("input[name=rmname]").val();
 	var surname = $(this).find("input[name=rmsurname]").val();
 	var nick = $(this).find("input[name=rmnick]").val();
+	var restid = $(this).find("input[name=rmrestid]").val();
+	console.log("OVO JE ID" + restid);
 	$.ajax({
 		type : 'POST',
 		url : newRestManURL,
 		contentType : 'application/json',
 		dataType : "text",
-		data : formToJSONNewRestMan(nick, email, name, surname, password),
+		data : formToJSONNewRestMan(nick, email, name, surname, password, restid),
 		success : function(data) {
 
 			window.location.href = "SystemManagerHome.html";
@@ -395,13 +397,14 @@ function formToJSONNewSysMan(system_manager_nick_id, manager_email,
 
 function formToJSONNewRestMan(restaurantManagerNickId, restaurantManagerMail,
 		restaurantManagerName, restaurantManagerSurname,
-		restaurantManagerPassword) {
+		restaurantManagerPassword, restaurantId) {
 	return JSON.stringify({
 		"restaurantManagerNickId" : restaurantManagerNickId,
 		"restaurantManagerMail" : restaurantManagerMail,
 		"restaurantManagerName" : restaurantManagerName,
 		"restaurantManagerSurname" : restaurantManagerSurname,
 		"restaurantManagerPassword" : restaurantManagerPassword,
+		"restaurantId" : restaurantId,
 	});
 }
 
