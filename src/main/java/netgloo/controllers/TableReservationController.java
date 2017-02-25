@@ -3,9 +3,11 @@ package netgloo.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,12 +48,16 @@ public class TableReservationController {
 	private UserDao userDao;
 	
 	@Autowired
+	private SmtpMailSender smtpMailSender;
+	
+	@Autowired
 	private FriendshipsDao friendshipsDao;
 	
 	public ArrayList<Restaurant> restaurantCombo = new ArrayList<Restaurant>();
 	public ArrayList<DiningTable> diningTableList = new ArrayList<DiningTable>();
 	public ArrayList<TableReservation> reservedRestaurant = new ArrayList<TableReservation>();
 	public ArrayList<User> allFriends = new ArrayList<User>();
+	public InviteFriend tr1 = null;
 	
 	//METODE--------------------------
 	
@@ -135,11 +141,65 @@ public class TableReservationController {
 
 			InviteFriend inviteFriend = new InviteFriend(tableReservation, user, false);
 			inviteFriendDao.save(inviteFriend);
+			sendMail(tableReservation, user);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		return "OK";
 	}
+	
+	public void sendMail(TableReservation tableReservation, User user) throws MessagingException {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<HTML><BODY style='border-width:0px'>");
+		sb.append("<br><br>");
+		sb.append("Postovanje,");
+		sb.append("<br>");
+		sb.append("<br>");
+		sb.append("Prijatelj " + tableReservation.getUserId().getUser_name() + " vas je pozvao u restoran.<br>");
+		sb.append("Datum i vrijeme rezervacije su: " + tableReservation.getDate() + " " + tableReservation.getTime() + "<br>");
+		sb.append("Klikom na link ispod, potvrdite dolazak ili ignorisite zahtjev.");
+		sb.append("<br>");
+		sb.append("<br>");
+		
+		sb.append("<a href=\"http://localhost:8080/tableReservation/confirmTableReservation/"+tableReservation.getTableReservationId() +"yz" + user.getEmail().trim() +"\">Confirm link</a>");
+		sb.append("<BR/>");
+		sb.append("</BODY></HTML>");
+		smtpMailSender.send(user.getEmail().trim(), "Confirm table reservation from Spring", sb.toString());
+		
+	}
+	
+	@RequestMapping("/confirmTableReservation/{mail}")
+	public String sendMail(@PathVariable("mail") String mail) throws MessagingException {
+		try {
+			
+			System.out.println("STIGAO JE MAIL SA LINKOM: " + mail);
+			String[] token = mail.split("yz");
+			String uEmail = token[1] + ".com";
+			String uTableResId = token[0];
+			
+			System.out.println("STIGAO JE MAIL U KONZOLU: " + uEmail);
+			System.out.println("STIGAO JE TableResID U KONZOLU: " + uTableResId);
+			
+			List<InviteFriend> tr = (List<InviteFriend>) inviteFriendDao.findAll();
+			for(int i =0; i<tr.size();i++) {
+				if(tr.get(i).getTableReservationId().getTableReservationId().equals(Integer.parseInt(uTableResId.trim()))) {
+					if(tr.get(i).getUserId().getEmail().trim().equals(uEmail)) {
+						tr1= tr.get(i);
+						tr1.setAccepted(true);
+						inviteFriendDao.save(tr1);
+						break;
+					}
+				}
+			}
+	
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		 return "Uspjesno prihvacen poziv za sto.";
+	}
+	
+	
 	
 }
