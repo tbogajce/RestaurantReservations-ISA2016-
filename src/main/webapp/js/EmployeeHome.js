@@ -5,6 +5,7 @@ var editGuest = "users/editGuest";
 var getWS = "workingShiftController/getWorkingShifts";
 var getOrders = "guestsOrderController/getOrders";
 var acceptedOrder = "guestsOrderController/acceptedOrder";
+var canOrder = "guestsOrderController/canOrder";
 var doneOrder = "guestsOrderController/doneOrder";
 
 var getAreas = "tablesAndBillController/getAreas";
@@ -22,7 +23,8 @@ var getAllRestaurantBeverages = "tablesAndBillController/getAllRestaurantBeverag
 var getAllRestaurantMeals = "tablesAndBillController/getAllRestaurantMeals";
 var addNewSomeOrder = "tablesAndBillController/addNewSomeOrder";
 
-var createBill = "tablesAndBillController/createBill";
+var prepareBill = "tablesAndBillController/prepareBill";
+var finishBill = "tablesAndBillController/finishBill";
 
 
 var goidforever;
@@ -541,6 +543,11 @@ function ordersPrint(data)
 						var table = wsofl.table;
 						var orderId = wsofl.orderId;
 						var whatIsIt = wsofl.whatIsIt;
+						var canceled = wsofl.canceled;
+						
+						
+						if(canceled!="canceled")
+						{
 						
 						if(accepted =="")
 							{
@@ -572,12 +579,15 @@ function ordersPrint(data)
 								+'<input type="hidden" id="whatIsIt" name="whatIsIt" value="'+whatIsIt+'" >'
 								+'<input type="submit" name="accepted-submit" id="accepted-submit" tabindex="7" role="button" class="form-control btn btn-success" value="Accept">'
 								+'</form>';
+							
+							canceled=' <form id="canForm" action="" method="post" role="form" class="canForm" >'
+								+'<input type="hidden" id="orderIDh" name="orderIDh" value="'+orderId+'" >'
+								+'<input type="hidden" id="whatIsIt" name="whatIsIt" value="'+whatIsIt+'" >'
+								+'<input type="submit" name="canForm-submit" id="accepted-submit" tabindex="7" role="button" class="form-control btn btn-success" value="Cancel">'
+								+'</form>';
 								//Console.
 								//accepted="Something";
-							
 							done="";
-							
-							
 							}
 						else
 							{
@@ -590,6 +600,8 @@ function ordersPrint(data)
 										+'</form>';
 								}
 							}
+						
+						}
 						
 						
 						
@@ -608,6 +620,9 @@ function ordersPrint(data)
 										+ '</td>'
 										+ '<td>'
 										+ accepted
+										+ '</td>'
+										+ '<td>'
+										+ canceled
 										+ '</td>'
 										+ '<td>'
 										+ done
@@ -650,6 +665,28 @@ $(document).on('click', '.acceptedForm',function(e)
 	});
 	
 });
+
+$(document).on('click', '.canForm',function(e)
+		{
+			e.preventDefault();
+			console.log('canceled this thingy thing');
+			var orderxxID = $(this).find("input[name=orderIDh]").val();
+			var whatIsItxx = $(this).find("input[name=whatIsIt]").val();
+			console.log(orderxxID);
+			console.log(whatIsItxx);
+			$.ajax({
+				type:'POST',
+				url: canOrder,
+				contentType:'application/json',
+				data: formatToOrderID(orderxxID),
+				success : function()
+				{
+					showOrdersx();
+				}
+				
+			});
+			
+		});
 
 $(document).on('click', '.doneForm',function(e)
 		{
@@ -911,6 +948,7 @@ function printTableOrders(data)
 				tekstic = "<td>"+wsofl.whatWasOrdered+"</td>"
 						+"<td> Quantity: "+wsofl.quantity +"</td>"
 						+"<td> Note: "+ wsofl.note + "</td>"
+						+"<td> Status: "+ wsofl.status + "</td>"
 						+'<td><form id="ponistiOrder" action="" method="post" role="form" class="ponistiOrder" >'
 						+'<input type="hidden" id="orderIDZaPonistenje" name="orderIDZaPonistenje" value="'+wsofl.orderId+'" >'
 						+'<input type="hidden" id="foodOrDrink" name="foodOrDrink" value="'+wsofl.whatIsIt+'" >'
@@ -944,7 +982,7 @@ function printTableOrders(data)
 	+'<input type="submit" name="kreirajRacun-submit" role="button" id="kreirajRacun-submit" tabindex="7" class="form-control btn btn-success" value="Create BILL and unoccupy table">'
 	+'</form></div>';
 	
-	console.log(dugmeZaKreirajRacun);
+	//console.log(dugmeZaKreirajRacun);
 	
 	$('#dvijeOpcije').append(dugmeZaDodavanjeNovogJela);
 	$('#dvijeOpcije').append(dugmeZaDodavanjeNovogPica);
@@ -959,30 +997,59 @@ function printTableOrders(data)
 $(document).on('click', '.kreirajRacun',function(e)
 		{
 			e.preventDefault();
-			//var tableID = $(this).find("input[name=tableIDw]").val();
-			//var areaID = $(this).find("input[name=areaID]").val();
-			
 			var gico = $(this).find("input[name=guestOrderID]").val();
-			//var exw = document.getElementById("mealsSelect");
-			//console.log(exw);
-			//var bevId = exw.options[exw.selectedIndex].value;
-			//var quantity = $(this).find("input[name=Quantity]").val();
-			//var note = $(this).find("input[name=note]").val();
 			
-			console.log("OJHAAAAAAAAAAAAAAAAAAAAAA")
-			
-			//console.log("zauzmi Sto");
-			//console.log(areaID);
+			console.log("OJHAAAAAAAAAAAAAAAAAAAAAA uslo u kreiranje racuna")
 			$.ajax({
 				type:'POST',
-				url : createBill,
+				url : prepareBill,
 				contentType:'application/json',
 				dataType : "text",
 				data: formatToOrderImmitationasd(gico,1,1,"wut",""),
 				success : function(data)
 				{
-					//printTableOrders(data);
+					data = $.parseJSON(data);
+					var goxid= data.guestsOrderId;
+					var prxice= data.price;
 					
+					console.log(data);
+					console.log(goxid);
+					console.log(prxice);
+					
+					var dugmeZaZavrsiRacun ='<div><form id="zavrsiRacun" action="" method="post" role="form" class="zavrsiRacun" >'
+						+'<input type="hidden" id="guestOrderID" name="guestOrderID" value="'+goxid+'" >'
+						+'<input type="hidden" id="price" name="price" value="'+prxice+'" >'
+						//+'<input type="hidden" id="table" name="table" value="'+tid+'" >'
+						+'<input type="submit" name="zavrsiRacun-submit" role="button" id="zavrsiRacun-submit" tabindex="7" class="form-control btn btn-success" value="Close '+prxice+' &euro; worth Bill and free the table">'
+						+'</form></div>';
+					
+					$('#dvijeOpcije').empty();
+					$('#dvijeOpcije').append(dugmeZaZavrsiRacun);
+					
+				}	
+			});
+				
+		});
+
+
+$(document).on('click', '.zavrsiRacun',function(e)
+		{
+			e.preventDefault();
+			var gico = $(this).find("input[name=guestOrderID]").val();
+			
+			
+			console.log("OJHAAAAAAAAAAAAAAAAAAAAAA uslo u zavrsi racuna")
+			$.ajax({
+				type:'POST',
+				url : finishBill,
+				contentType:'application/json',
+				dataType : "text",
+				data: formatToOrderImmitationasd(gico,1,1,"wut",""),
+				success : function(data)
+				{
+					printTables(data);
+					$('#dvijeOpcije').empty();
+					$('#seeTableOrdersDiv').hide();
 				}	
 			});
 				

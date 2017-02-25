@@ -13,6 +13,10 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+
+
+/* NE KORISTITI OVUUUUU */
+
 @Entity
 @Table(name = "waiterIncome")
 public class WaiterIncome {

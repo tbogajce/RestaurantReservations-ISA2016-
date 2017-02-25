@@ -20,13 +20,27 @@ public class OrderImmitation {
 	
 	private String done;
 	
+	private String canceled;
+	
 	private String employee;
 	
 	private Long table;
 	
 	private int guestOrderID;
 	
+	private String status;
 	
+	
+	
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	//yes - jeste novo, no - nije novo
 	private String novitet;
 
@@ -36,7 +50,7 @@ public class OrderImmitation {
 	}
 
 	public OrderImmitation(Integer orderId,String whatWasOrdered, Integer quantity, String note, String accepted, String done,
-			String employee, Long table,String whatIsIt) {
+			String employee, Long table,String whatIsIt,String canceled) {
 		super();
 		this.orderId=orderId;
 		this.whatWasOrdered = whatWasOrdered;
@@ -47,6 +61,7 @@ public class OrderImmitation {
 		this.employee = employee;
 		this.table = table;
 		this.whatIsIt=whatIsIt;
+		this.canceled=canceled;
 	}
 	
 	public OrderImmitation(Integer orderId,String whatIsIt)
@@ -60,6 +75,14 @@ public class OrderImmitation {
 	
 	
 	
+
+	public String getCanceled() {
+		return canceled;
+	}
+
+	public void setCanceled(String canceled) {
+		this.canceled = canceled;
+	}
 
 	public Long getWhatWasOrderedId() {
 		return whatWasOrderedId;

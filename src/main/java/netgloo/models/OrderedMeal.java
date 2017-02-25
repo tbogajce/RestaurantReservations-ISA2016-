@@ -48,6 +48,9 @@ public class OrderedMeal {
 	private Boolean IsAccepted;
 	
 	@Column(nullable=true)
+	private Boolean isCanceled;
+	
+	@Column(nullable=true)
 	private Boolean IsDone;
 	
 	@Column(nullable=true)
@@ -92,6 +95,14 @@ public class OrderedMeal {
 
 
 
+
+	public Boolean getIsCanceled() {
+		return isCanceled;
+	}
+
+	public void setIsCanceled(Boolean isCanceled) {
+		this.isCanceled = isCanceled;
+	}
 
 	public Integer getOrderedMealID() {
 		return orderedMealID;

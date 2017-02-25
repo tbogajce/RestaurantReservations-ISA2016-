@@ -51,6 +51,9 @@ public class OrderedBeverage {
 	private Boolean IsDone;
 	
 	@Column(nullable=true)
+	private Boolean isCanceled;
+	
+	@Column(nullable=true)
 	private Timestamp acceptedTime;
 	
 	@Column(nullable=true)
@@ -89,6 +92,16 @@ public class OrderedBeverage {
 	}
 
 
+	
+	
+
+	public Boolean getIsCanceled() {
+		return isCanceled;
+	}
+
+	public void setIsCanceled(Boolean isCanceled) {
+		this.isCanceled = isCanceled;
+	}
 
 	public Integer getOrderedBeverageID() {
 		return orderedBeverageID;

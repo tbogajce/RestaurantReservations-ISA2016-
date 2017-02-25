@@ -16,22 +16,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 import netgloo.dao.AreaDao;
 import netgloo.dao.BeveragesDao;
+import netgloo.dao.BillDao;
 import netgloo.dao.DinningTableDao;
 import netgloo.dao.GuestsOrderDao;
+import netgloo.dao.HistoryRecordDao;
 import netgloo.dao.MenuDao;
 import netgloo.dao.OrderedBeverageDao;
 import netgloo.dao.OrderedMealDao;
+import netgloo.dao.WaiterEarningsDao;
 import netgloo.models.Area;
 import netgloo.models.AreaImmitation;
 import netgloo.models.Beverages;
+import netgloo.models.Bill;
 import netgloo.models.DiningTable;
 import netgloo.models.Employee;
 import netgloo.models.GuestsOrder;
+import netgloo.models.HistoryRecord;
 import netgloo.models.Menu;
 import netgloo.models.OrderImmitation;
 import netgloo.models.OrderedBeverage;
 import netgloo.models.OrderedMeal;
+import netgloo.models.PriceToPay;
 import netgloo.models.TablePrint;
+import netgloo.models.User;
+import netgloo.models.WaiterEarnings;
 
 
 @RestController
@@ -59,6 +67,15 @@ public class TablesAndBillController {
 	
 	@Autowired
 	MenuDao menuDao;
+	
+	@Autowired
+	BillDao billDao;
+	
+	@Autowired
+	HistoryRecordDao historyRecDao;
+	
+	@Autowired
+	WaiterEarningsDao waiterEarnDao;
 	
 	private ArrayList<AreaImmitation> areasList = new ArrayList<AreaImmitation>();
 	
@@ -205,15 +222,44 @@ public class TablesAndBillController {
 		
 		for(OrderedMeal om : ordMealList)
 		{
-			OrderImmitation ox =  new OrderImmitation(om.getOrderedMealID(),om.getMenu().getMenu_meal_description(), om.getQuantity(), om.getOrderedMealNote(), "","","",idStola,"m");
+			String status="Pending";
+			if(om.getIsCanceled()!=null && om.getIsCanceled()==true)
+			{
+				status="Canceled";
+			}
+			if(om.getIsAccepted()!=null && om.getIsAccepted()==true)
+			{
+				status="Accepted";
+			}
+			if(om.getIsDone()!=null && om.getIsDone()==true)
+			{
+				status="Done";
+			}
+			
+			OrderImmitation ox =  new OrderImmitation(om.getOrderedMealID(),om.getMenu().getMenu_meal_description(), om.getQuantity(), om.getOrderedMealNote(), "","","",idStola,"m","");
 			ox.setNovitet("no");
+			ox.setStatus(status);
 			ox.setGuestOrderID(om.getGuestsOrder().getOrderID());
 			oiList.add(ox);
 		}
 		for(OrderedBeverage ob : ordBevList)
 		{
-			OrderImmitation ox =  new OrderImmitation(ob.getOrderedBeverageID(),ob.getBeverage().getBeveragesName(), ob.getQuantity(), ob.getOrderedBeverageNote(), "","","",idStola,"b");
+			String status="Pending";
+			if(ob.getIsCanceled()!=null && ob.getIsCanceled()==true)
+			{
+				status="Canceled";
+			}
+			if(ob.getIsAccepted()!=null && ob.getIsAccepted()==true)
+			{
+				status="Accepted";
+			}
+			if(ob.getIsDone()!=null && ob.getIsDone()==true)
+			{
+				status="Done";
+			}
+			OrderImmitation ox =  new OrderImmitation(ob.getOrderedBeverageID(),ob.getBeverage().getBeveragesName(), ob.getQuantity(), ob.getOrderedBeverageNote(), "","","",idStola,"b","");
 			ox.setNovitet("no");
+			ox.setStatus(status);
 			ox.setGuestOrderID(ob.getGuestsOrder().getOrderID());
 			oiList.add(ox);
 		}
@@ -280,15 +326,44 @@ public class TablesAndBillController {
 		
 		for(OrderedMeal om : ordMealList)
 		{
-			OrderImmitation ox =  new OrderImmitation(om.getOrderedMealID(),om.getMenu().getMenu_meal_description(), om.getQuantity(), om.getOrderedMealNote(), "","","",idStola,"m");
+			
+			String status="Pending";
+			if(om.getIsCanceled()!=null && om.getIsCanceled()==true)
+			{
+				status="Canceled";
+			}
+			if(om.getIsAccepted()!=null && om.getIsAccepted()==true)
+			{
+				status="Accepted";
+			}
+			if(om.getIsDone()!=null && om.getIsDone()==true)
+			{
+				status="Done";
+			}
+			OrderImmitation ox =  new OrderImmitation(om.getOrderedMealID(),om.getMenu().getMenu_meal_description(), om.getQuantity(), om.getOrderedMealNote(), "","","",idStola,"m","");
 			ox.setNovitet("no");
+			ox.setStatus(status);
 			ox.setGuestOrderID(om.getGuestsOrder().getOrderID());
 			oiList.add(ox);
 		}
 		for(OrderedBeverage ob : ordBevList)
 		{
-			OrderImmitation ox =  new OrderImmitation(ob.getOrderedBeverageID(),ob.getBeverage().getBeveragesName(), ob.getQuantity(), ob.getOrderedBeverageNote(), "","","",idStola,"b");
+			String status="Pending";
+			if(ob.getIsCanceled()!=null && ob.getIsCanceled()==true)
+			{
+				status="Canceled";
+			}
+			if(ob.getIsAccepted()!=null && ob.getIsAccepted()==true)
+			{
+				status="Accepted";
+			}
+			if(ob.getIsDone()!=null && ob.getIsDone()==true)
+			{
+				status="Done";
+			}
+			OrderImmitation ox =  new OrderImmitation(ob.getOrderedBeverageID(),ob.getBeverage().getBeveragesName(), ob.getQuantity(), ob.getOrderedBeverageNote(), "","","",idStola,"b","");
 			ox.setNovitet("no");
+			ox.setStatus(status);
 			ox.setGuestOrderID(ob.getGuestsOrder().getOrderID());
 			oiList.add(ox);
 		}
@@ -333,6 +408,7 @@ public class TablesAndBillController {
 			Menu menue = menuDao.findOne(orderImmitationThing.getWhatWasOrderedId());
 			
 			OrderedMeal omel = new OrderedMeal(lastGuOrd,menue, orderImmitationThing.getQuantity(),orderImmitationThing.getNote());
+			omel.setIsCanceled(false);
 			ordMealDao.save(omel);
 		}
 		else if(whatIsIt.equals("b"))
@@ -343,6 +419,7 @@ public class TablesAndBillController {
 			
 			Beverages bev = bevDao.findOne(orderImmitationThing.getWhatWasOrderedId());
 			OrderedBeverage obeg = new OrderedBeverage(lastGuOrd, bev,orderImmitationThing.getQuantity(),orderImmitationThing.getNote() );
+			obeg.setIsCanceled(false);
 			ordBevDao.save(obeg);
 		}
 		
@@ -370,15 +447,44 @@ public class TablesAndBillController {
 		
 		for(OrderedMeal om : ordMealList)
 		{
-			OrderImmitation ox =  new OrderImmitation(om.getOrderedMealID(),om.getMenu().getMenu_meal_description(), om.getQuantity(), om.getOrderedMealNote(), "","","",idStola,"m");
+			
+			String status="Pending";
+			if(om.getIsCanceled()!=null && om.getIsCanceled()==true)
+			{
+				status="Canceled";
+			}
+			if(om.getIsAccepted()!=null && om.getIsAccepted()==true)
+			{
+				status="Accepted";
+			}
+			if(om.getIsDone()!=null && om.getIsDone()==true)
+			{
+				status="Done";
+			}
+			OrderImmitation ox =  new OrderImmitation(om.getOrderedMealID(),om.getMenu().getMenu_meal_description(), om.getQuantity(), om.getOrderedMealNote(), "","","",idStola,"m","");
 			ox.setNovitet("no");
+			ox.setStatus(status);
 			ox.setGuestOrderID(om.getGuestsOrder().getOrderID());
 			oiList.add(ox);
 		}
 		for(OrderedBeverage ob : ordBevList)
 		{
-			OrderImmitation ox =  new OrderImmitation(ob.getOrderedBeverageID(),ob.getBeverage().getBeveragesName(), ob.getQuantity(), ob.getOrderedBeverageNote(), "","","",idStola,"b");
+			String status="Pending";
+			if(ob.getIsCanceled()!=null && ob.getIsCanceled()==true)
+			{
+				status="Canceled";
+			}
+			if(ob.getIsAccepted()!=null && ob.getIsAccepted()==true)
+			{
+				status="Accepted";
+			}
+			if(ob.getIsDone()!=null && ob.getIsDone()==true)
+			{
+				status="Done";
+			}
+			OrderImmitation ox =  new OrderImmitation(ob.getOrderedBeverageID(),ob.getBeverage().getBeveragesName(), ob.getQuantity(), ob.getOrderedBeverageNote(), "","","",idStola,"b","");
 			ox.setNovitet("no");
+			ox.setStatus(status);
 			ox.setGuestOrderID(ob.getGuestsOrder().getOrderID());
 			oiList.add(ox);
 		}
@@ -394,80 +500,116 @@ public class TablesAndBillController {
 		return oiList;
 	}
 	
-	/*
-	@RequestMapping(value = "/createBill", method = RequestMethod.POST, headers = { "content-type=application/json" })
-	public BillImmitation createBill(@RequestBody OrderImmitation orderImmitationThing, HttpServletRequest request) {
-		
-		ArrayList<OrderImmitation> oiList = new ArrayList<OrderImmitation>();
+	
+	@RequestMapping(value = "/prepareBill", method = RequestMethod.POST, headers = { "content-type=application/json" })
+	public PriceToPay prepareBill(@RequestBody OrderImmitation orderImmitationThing, HttpServletRequest request) {
 		
 		
-		
-		Long idStola  = orderImmitationThing.getTable();
-		DiningTable dtable = dtDao.findOne(idStola);
-		
-		String whatIsIt = orderImmitationThing.getWhatIsIt();
-		
-		int idObroka = orderImmitationThing.getOrderId();
-		
-		if(whatIsIt.equals("m"))
-		{
-			OrderedMeal omel = ordMealDao.findOne(idObroka);
-			ordMealDao.delete(omel);
-			System.out.println("Obrisano jelo");
-		}
-		else if(whatIsIt.equals("b"))
-		{
-			OrderedBeverage obel = ordBevDao.findOne(idObroka);
-			ordBevDao.delete(obel);
-			System.out.println("Obrisano pice");
-		}
-		
-		
-		
-		
-		
-		GuestsOrder lastGuOrd = null;
-		int maxID =0;
-		
-		
-		ArrayList<GuestsOrder> guOrList = goDao.findAllByDiningTable(dtable);
-		
-		for(GuestsOrder guo : guOrList)
-		{
-			if(guo.getOrderID()>maxID)
-			{
-				maxID= guo.getOrderID();
-				lastGuOrd = guo;
-			}
-		}
+		float sumaSvega =0;
+
+		GuestsOrder lastGuOrd = goDao.findOne(orderImmitationThing.getGuestOrderID());
 		
 		ArrayList<OrderedMeal> ordMealList = ordMealDao.findAllByGuestsOrder(lastGuOrd);
 		ArrayList<OrderedBeverage> ordBevList = ordBevDao.findAllByGuestsOrder(lastGuOrd);
 		
 		for(OrderedMeal om : ordMealList)
 		{
-			OrderImmitation ox =  new OrderImmitation(om.getOrderedMealID(),om.getMenu().getMenu_meal_description(), om.getQuantity(), om.getOrderedMealNote(), "","","",idStola,"m");
-			ox.setNovitet("no");
-			ox.setGuestOrderID(om.getGuestsOrder().getOrderID());
-			oiList.add(ox);
+			int q = om.getQuantity();
+			float pri = om.getMenu().getMenuMealPrice();
+			sumaSvega = sumaSvega +((float) ((float)q*pri));
 		}
 		for(OrderedBeverage ob : ordBevList)
 		{
-			OrderImmitation ox =  new OrderImmitation(ob.getOrderedBeverageID(),ob.getBeverage().getBeveragesName(), ob.getQuantity(), ob.getOrderedBeverageNote(), "","","",idStola,"b");
-			ox.setNovitet("no");
-			ox.setGuestOrderID(ob.getGuestsOrder().getOrderID());
-			oiList.add(ox);
-		}
-		
-		if(oiList.isEmpty())
-		{
-			OrderImmitation ox = new OrderImmitation();
-			ox.setGuestOrderID(lastGuOrd.getOrderID());
-			oiList.add(ox);
+			int q = ob.getQuantity();
+			float pri = ob.getBeverage().getBeveragesPrice();
+			sumaSvega = sumaSvega +((float) ((float)q*pri));
 		}
 		
 		
-		return oiList;
+		PriceToPay ptp = new PriceToPay(orderImmitationThing.getGuestOrderID(),sumaSvega);
+		
+		return ptp;
 	}
-	*/
+	
+	@RequestMapping(value = "/finishBill", method = RequestMethod.POST, headers = { "content-type=application/json" })
+	public ArrayList<TablePrint> finishBill(@RequestBody OrderImmitation orderImmitationThing, HttpServletRequest request) {
+		
+		
+		float sumaSvega =0;
+
+		GuestsOrder lastGuOrd = goDao.findOne(orderImmitationThing.getGuestOrderID());
+		
+		Employee employee = lastGuOrd.getWaiter();
+		
+		DiningTable dinTab = lastGuOrd.getDiningTable();
+		
+		User guest = lastGuOrd.getGuest();
+		
+		ArrayList<OrderedMeal> ordMealList = ordMealDao.findAllByGuestsOrder(lastGuOrd);
+		ArrayList<OrderedBeverage> ordBevList = ordBevDao.findAllByGuestsOrder(lastGuOrd);
+		
+		for(OrderedMeal om : ordMealList)
+		{
+			int q = om.getQuantity();
+			float pri = om.getMenu().getMenuMealPrice();
+			sumaSvega = sumaSvega +((float) ((float)q*pri));
+		}
+		for(OrderedBeverage ob : ordBevList)
+		{
+			int q = ob.getQuantity();
+			float pri = ob.getBeverage().getBeveragesPrice();
+			sumaSvega = sumaSvega +((float) ((float)q*pri));
+		}
+		
+		lastGuOrd.setIsPaid(true);
+		goDao.save(lastGuOrd);
+		
+		Bill bill = new Bill(lastGuOrd,sumaSvega);
+		
+		billDao.save(bill);
+		
+		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+		
+		WaiterEarnings we = new WaiterEarnings(bill,date,sumaSvega,employee.getRestaurantId(),employee);
+		
+		waiterEarnDao.save(we);
+		
+		if(guest!=null)
+		{
+			HistoryRecord hr = new HistoryRecord(employee.getRestaurant_id(),lastGuOrd,guest,date);
+			hr.setHasAlreadyGradedMeal(false);
+			hr.setHasAlreadyGradedRestaurant(false);
+			hr.setHasAlreadyGradedService(false);
+			
+			historyRecDao.save(hr);
+		}
+		
+		dinTab.setOccupied(false);
+		
+		dtDao.save(dinTab);
+		
+		ArrayList<DiningTable> dtList = new ArrayList<DiningTable>();
+		ArrayList<TablePrint> tp = new ArrayList<TablePrint>();
+		//System.out.println("USLO JE U OVO OVDE ZA TABLE");
+		//System.out.println("SELECTED AREA: "+ ai.areaID);
+		
+		Area areax = dinTab.getArea();
+		
+		dtList = dtDao.findAllByArea(areax);
+		
+		for(DiningTable dt: dtList)
+		{
+			tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID()/*, dt.getGuestsOrder().getOrderID()*/));
+		}
+		
+		for(DiningTable dt: dtList)
+		{
+			System.out.println("Table: " + dt.getPositionX()+", "+dt.getPositionY()+ " -> area: "+dt.getArea());
+		}
+		
+		return tp;
+		//PriceToPay ptp = new PriceToPay(orderImmitationThing.getGuestOrderID(),sumaSvega);
+		//return tp;
+	}
+	
 }

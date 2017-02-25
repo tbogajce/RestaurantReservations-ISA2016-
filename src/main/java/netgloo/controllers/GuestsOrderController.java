@@ -87,6 +87,57 @@ public class GuestsOrderController {
 		return "OK";
 	}
 	
+	@RequestMapping(value = "/canOrder", method = RequestMethod.POST, headers = { "content-type=application/json" })
+	public String canOrder(@RequestBody OrderImmitation oi, HttpServletRequest request) {
+
+		try {
+			System.out.println("OVO JE OI: " + oi.getOrderId());
+			
+			Employee emp = (Employee) request.getSession().getAttribute("employee");
+			
+			if(emp.getEmployeeRole().equals("Bartender"))
+			{
+				OrderedBeverage orderedBeverage = obDao.findOne(oi.getOrderId());
+				/*
+				Timestamp sTime = null;
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(Calendar.getInstance().getTime());
+				//cal.add(Calendar.DAY_OF_MONTH, -1);
+				sTime = new Timestamp(cal.getTime().getTime());
+				
+				orderedBeverage.setAcceptedTime(sTime);
+				orderedBeverage.setIsAccepted(true);
+				orderedBeverage.setBartender(emp);
+				*/
+				orderedBeverage.setIsCanceled(true);
+				obDao.save(orderedBeverage);
+				
+			}
+			if(emp.getEmployeeRole().equals("Cook"))
+			{
+				OrderedMeal orderedMeal = omDao.findOne(oi.getOrderId());
+				/*
+				Timestamp sTime = null;
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(Calendar.getInstance().getTime());
+				//cal.add(Calendar.DAY_OF_MONTH, -1);
+				sTime = new Timestamp(cal.getTime().getTime());
+				
+				orderedMeal.setIsAccepted(true);
+				orderedMeal.setAcceptedTime(sTime);
+				orderedMeal.setCook(emp);
+				*/
+				orderedMeal.setIsCanceled(true);
+				omDao.save(orderedMeal);
+				
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			//return "EXCEPTION";
+		}
+		return "OK";
+	}
+	
 	
 	@RequestMapping(value = "/doneOrder", method = RequestMethod.POST, headers = { "content-type=application/json" })
 	public String doneOrder(@RequestBody OrderImmitation oi, HttpServletRequest request) {
@@ -186,6 +237,7 @@ public class GuestsOrderController {
 					String acceptedTime="";
 					String doneTime="";
 					String note="";
+					String canceled="";
 					if(ob.getBartender()!=null)
 					{
 						employeeString = ob.getBartender().getUserId().getUserName()+" "+ob.getBartender().getUserId().getUserSurname();
@@ -202,7 +254,11 @@ public class GuestsOrderController {
 					{
 						note=ob.getOrderedBeverageNote();
 					}
-					OrderImmitation oi = new OrderImmitation(ob.getOrderedBeverageID(),ob.getBeverage().getBeveragesName(),ob.getQuantity(),note,acceptedTime,doneTime,employeeString,ob.getGuestsOrder().getDiningTable().getTableNumberInRestaurant(),"b");
+					if(ob.getIsCanceled()==true)
+					{
+						canceled="canceled";
+					}
+					OrderImmitation oi = new OrderImmitation(ob.getOrderedBeverageID(),ob.getBeverage().getBeveragesName(),ob.getQuantity(),note,acceptedTime,doneTime,employeeString,ob.getGuestsOrder().getDiningTable().getTableNumberInRestaurant(),"b",canceled);
 					orderImitsList.add(oi);
 				}
 			}
@@ -219,6 +275,7 @@ public class GuestsOrderController {
 					String acceptedTime="";
 					String doneTime="";
 					String note="";
+					String canceled="";
 					if(ob.getCook()!=null)
 					{
 						employeeString = ob.getCook().getUserId().getUserName()+" "+ob.getCook().getUserId().getUserSurname();
@@ -235,7 +292,11 @@ public class GuestsOrderController {
 					{
 						note=ob.getOrderedMealNote();
 					}
-					OrderImmitation oi = new OrderImmitation(ob.getOrderedMealID(),ob.getMenu().getMenuMealDescription(),ob.getQuantity(),note,acceptedTime,doneTime,employeeString,ob.getGuestsOrder().getDiningTable().getTableNumberInRestaurant(),"m");
+					if(ob.getIsCanceled()!=null && ob.getIsCanceled()==true)
+					{
+						canceled="canceled";
+					}
+					OrderImmitation oi = new OrderImmitation(ob.getOrderedMealID(),ob.getMenu().getMenuMealDescription(),ob.getQuantity(),note,acceptedTime,doneTime,employeeString,ob.getGuestsOrder().getDiningTable().getTableNumberInRestaurant(),"m",canceled);
 					orderImitsList.add(oi);
 				}
 			}
