@@ -138,6 +138,7 @@ public class TableReservationController {
 					tableReservationPom.getTime(), Integer.parseInt(tableReservationPom.getHours()), diningTable, user);
 			tableReservationDao.save(tableReservation);
 
+			
 			System.out.println("ISPIS DATUM..." + tableReservationPom.getDate());
 			System.out.println("ISPIS VRIJEME..." + tableReservationPom.getTime() + ":00");
 			String startDateString = tableReservationPom.getDate();
@@ -155,6 +156,8 @@ public class TableReservationController {
 			GuestsOrder guestsOrder = new GuestsOrder(restaurant, null, user, diningTable, false, tableReservation,
 					later);
 			guestsOrderDao.save(guestsOrder);
+
+
 
 		} catch (Exception e) {
 			e.printStackTrace();

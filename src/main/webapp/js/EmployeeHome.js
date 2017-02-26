@@ -350,6 +350,8 @@ function printTables(data)
 						var tableID = wsofl.generalTableID;
 						var resTableID = wsofl.resTableID;
 						var aID = wsofl.areaID;
+						var waiter = wsofl.waiterID;
+						var guestOID = wsofl.guestOrderID;
 						//var guestsOrder = wsofl.guestsOrder;
 						
 						var singleTable = {};
@@ -359,6 +361,8 @@ function printTables(data)
 							singleTable['tableID']=tableID;
 							singleTable['resTableID'] = resTableID;
 							singleTable['areaID'] = aID;
+							singleTable['waiter']= waiter;
+							singleTable['guestOID']= guestOID;
 							//singleTable['guestsOrder'] = guestsOrder;
 							
 							
@@ -441,6 +445,8 @@ function printTables(data)
 					var naslo=false;
 					var id;
 					var oc;
+					var w;
+					var g;
 					//var guestsOrderx;
 					
 					
@@ -462,6 +468,9 @@ function printTables(data)
 								oc =  thingy.isOccupied;
 								resTID = thingy.resTableID;
 								areaID = thingy.areaID;
+								w= thingy.waiter;
+								g= thingy.guestOID;
+								
 								//guestsOrderx = thingy.guestsOrder;
 								return true;
 								
@@ -479,13 +488,31 @@ function printTables(data)
 						
 						if(oc==true)
 							{
-							var tekstic = '<td height="60",width="60", bgcolor="#FF0000"><form id="tableForm" action="" method="post" role="form" class="tableForm" >'
-								+'<input type="hidden" id="tableID" name="tableID" value="'+id+'" >'
-								+'<input type="hidden" id="oc" name="oc" value="'+oc+'" >'
-								+'<input type="hidden" id="areaID" name="areaID" value="'+areaID+'" >'
-								//+'<input type="hidden" id="guestsOrderx" name="guestsOrderx" value="'+guestsOrderx+'" >'
-								+'<input type="submit" name="tab-submit" id="tab-submit" tabindex="7" role="button" class="form-control btn btn-success" value="'+resTID+'">'
-								+'</form></td>';
+								if(w==-1)
+								{
+										var tekstic = '<td height="60",width="60", bgcolor="#00BFFF"><form id="tableForm" action="" method="post" role="form" class="tableForm" >'
+												+'<input type="hidden" id="tableID" name="tableID" value="'+id+'" >'
+												+'<input type="hidden" id="oc" name="oc" value="'+oc+'" >'
+												+'<input type="hidden" id="areaID" name="areaID" value="'+areaID+'" >'
+												+'<input type="hidden" id="g" name="g" value="'+g+'" >'
+												+'<input type="hidden" id="w" name="w" value="'+w+'" >'
+												
+												//+'<input type="hidden" id="guestsOrderx" name="guestsOrderx" value="'+guestsOrderx+'" >'
+												+'<input type="submit" name="tab-submit" id="tab-submit" tabindex="7" role="button" class="form-control btn btn-success" value="'+resTID+'">'
+												+'</form></td>';
+								}
+								else
+								{
+									var tekstic = '<td height="60",width="60", bgcolor="#FF0000"><form id="tableForm" action="" method="post" role="form" class="tableForm" >'
+										+'<input type="hidden" id="tableID" name="tableID" value="'+id+'" >'
+										+'<input type="hidden" id="oc" name="oc" value="'+oc+'" >'
+										+'<input type="hidden" id="areaID" name="areaID" value="'+areaID+'" >'
+										+'<input type="hidden" id="g" name="g" value="'+g+'" >'
+										+'<input type="hidden" id="w" name="w" value="'+w+'" >'
+										//+'<input type="hidden" id="guestsOrderx" name="guestsOrderx" value="'+guestsOrderx+'" >'
+										+'<input type="submit" name="tab-submit" id="tab-submit" tabindex="7" role="button" class="form-control btn btn-success" value="'+resTID+'">'
+										+'</form></td>';
+								}
 							}
 						else
 							{
@@ -493,6 +520,8 @@ function printTables(data)
 								+'<input type="hidden" id="tableID" name="tableID" value="'+id+'" >'
 								+'<input type="hidden" id="oc" name="oc" value="'+oc+'" >'
 								+'<input type="hidden" id="areaID" name="areaID" value="'+areaID+'" >'
+								+'<input type="hidden" id="g" name="g" value="'+g+'" >'
+								+'<input type="hidden" id="w" name="w" value="'+w+'" >'
 								+'<input type="submit" name="tab-submit" id="tab-submit" tabindex="7" role="button" class="form-control btn btn-success" value="'+resTID+'">'
 								+'</form></td>';
 							}
@@ -758,6 +787,7 @@ $(document).on('click', '.zauzmiSto',function(e)
 	e.preventDefault();
 	var tableID = $(this).find("input[name=tableIDw]").val();
 	var areaID = $(this).find("input[name=areaID]").val();
+	var g = $(this).find("input[name=g]").val();
 	console.log("zauzmi Sto");
 	console.log(areaID);
 	$.ajax({
@@ -765,7 +795,7 @@ $(document).on('click', '.zauzmiSto',function(e)
 		url : occupyTableThingUrl,
 		contentType:'application/json',
 		dataType : "text",
-		data: formatToTablePrintID(tableID),
+		data: formatToTablePrintID(tableID,g),
 		success : function(data)
 		{
 			console.log("ovoe");
@@ -787,6 +817,7 @@ $(document).on('click', '.ponistiOrder',function(e)
 			var orderIDZaPonistenje = $(this).find("input[name=orderIDZaPonistenje]").val();
 			var foodOrDrink = $(this).find("input[name=foodOrDrink]").val();
 			var table = $(this).find("input[name=table]").val();
+			var g = $(this).find("input[name=g]").val();
 			//console.log("zauzmi Sto");
 			//console.log(areaID);
 			$.ajax({
@@ -794,7 +825,7 @@ $(document).on('click', '.ponistiOrder',function(e)
 				url : removeSomeOrder,
 				contentType:'application/json',
 				dataType : "text",
-				data: formatToOrderImmitationxy(orderIDZaPonistenje,foodOrDrink,table),
+				data: formatToOrderImmitationxy(orderIDZaPonistenje,foodOrDrink,table,g),
 				success : function(data)
 				{
 					printTableOrders(data);
@@ -996,6 +1027,7 @@ function printTableOrders(data)
 						+'<input type="hidden" id="orderIDZaPonistenje" name="orderIDZaPonistenje" value="'+wsofl.orderId+'" >'
 						+'<input type="hidden" id="foodOrDrink" name="foodOrDrink" value="'+wsofl.whatIsIt+'" >'
 						+'<input type="hidden" id="table" name="table" value="'+wsofl.table+'" >'
+						+'<input type="hidden" id="g" name="g" value="'+wsofl.guestOrderID+'" >'
 						+'<input type="submit" name="ponisti-submit" role="button" id="ponisti-submit" tabindex="7" class="form-control btn btn-success" value="Remove">'
 						+'</form></td>';
 				tr.append(tekstic);
@@ -1109,6 +1141,10 @@ $(document).on('click', '.tableForm',function(e)
 			var tableID = $(this).find("input[name=tableID]").val();
 			var oc = $(this).find("input[name=oc]").val();
 			var areaID = $(this).find("input[name=areaID]").val();
+			var g = $(this).find("input[name=g]").val();
+			var w = $(this).find("input[name=w]").val();
+			
+			console.log("GGGGGGGGGGGG: [table form]"+ g);
 			//var guestsOrderx = $(this).find("input[name=guestsOrderx]").val();
 			//console.log(orderxxID);
 			//console.log(whatIsItxx);
@@ -1118,55 +1154,67 @@ $(document).on('click', '.tableForm',function(e)
 			$('#seeTableOrdersDiv').hide();
 			//console.log(guestsOrderx);
 			
-			if(oc=="true")
+			if(oc=="true" )
 			{
 			//console.log("OC JE TRUE");
 			//console.log("zasto se ne izvrsi");
-				$('#choseWhat').empty();
-				
-				$.ajax({
-					type:'POST',
-					url : seeAllTableOrders,
-					contentType:'application/json',
-					dataType : "text",
-					data: formatToTablePrintID(tableID),
-					success : function(data)
-					{
-						console.log("OVO SE POSLALO DA VIDI ALL TABLE ORDERS");
-						//$('#tablesData').empty();
-						printTableOrders(data);
-						
-						$('#seeTableOrdersDiv').show();
-						
-						
-						//printTables2(areaID);
-						//$('#choseWhat').empty();
-						//console.log("ovoe 2");
-						
-					}	
-				});
-				
+				if(g!=-1 && w!=-1)
+				{
+					$('#choseWhat').empty();
+
+					$.ajax({
+						type:'POST',
+						url : seeAllTableOrders,
+						contentType:'application/json',
+						dataType : "text",
+						data: formatToTablePrintID(tableID,g),
+						success : function(data)
+						{
+							console.log("OVO SE POSLALO DA VIDI ALL TABLE ORDERS");
+							//$('#tablesData').empty();
+							printTableOrders(data);
+
+							$('#seeTableOrdersDiv').show();
+
+
+							//printTables2(areaID);
+							//$('#choseWhat').empty();
+							//console.log("ovoe 2");
+
+						}	
+					});
+				}
+				if(g!=-1 && w==-1)
+				{
+					//console.log("OC JE FALSE");
+					//alert("ovaj sto nije zauzet x ... ");
+					//$('#seeTableOrdersDiv').empty();
+					
+					$('#seeTableOrdersDiv').hide();
+
+					$('#choseWhat').empty();
+					
+					tekst_za_append='<form id="zauzmiSto" action="" method="post" role="form" class="zauzmiSto" >'
+						+'<input type="hidden" id="tableIDw" name="tableIDw" value="'+tableID+'" >'
+						+'<input type="hidden" id="areaID" name="areaID" value="'+areaID+'" >'
+						+'<input type="hidden" id="g" name="g" value="'+g+'" >'
+						+'<input type="submit" name="zauzmiSto-submit" role="button" id="zauzmiSto-submit" tabindex="7" class="form-control btn btn-success" value="Tend to this Table">'
+						+'</form>';
+
+					$('#choseWhat').append(tekst_za_append);
+
+					console.log("Wut mate? u wut?");
+					 
+					//$('#choseWhat').show();	
+				}
+
 			//alert("ovaj sto je zauzet ... eto...");
 			
 			//$('#choseWhat').empty();
 			}
 			else if(oc == "false")
 			{
-				//console.log("OC JE FALSE");
-				//alert("ovaj sto nije zauzet x ... ");
-				//$('#seeTableOrdersDiv').empty();
-				$('#seeTableOrdersDiv').hide();
-				$('#choseWhat').empty();
-				tekst_za_append='<form id="zauzmiSto" action="" method="post" role="form" class="zauzmiSto" >'
-					+'<input type="hidden" id="tableIDw" name="tableIDw" value="'+tableID+'" >'
-					+'<input type="hidden" id="areaID" name="areaID" value="'+areaID+'" >'
-					+'<input type="submit" name="zauzmiSto-submit" role="button" id="zauzmiSto-submit" tabindex="7" class="form-control btn btn-success" value="Occupy Table">'
-					+'</form>';
 				
-				$('#choseWhat').append(tekst_za_append);
-				
-				console.log("Wut mate? u wut?");
-				//$('#choseWhat').show();	
 			}
 			
 			
@@ -1239,11 +1287,12 @@ function workingShiftPrint(data)
 	console.log("XXXX4");
 }
 
-function formatToTablePrintID(idXXX)
+function formatToTablePrintID(idXXX,g)
 {
 	return JSON.stringify(
 			{
-				"generalTableID":idXXX
+				"generalTableID":idXXX,
+				"guestOrderID":g
 			}
 			);
 	
@@ -1269,7 +1318,7 @@ function formatToOrderID(orderxxxx)
 	);
 }
 
-function formatToOrderImmitationxy(orderIDZaPonistenje,foodOrDrink,table)
+function formatToOrderImmitationxy(orderIDZaPonistenje,foodOrDrink,table,g)
 {
 	/*
 	var orderIDZaPonistenje = $(this).find("input[name=orderIDZaPonistenje]").val();
@@ -1280,7 +1329,8 @@ function formatToOrderImmitationxy(orderIDZaPonistenje,foodOrDrink,table)
 			{
 				"orderId":orderIDZaPonistenje,
 				"whatIsIt":foodOrDrink,
-				"table":table
+				"table":table,
+				"guestOrderID":g
 			}
 	);
 }

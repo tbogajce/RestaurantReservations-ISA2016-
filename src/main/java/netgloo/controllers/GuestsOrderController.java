@@ -228,7 +228,7 @@ public class GuestsOrderController {
 			if(emp.getEmployeeRole().equals("Bartender"))
 			{
 				ArrayList<OrderedBeverage> listac=new ArrayList<OrderedBeverage>();
-				Pageable page= new PageRequest(0, 40);
+				Pageable page= new PageRequest(0, 80);
 				listac= guOrdDao.findByRestaurantAndDates(emp.getRestaurantId(), sTime, eTime,page);
 				
 				for(OrderedBeverage ob : listac)
@@ -238,6 +238,9 @@ public class GuestsOrderController {
 					String doneTime="";
 					String note="";
 					String canceled="";
+					
+					boolean skipIt = false;
+					
 					if(ob.getBartender()!=null)
 					{
 						employeeString = ob.getBartender().getUserId().getUserName()+" "+ob.getBartender().getUserId().getUserSurname();
@@ -249,6 +252,7 @@ public class GuestsOrderController {
 					if(ob.getDoneTime()!=null)
 					{
 						doneTime=ob.getDoneTime().toString();
+						skipIt=true;
 					}
 					if(ob.getOrderedBeverageNote()!=null && !ob.getOrderedBeverageNote().equals(""))
 					{
@@ -257,16 +261,21 @@ public class GuestsOrderController {
 					if(ob.getIsCanceled()==true)
 					{
 						canceled="canceled";
+						skipIt=true;
 					}
-					OrderImmitation oi = new OrderImmitation(ob.getOrderedBeverageID(),ob.getBeverage().getBeveragesName(),ob.getQuantity(),note,acceptedTime,doneTime,employeeString,ob.getGuestsOrder().getDiningTable().getTableNumberInRestaurant(),"b",canceled);
-					orderImitsList.add(oi);
+					if(skipIt==false)
+					{
+						OrderImmitation oi = new OrderImmitation(ob.getOrderedBeverageID(),ob.getBeverage().getBeveragesName(),ob.getQuantity(),note,acceptedTime,doneTime,employeeString,ob.getGuestsOrder().getDiningTable().getTableNumberInRestaurant(),"b",canceled);
+						orderImitsList.add(oi);
+					}
+					
 				}
 			}
 			
 			if(emp.getEmployeeRole().equals("Cook"))
 			{
 				ArrayList<OrderedMeal> listac=new ArrayList<OrderedMeal>();
-				Pageable page= new PageRequest(0, 40);
+				Pageable page= new PageRequest(0, 80);
 				listac= guOrdDao.findByRestaurantAndDatesMeal(emp.getRestaurantId(), sTime, eTime,page);
 				
 				for(OrderedMeal ob : listac)
@@ -276,6 +285,9 @@ public class GuestsOrderController {
 					String doneTime="";
 					String note="";
 					String canceled="";
+					boolean skipIt=false;
+					
+					
 					if(ob.getCook()!=null)
 					{
 						employeeString = ob.getCook().getUserId().getUserName()+" "+ob.getCook().getUserId().getUserSurname();
@@ -287,6 +299,7 @@ public class GuestsOrderController {
 					if(ob.getDoneTime()!=null)
 					{
 						doneTime=ob.getDoneTime().toString();
+						skipIt=true;
 					}
 					if(ob.getOrderedMealNote()!=null && !ob.getOrderedMealNote().equals(""))
 					{
@@ -295,9 +308,15 @@ public class GuestsOrderController {
 					if(ob.getIsCanceled()!=null && ob.getIsCanceled()==true)
 					{
 						canceled="canceled";
+						skipIt=true;
 					}
-					OrderImmitation oi = new OrderImmitation(ob.getOrderedMealID(),ob.getMenu().getMenuMealDescription(),ob.getQuantity(),note,acceptedTime,doneTime,employeeString,ob.getGuestsOrder().getDiningTable().getTableNumberInRestaurant(),"m",canceled);
-					orderImitsList.add(oi);
+					
+					if(skipIt==false)
+					{
+						OrderImmitation oi = new OrderImmitation(ob.getOrderedMealID(),ob.getMenu().getMenuMealDescription(),ob.getQuantity(),note,acceptedTime,doneTime,employeeString,ob.getGuestsOrder().getDiningTable().getTableNumberInRestaurant(),"m",canceled);
+						orderImitsList.add(oi);
+					}
+					
 				}
 			}
 			
