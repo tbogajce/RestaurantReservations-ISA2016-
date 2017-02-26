@@ -9,27 +9,25 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
 @Entity
-@Table(name="systemManager")
+@Table(name = "systemManager")
 public class SystemManager {
-	
-	
+
 	@Id
 	private String systemManagerNickId;
-	
+
 	@NotNull
 	private String managerEmail;
-	
+
 	@NotNull
 	private String managerName;
-	
+
 	@NotNull
 	private String managerLastName;
-	
-	@NotNull 
+
+	@NotNull
 	private String managerPassword;
-	
-	public SystemManager()
-	{
+
+	public SystemManager() {
 		super();
 	}
 
@@ -42,24 +40,17 @@ public class SystemManager {
 		this.managerLastName = manager_last_name;
 		this.managerPassword = manager_password;
 	}
-	
-	
-	public SystemManager(String system_manager_nick_id, String manager_password)
-	{
+
+	public SystemManager(String system_manager_nick_id, String manager_password) {
 		super();
 		this.systemManagerNickId = system_manager_nick_id;
 		this.managerPassword = manager_password;
 	}
-	
-	public SystemManager(String system_manager_nick_id)
-	{
+
+	public SystemManager(String system_manager_nick_id) {
 		super();
-		this.systemManagerNickId=system_manager_nick_id;
+		this.systemManagerNickId = system_manager_nick_id;
 	}
-	
-	
-	
-	
 
 	public String getSystemManagerNickId() {
 		return systemManagerNickId;
@@ -140,9 +131,5 @@ public class SystemManager {
 	public void setManager_password(String manager_password) {
 		this.managerPassword = manager_password;
 	}
-	
-	
-	
-	
 
 }

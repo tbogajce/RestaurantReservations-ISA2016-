@@ -66,6 +66,9 @@ body {
 							<div class="col-xs-6">
 								<a href="#" id="create-new-provider">Add new Provider</a>
 							</div>
+							<div class="col-xs-6">
+								<a href="#" id="create-new-beverage">Add new Beverage</a>
+							</div>
 
 						</div>
 						<hr>
@@ -75,15 +78,15 @@ body {
 						<div class="row">
 							<div class="col-lg-12">
 								<h1 id="greetings" style="display: block;">Welcome!</h1>
-								
+
 								<form id="edit-info-form" action="" method="post" role="form"
 									class="editInfoForm" style="display: none;">
 									<div class="form-group">
 										<input type="text" name="rname" id="rname" tabindex="1"
 											class="form-control" placeholder="Name" value="">
 									</div>
-									
-									
+
+
 
 									<div class="form-group">
 										<input type="text" name="rtype" id="rtype" tabindex="2"
@@ -97,9 +100,8 @@ body {
 									</div>
 
 									<div class="form-group">
-										<input type="text" name="radress" id="radress"
-											tabindex="4" class="form-control" placeholder="Adress"
-											value="">
+										<input type="text" name="radress" id="radress" tabindex="4"
+											class="form-control" placeholder="Adress" value="">
 									</div>
 
 									<div class="form-group">
@@ -129,8 +131,8 @@ body {
 										</div>
 									</div>
 								</form>
-								
-								
+
+
 								<form id="add-new-provider-form" action="" method="post"
 									role="form" class="newProviderForm" style="display: none;">
 									<div class="form-group">
@@ -223,7 +225,42 @@ body {
 									</div>
 								</form>
 
+								<form id="add-new-beverage-form" action="" method="post"
+									role="form" class="newBeverageForm" style="display: none;">
+									<div class="form-group">
+										<input type="text" name="brid" id="brid" tabindex="1"
+											class="form-control" placeholder="Restaurant ID" value="">
+									</div>
 
+									<div class="form-group">
+										<input type="text" name="bname" id="bname" tabindex="2"
+											class="form-control" placeholder="Name" value="">
+									</div>
+
+									<div class="form-group">
+										<input type="text" name="bdescription" id="bdescription"
+											tabindex="3" class="form-control" placeholder="Description"
+											value="">
+									</div>
+
+									<div class="form-group">
+										<input type="text" name="bprice" id="bprice" tabindex="4"
+											class="form-control" placeholder="Price" value="">
+									</div>
+
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-8 col-sm-offset-2">
+												<input type="submit" name="new-beverage-submit"
+													id="new-beverage-submit" tabindex="5"
+													class="form-control btn btn-success"
+													value="Add new Beverage">
+											</div>
+										</div>
+									</div>
+								</form>
+								
+							
 
 
 							</div>

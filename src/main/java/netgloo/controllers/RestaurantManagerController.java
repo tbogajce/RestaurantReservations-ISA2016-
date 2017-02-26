@@ -84,7 +84,7 @@ public class RestaurantManagerController {
 		try {
 			
 			if (restDao.findByRestaurantId(r1.getRestaurantId()) == rm1.getRestaurantId()) {
-
+				System.out.println("ID menadzera i restorana JESU isti");
 				if (restDao.findByRestaurantId(r1.getRestaurantId()) != null) {
 
 					Restaurant restaurant = restDao.findByRestaurantId(r1.getRestaurantId());
@@ -100,6 +100,8 @@ public class RestaurantManagerController {
 				} else {
 					return "NOT_OK";
 				}
+			}else{
+				System.out.println("ID menadzera i restorana NISU isti");
 			}
 		} catch (Exception ex) {
 			return "Error updating restaurant: " + ex.toString();
