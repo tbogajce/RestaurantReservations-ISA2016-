@@ -8,4 +8,5 @@ import netgloo.models.Restaurant;
 public interface RestaurantDao extends CrudRepository<Restaurant, String>{
 
 	public Restaurant findByRestaurantId(Long restaurantId);
+
 }
