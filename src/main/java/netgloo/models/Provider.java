@@ -1,5 +1,6 @@
 package netgloo.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -24,14 +25,29 @@ public class Provider {
 	@NotNull
 	private String providerPassword;
 	
+	@Column(nullable=true)
+	private Boolean changedPass;
+
 	
+	
+	
+	public Provider(String providerNickId, String providerMail, String providerName, String providerSurname,
+			String providerPassword, Boolean changedPass) {
+		super();
+		this.providerNickId = providerNickId;
+		this.providerMail = providerMail;
+		this.providerName = providerName;
+		this.providerSurname = providerSurname;
+		this.providerPassword = providerPassword;
+		this.changedPass = changedPass;
+	}
 
 	public Provider() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Provider(String providerNickId, String providerMail, String providerName, String providerSurname,
+	/*public Provider(String providerNickId, String providerMail, String providerName, String providerSurname,
 			String providerPassword) {
 		super();
 		this.providerNickId = providerNickId;
@@ -39,7 +55,7 @@ public class Provider {
 		this.providerName = providerName;
 		this.providerSurname = providerSurname;
 		this.providerPassword = providerPassword;
-	}
+	}*/
 
 	public String getProviderNickId() {
 		return providerNickId;
@@ -81,4 +97,14 @@ public class Provider {
 		this.providerPassword = providerPassword;
 	}
 
+	public Boolean getChangedPass() {
+		return changedPass;
+	}
+
+	public void setChangedPass(Boolean changedPass) {
+		this.changedPass = changedPass;
+	}
+	
+	
+	
 }

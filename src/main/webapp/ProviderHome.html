@@ -52,6 +52,9 @@ body {
 	<!-- /.container-fluid --> </nav>
 	<!--------------------------------- End Header -------------------------------------------->
 
+	
+
+
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
@@ -64,6 +67,18 @@ body {
 							</div>
 						</div>
 						<hr>
+					</div>
+
+					<div class="panel panel-default" id="changePasswordPanel">
+						<h4 id="changePass">Enter a new password:</h4>
+						<form id="changePassForm" action="" method="post" role="form"
+							class="changePassForm" style="display: none;">
+							<input type="password" name="newPass" id="newPass" tabindex="6"
+								class="form-control" placeholder="New Password" value="">
+							<input type="submit" name="cpf-submit" id="cpf-submit"
+								tabindex="7" class="form-control btn btn-success"
+								value="Change Password">
+						</form>
 					</div>
 
 					<div class="panel-body">

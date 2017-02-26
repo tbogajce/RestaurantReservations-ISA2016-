@@ -1,16 +1,82 @@
 var getProviderDataURL = "providerController/providerData";
 var getUpdProviderDataURL = "providerController/updateProvider";
+var hasChangedPass = "providerController/hasChangedPass";
+var changePass = "providerController/changePass";
 
 $(function() {
 
 	$('#edit-info').click(function(e) {
 		// e.preventDefault();
 		$("#edit-info-form").delay(300).fadeIn(100);
-
+		
 		$("#greetings").fadeOut(100);
+		
 
 		$(this).addClass('active');
 		e.preventDefault();
+	});
+
+});
+
+// *********************************************************************************
+// NOVA SIFRA
+$(document).ready(function() {
+	// $('#guestProfilePanel').show();
+	$('#edit-info').hide();
+	console.log("Uslo do ovde..")
+	$.ajax({
+		type : 'POST',
+		url : hasChangedPass,
+
+		dataType : "text",
+
+		success : function(data) {
+
+			console.log(data)
+			if (data == "no") {
+				$('#edit-info').hide();
+
+				$('#changePasswordPanel').show();
+				$('#changePassForm').show();
+
+			} else if (data == "yes") {
+
+				$('#edit-info').show();
+
+				$('#changePasswordPanel').hide();
+				$('#changePassForm').hide();
+
+			} else if (data == "nijeCovjek") {
+				$('#edit-info').hide();
+			}
+
+		}
+
+	});
+
+});
+
+$(document).on('submit', '.changePassForm', function(e) {
+	e.preventDefault();
+	// var startingDate = $(this).find("input[name=startingDate]").val();
+	// var endingDate = $(this).find("input[name=endingDate]").val();
+
+	var newPass = $(this).find("input[name=newPass]").val();
+
+	$.ajax({
+		type : 'POST',
+		url : changePass,
+		contentType : 'application/json',
+		dataType : "text",
+		data : formatToPassword(newPass),
+		success : function(data) {
+			console.log("Izmjena passworda");
+			$('#edit-info').show();
+			$('#changePasswordPanel').hide();
+			$('#changePassForm').hide();
+			// workingShiftPrint(data);
+		}
+
 	});
 
 });
@@ -75,4 +141,12 @@ function formToJSONNewProvider(providerNickId, providerMail, providerName,
 		"providerSurname" : providerSurname,
 		"providerPassword" : providerPassword,
 	});
+}
+
+function formatToPassword(newPass) {
+	return JSON.stringify({
+		"newPassword" : newPass
+	}
+
+	);
 }
