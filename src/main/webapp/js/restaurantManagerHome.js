@@ -67,30 +67,96 @@ $(function() {
 
 });
 
+
+
+
+$(document).ready
+{
+	console.log("Ovo se izvrsilox");
+	// e.preventDefault();
+	// $('#create-new-system-manager').addClass('active');
+	// $("#add-new-system-manager-form").delay(300).fadeIn(100);
+	// $("#restoran").fadeOut(100);
+	// $("#add-new-rest-man-form").fadeOut(100);
+	// $("#edit-info-form").fadeOut(100);
+	// $('#edit-info').removeClass('active');
+	// $('#create-new-restaurant').removeClass('active');
+	// $('#create-new-restaurant-manager').removeClass('active');
+	// e.preventDefault();
+
+	$('#create-new-employee').removeClass('active');
+	$('#create-new-provider').removeClass('active');
+	$('#create-new-beverage').removeClass('active');
+	$('#edit-info').removeClass('active'); 
+	var apc = $.ajax({
+		type : 'GET',
+		url : getRestDataURL,
+		// contentType : 'application/json',
+		dataType : "text",
+		// citavo nista ne saljem... jasno
+		// data : formToJSONNewSysMan(nick, email, name, surname,
+		// password),
+		success : function(data) {
+			console.log(data);
+			if (data.length != 0) {
+				console.log("Ovo se IF izvrsilo");
+				data = $.parseJSON(data)
+				// console.log("Ovo se izvrsilo");
+				// console.log(data)
+				// console.log(data.manager_email)
+				// $('edit-info-form').find("input[name=nick]").val(data.manager_email);
+				// $('edit-info-form').find("input[name=nick]").val(data.manager_email);
+				// $('.editInfo').find("input[name=nick]").prop('value',data.manager_email);
+				// $('.editInfo').find("input[name=nick]").prop('placeholder',data.manager_email);
+				  $('#rname').val(data.restaurantName);
+				  $('#rtype').val(data.restaurantType);
+				  $('#rcoordinates').val(data.restaurantCoordinates);
+				  $('#radress').val(data.restaurantAdress);
+				  $('#rrate').val(data.restaurantRate);
+				  $('#rvisitsnumber').val(data.restaurantVisitsNumber);
+				  $('#rincome').val(data.restaurantIncome); 
+				// console.log(data.manager_email)
+
+			} else {
+				console.log("Ovo se ELSE izvrsilo");;
+				window.location.href = "RegistrationPage.html";
+			}
+			// window.location.href =
+			// "http://localhost:8080/SystemManagerHome.html";
+		}
+	});
+}
+
 /*
- * $(document).ready { console.log("Ovo se izvrsilox, RESTORAN MENADZER");
- * 
- * $('#create-new-employee').removeClass('active');
- * $('#create-new-provider').removeClass('active');
- * $('#create-new-beverage').removeClass('active');
- * $('#edit-info').removeClass('active'); var apc = $.ajax({ type : 'GET', url :
- * getRestDataURL, // contentType : 'application/json', dataType : "text", //
- * citavo nista ne saljem... jasno data : formToJSONNewRest(restaurantName,
- * restaurantType, restaurantCoordinates, restaurantAdress, restaurantRate,
- * restaurantVisitsNumber, restaurantIncome), success : function(data) {
- * console.log(data); if (data.length != 0) { console.log("Ovo se IF izvrsilo");
- * data = $.parseJSON(data) $('#rname').val(data.restaurantName);
- * $('#rtype').val(data.restaurantType);
- * $('#rcoordinates').val(data.restaurantCoordinates);
- * $('#radress').val(data.restaurantAdress);
- * $('#rrate').val(data.restaurantRate);
- * $('#rvisitsnumber').val(data.restaurantVisitsNumber);
- * $('#rincome').val(data.restaurantIncome); // console.log(data.manager_email) }
- * else { console.log("Ovo se ELSE izvrsilo"); window.location.href =
- * "RestaurantManagerHome.html"; } // window.location.href =
- * 
- *  // "http://localhost:8080/SystemManagerHome.html"; } }); }
- */
+$(document).ready { console.log("Ovo se izvrsilox, RESTORAN MENADZER");
+  
+  $('#create-new-employee').removeClass('active');
+  $('#create-new-provider').removeClass('active');
+  $('#create-new-beverage').removeClass('active');
+  $('#edit-info').removeClass('active'); 
+  var apc = $.ajax(
+		  { type : 'GET', url :
+  getRestDataURL, // contentType : 'application/json', dataType : "text", //
+  // citavo nista ne saljem... jasno
+  // data : formToJSONNewRest(restaurantName,
+  // restaurantType, restaurantCoordinates, restaurantAdress, restaurantRate,
+  // restaurantVisitsNumber, restaurantIncome), 
+  success : function(data) {
+  console.log(data); if (data.length != 0) { console.log("Ovo se IF izvrsilo");
+  data = $.parseJSON(data) $('#rname').val(data.restaurantName);
+  $('#rtype').val(data.restaurantType);
+  $('#rcoordinates').val(data.restaurantCoordinates);
+  $('#radress').val(data.restaurantAdress);
+  $('#rrate').val(data.restaurantRate);
+  $('#rvisitsnumber').val(data.restaurantVisitsNumber);
+  $('#rincome').val(data.restaurantIncome); 
+  // console.log(data.manager_email) }
+  else { console.log("Ovo se ELSE izvrsilo"); window.location.href =RestaurantManagerHome.html"; }); // window.location.href =
+  
+  
+   // "http://localhost:8080/SystemManagerHome.html"; 
+   }); 
+*/
 
 // *********************************************************************************
 // PONUDJAC

@@ -80,42 +80,59 @@ public class RestaurantManagerController {
 	@RequestMapping(value = "/updateRestaurant", method = RequestMethod.POST, headers = {
 			"content-type=application/json" })
 	@ResponseBody
-	public String updateRestaurant(@RequestBody Restaurant r1, RestaurantManager rm1) {
+	public String updateRestaurant(@RequestBody Restaurant r1, RestaurantManager rm1,HttpServletRequest request) {
 		try {
-			
+			/*
 			if (restDao.findByRestaurantId(r1.getRestaurantId()) == rm1.getRestaurantId()) {
 				System.out.println("ID menadzera i restorana JESU isti");
 				if (restDao.findByRestaurantId(r1.getRestaurantId()) != null) {
+					*/
 
-					Restaurant restaurant = restDao.findByRestaurantId(r1.getRestaurantId());
-					restaurant.setRestaurantName(r1.getRestaurantName());
-					restaurant.setRestaurantType(r1.getRestaurantType());
-					restaurant.setRestaurantCoordinates(r1.getRestaurantCoordinates());
-					restaurant.setRestaurantAdress(r1.getRestaurantAdress());
-					restaurant.setRestaurantRate(r1.getRestaurantRate());
-					restaurant.setRestaurantVisitsNumber(r1.getRestaurantVisitsNumber());
-					restaurant.setRestaurantIncome(r1.getRestaurantIncome());
-					restDao.save(restaurant);
-					return "OK";
+					RestaurantManager rm = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
+					
+					if(rm!=null)
+					{
+						if(rm.getRestaurantId()!=null)
+						{
+							Restaurant restaurant = rm.getRestaurantId();
+							//Restaurant restaurant = restDao.findByRestaurantId(r1.getRestaurantId());
+							restaurant.setRestaurantName(r1.getRestaurantName());
+							restaurant.setRestaurantType(r1.getRestaurantType());
+							restaurant.setRestaurantCoordinates(r1.getRestaurantCoordinates());
+							restaurant.setRestaurantAdress(r1.getRestaurantAdress());
+							restaurant.setRestaurantRate(r1.getRestaurantRate());
+							restaurant.setRestaurantVisitsNumber(r1.getRestaurantVisitsNumber());
+							restaurant.setRestaurantIncome(r1.getRestaurantIncome());
+							restDao.save(restaurant);
+						}
+					}
+					
+					System.out.println("JE LI RAVNO OVO? JE LI RAVNO OVO?");
+					
+					//return "OK";
+					/*
 				} else {
 					return "NOT_OK";
 				}
 			}else{
 				System.out.println("ID menadzera i restorana NISU isti");
 			}
+			*/
 		} catch (Exception ex) {
 			return "Error updating restaurant: " + ex.toString();
 		}
+		//return null;
 		return null;
-
 	}
 	
 	@RequestMapping(value = "/restaurantData", method = RequestMethod.GET)
 	public Restaurant restaurantData(HttpServletRequest request) {
 		try{
-			if(request.getSession().getAttribute("restaurant")!=null)
+			if(request.getSession().getAttribute("restaurantManager")!=null)
 			{
-				Restaurant restaurant =(Restaurant) request.getSession().getAttribute("restaurant");
+				System.out.println("PROCURILO U OVO ... sto je dobro");
+				RestaurantManager rmkkk = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
+				Restaurant restaurant =rmkkk.getRestaurantId(); //(Restaurant) request.getSession().getAttribute("restaurantManager");
 				return restaurant;
 			}
 			
