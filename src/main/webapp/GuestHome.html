@@ -10,6 +10,7 @@
 <script src="js/fabric.js"></script>
 <script src="js/guestHome.js"></script>
 <script src="js/guestHomeInvite.js"></script>
+<script src="js/guestHomeReview.js"></script>
 
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -67,6 +68,8 @@
 			<ul class="nav nav-pills nav-stacked">
 				<li><a href="#" id="reservationButton">Reservation</a></li>
 				<li><a href="#" id="callFriendButton">Call friend</a></li>
+				<li><a href="#" id="makeOrderButton">Make order</a></li>
+				<li><a href="#" id="historyVisitsButton">History visits</a></li>
 			</ul>
 		</div>
 
@@ -81,9 +84,7 @@
 
 						<div class="row">
 							<div class="panel panel-primary filterable">
-								<div class="panel-heading">
-									<h3 class="panel-title guestName"></h3>
-								</div>
+
 								<!-- panel preview -->
 								<div class="col-sm-7" style="margin-left: 200px;">
 									<h4></h4>
@@ -159,9 +160,7 @@
 
 						<div class="row">
 							<div class="panel panel-primary filterable">
-								<div class="panel-heading">
-									<h3 class="panel-title"></h3>
-								</div>
+
 								<!-- panel preview -->
 								<div class="col-sm-7" style="margin-left: 200px;">
 									<h4></h4>
@@ -218,6 +217,153 @@
 				</div>
 				<!-------------------------------- END prvo prikazi tabelu kupac --------------------------------------->
 			</div> 
+			
+			<!-- PODJELA PANELA -->
+			<div class="panel panel-default" id="makeOrderPanel">  
+				<div class="panel-heading">MAKE ORDER: </div>
+				<div class="panel-body">
+					<!------------------------------------ prvo prikazi tabelu kupac --------------------------------------------->
+					<div class="container" style="margin-left: -10px;">
+
+						<hr>
+
+						<div class="row">
+							<div class="panel panel-primary filterable">
+							
+								<!-- panel preview -->
+								<div class="col-sm-7" style="margin-left: 200px;">
+									<h4></h4>
+									<div class="panel panel-default">
+										<div class="panel-body form-horizontal payment-form">
+										<!--  TU SE DODAJE TABELA -->
+										
+											<form class="formReservation"> 
+															
+											<div class="form-group"> 
+											 <label for="concept" class="col-sm-3 control-label">Restaurant:</label>
+											<div class="col-sm-9"> 
+												<select class="form-control findRestaurant" name="restaurantOrder" style="width: 125px">
+
+												</select> 
+											</div> 
+										</div>
+										
+										<div class="form-group"> 
+										 <label for="concept" class="col-sm-3 control-label">Date</label>
+										<div class="col-sm-9"> 
+											<input type="text" class="form-control" name="dateOrder" readonly> 
+										</div> 
+										</div>
+										
+										<div class="form-group"> 
+										 <label for="concept" class="col-sm-3 control-label">Time</label>
+										<div class="col-sm-9"> 
+											<input type="text" class="form-control" name="timeOrder" readonly> 
+										</div> 
+										</div>
+										
+
+										<div class="form-group"> 
+										 <label for="concept" class="col-sm-3 control-label">Choose meal: </label>
+										<div class="col-sm-9"> 
+											<select class="form-control selectMeal" style="width: 125px">
+			
+											</select> 
+										</div> 
+									</div>
+									
+									<div class="form-group"> 
+										 <label for="concept" class="col-sm-3 control-label">Choose drink: </label>
+										<div class="col-sm-9"> 
+											<select class="form-control selectDrink" style="width: 125px">
+			
+											</select> 
+										</div> 
+									</div>
+						
+						<button class="btn btn-success btn-block makeOrder" type="submit">Make order</button>
+						</form>
+										
+										
+										
+										
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- / panel preview -->
+
+						</div>
+					</div>
+				</div>
+				<!-------------------------------- END prvo prikazi tabelu kupac --------------------------------------->
+			</div> 
+			
+			<!-- PODJELA -->
+			
+				<div class="panel panel-default" id="historyVisitsPanel">  
+				<div class="panel-heading">HISTORY VISITS: </div>
+				<div class="panel-body">
+					<!------------------------------------ prvo prikazi tabelu kupac --------------------------------------------->
+					<div class="container" style="margin-left: -10px;">
+
+						<hr>
+
+						<div class="row">
+							<div class="panel panel-primary filterable">
+
+								<!-- panel preview -->
+								<div class="col-sm-7" style="margin-left: 200px;">
+									<h4></h4>
+									<div class="panel panel-default">
+										<div class="panel-body form-horizontal payment-form">
+										<!--  TU SE DODAJE TABELA -->
+										
+											<form class="formReviewRestaurant"> 
+															
+											<div class="form-group"> 
+											 <label for="concept" class="col-sm-3 control-label">Restaurant</label>
+											<div class="col-sm-9"> 
+												<select class="form-control chooseRestaurant1" name="restaurant1" style="width: 125px">
+
+												</select> 
+											</div> 
+												</div>
+										
+										<div class="form-group"> 
+										 <label for="concept" class="col-sm-3 control-label">Nesto</label>
+										<div class="col-sm-9"> 
+											<input type="text" class="form-control" name="nesto" 
+												> 
+										</div> 
+										</div>
+
+									<div class="form-group"> 
+									 <label for="concept" class="col-sm-3 control-label">Nesto 2</label>
+									<div class="col-sm-9"> 
+										<select class="form-control selectNesto" style="width: 125px">
+
+										</select> 
+									</div> 
+									</div>
+						
+						<button class="btn btn-success btn-block historyVis" type="submit">Nesto submit</button>
+						</form>
+										
+										
+										
+										
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- / panel preview -->
+
+						</div>
+					</div>
+				</div>
+				<!-------------------------------- END prvo prikazi tabelu kupac --------------------------------------->
+			</div>
 			</div>
 			
 			

@@ -45,12 +45,12 @@ public class GuestsOrder {
 	@Column(nullable=true)
 	private Boolean IsPaid;
 	
-	/*
+	
 	@JsonBackReference("tableReservation-guestsOrder")
 	@ManyToOne
 	@JoinColumn(name="tableReservation", referencedColumnName="tableReservationId", nullable=true)
 	private TableReservation tableReservation;
-	*/
+	
 	
 	private Timestamp orderReceivedTime;
 
@@ -77,9 +77,19 @@ public class GuestsOrder {
 		this.IsPaid = isPaid;
 		this.orderReceivedTime = orderReceivedTime;
 	}
+	
 
-	
-	
+	public GuestsOrder(Restaurant restaurant, Employee waiter, User guest, DiningTable diningTable, Boolean isPaid,
+			TableReservation tableReservation, Timestamp orderReceivedTime) {
+		super();
+		this.restaurant = restaurant;
+		this.waiter = waiter;
+		this.guest = guest;
+		this.diningTable = diningTable;
+		IsPaid = isPaid;
+		this.tableReservation = tableReservation;
+		this.orderReceivedTime = orderReceivedTime;
+	}
 
 	public GuestsOrder() {
 		super();
@@ -144,6 +154,14 @@ public class GuestsOrder {
 
 	public void setOrderReceivedTime(Timestamp orderReceivedTime) {
 		this.orderReceivedTime = orderReceivedTime;
+	}
+
+	public TableReservation getTableReservation() {
+		return tableReservation;
+	}
+
+	public void setTableReservation(TableReservation tableReservation) {
+		this.tableReservation = tableReservation;
 	}
 	
 	
