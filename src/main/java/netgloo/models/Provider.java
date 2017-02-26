@@ -23,6 +23,8 @@ public class Provider {
 
 	@NotNull
 	private String providerPassword;
+	
+	
 
 	public Provider() {
 		super();

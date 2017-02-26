@@ -69,6 +69,9 @@ body {
 							<div class="col-xs-6">
 								<a href="#" id="create-new-beverage">Add new Beverage</a>
 							</div>
+							<div class="col-xs-6">
+								<a href="#" id="create-new-menu">Add new Meal</a>
+							</div>
 
 						</div>
 						<hr>
@@ -260,7 +263,40 @@ body {
 									</div>
 								</form>
 								
-							
+								<form id="add-new-menu-form" action="" method="post"
+									role="form" class="newMenuForm" style="display: none;">
+									<div class="form-group">
+										<input type="text" name="mrid" id="mrid" tabindex="1"
+											class="form-control" placeholder="Restaurant ID" value="">
+									</div>
+
+									<div class="form-group">
+										<input type="text" name="mdescription" id="mdescription" tabindex="2"
+											class="form-control" placeholder="Description" value="">
+									</div>
+
+									<div class="form-group">
+										<input type="text" name="mprice" id="mprice"
+											tabindex="3" class="form-control" placeholder="Price"
+											value="">
+									</div>
+
+									<div class="form-group">
+										<input type="text" name="mrate" id="mrate" tabindex="4"
+											class="form-control" placeholder="Rate" value="">
+									</div>
+
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-8 col-sm-offset-2">
+												<input type="submit" name="new-menu-submit"
+													id="new-menu-submit" tabindex="5"
+													class="form-control btn btn-success"
+													value="Add new Meal">
+											</div>
+										</div>
+									</div>
+								</form>
 
 
 							</div>

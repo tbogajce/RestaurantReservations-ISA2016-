@@ -1,39 +1,24 @@
 package netgloo.models;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+public class MenuPom {
 
-@Entity
-@Table(name = "menu")
-public class Menu {
-
-	@JsonBackReference("restaurant-menu")
-	@ManyToOne
-	@JoinColumn(name = "restaurantId", referencedColumnName = "restaurantId", nullable = false)
-	private Restaurant restaurantId;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	private String restaurantId;
 	private Long menuMealId;
-
-	@NotNull
 	private String menuMealDescription;
-
-	@NotNull
 	private Float menuMealPrice;
-
-	@NotNull
 	private Float menuMealRate;
 
-	public Menu(Restaurant restaurantId, Long menuMealId, String menuMealDescription, Float menuMealPrice,
+	public MenuPom() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public MenuPom(String restaurantId, Long menuMealId, String menuMealDescription, Float menuMealPrice,
 			Float menuMealRate) {
 		super();
 		this.restaurantId = restaurantId;
@@ -43,16 +28,11 @@ public class Menu {
 		this.menuMealRate = menuMealRate;
 	}
 
-	public Menu() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Restaurant getRestaurantId() {
+	public String getRestaurantId() {
 		return restaurantId;
 	}
 
-	public void setRestaurantId(Restaurant restaurantId) {
+	public void setRestaurantId(String restaurantId) {
 		this.restaurantId = restaurantId;
 	}
 

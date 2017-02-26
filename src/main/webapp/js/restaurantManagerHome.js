@@ -2,6 +2,7 @@ var newProviderURL = "providerController/createNewProvider";
 var getUpdRestDataURL = "restaurantManagerController/updateRestaurant";
 var getRestDataURL = "restaurantManagerController/restaurantData";
 var newBeverageURL = "beveragesController/createNewBeverage";
+var newMenuURL = "menuController/createNewMenu";
 
 $(function() {
 
@@ -12,9 +13,11 @@ $(function() {
 		$("#greetings").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
+		$("#add-new-menu-form").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
 		$('#create-new-provider').removeClass('active');
 		$('#create-new-beverage').removeClass('active');
+		$('#create-new-menu').removeClass('active');
 		$('#edit-info').removeClass('active');
 		$(this).addClass('active');
 		e.preventDefault();
@@ -27,9 +30,11 @@ $(function() {
 		$("#greetings").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
+		$("#add-new-menu-form").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
 		$('#create-new-employee').removeClass('active');
 		$('#create-new-beverage').removeClass('active');
+		$('#create-new-menu').removeClass('active');
 		$('#edit-info').removeClass('active');
 		$(this).addClass('active');
 		e.preventDefault();
@@ -43,9 +48,11 @@ $(function() {
 		$("#add-new-employee-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
+		$("#add-new-menu-form").fadeOut(100);
 		$('#create-new-employee').removeClass('active');
 		$('#create-new-beverage').removeClass('active');
 		$('#create-new-provider').removeClass('active');
+		$('#create-new-menu').removeClass('active');
 		$(this).addClass('active');
 		e.preventDefault();
 	});
@@ -57,9 +64,28 @@ $(function() {
 		$("#greetings").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
+		$("#add-new-menu-form").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
 		$('#create-new-employee').removeClass('active');
 		$('#create-new-provider').removeClass('active');
+		$('#create-new-menu').removeClass('active');
+		$('#edit-info').removeClass('active');
+		$(this).addClass('active');
+		e.preventDefault();
+	});
+	
+	$('#create-new-menu').click(function(e) {
+		// e.preventDefault();
+		$("#add-new-menu-form").delay(300).fadeIn(100);
+
+		$("#greetings").fadeOut(100);
+		$("#add-new-employee-form").fadeOut(100);
+		$("#add-new-provider-form").fadeOut(100);
+		$("#add-new-beverage-form").fadeOut(100);
+		$("#edit-info-form").fadeOut(100);
+		$('#create-new-employee').removeClass('active');
+		$('#create-new-provider').removeClass('active');
+		$('#create-new-beverage').removeClass('active');
 		$('#edit-info').removeClass('active');
 		$(this).addClass('active');
 		e.preventDefault();
@@ -119,44 +145,13 @@ $(document).ready
 
 			} else {
 				console.log("Ovo se ELSE izvrsilo");;
-				window.location.href = "RegistrationPage.html";
+				window.location.href = "RestaurantManagerHome.html";
 			}
 			// window.location.href =
 			// "http://localhost:8080/SystemManagerHome.html";
 		}
 	});
 }
-
-/*
-$(document).ready { console.log("Ovo se izvrsilox, RESTORAN MENADZER");
-  
-  $('#create-new-employee').removeClass('active');
-  $('#create-new-provider').removeClass('active');
-  $('#create-new-beverage').removeClass('active');
-  $('#edit-info').removeClass('active'); 
-  var apc = $.ajax(
-		  { type : 'GET', url :
-  getRestDataURL, // contentType : 'application/json', dataType : "text", //
-  // citavo nista ne saljem... jasno
-  // data : formToJSONNewRest(restaurantName,
-  // restaurantType, restaurantCoordinates, restaurantAdress, restaurantRate,
-  // restaurantVisitsNumber, restaurantIncome), 
-  success : function(data) {
-  console.log(data); if (data.length != 0) { console.log("Ovo se IF izvrsilo");
-  data = $.parseJSON(data) $('#rname').val(data.restaurantName);
-  $('#rtype').val(data.restaurantType);
-  $('#rcoordinates').val(data.restaurantCoordinates);
-  $('#radress').val(data.restaurantAdress);
-  $('#rrate').val(data.restaurantRate);
-  $('#rvisitsnumber').val(data.restaurantVisitsNumber);
-  $('#rincome').val(data.restaurantIncome); 
-  // console.log(data.manager_email) }
-  else { console.log("Ovo se ELSE izvrsilo"); window.location.href =RestaurantManagerHome.html"; }); // window.location.href =
-  
-  
-   // "http://localhost:8080/SystemManagerHome.html"; 
-   }); 
-*/
 
 // *********************************************************************************
 // PONUDJAC
@@ -223,7 +218,28 @@ $(document).on('submit', '.newBeverageForm', function(e) {
 		url : newBeverageURL,
 		contentType : 'application/json',
 		dataType : "text",
-		data : formToJSONNewBeverage(brid, bname, bdescription, bprice),
+		data : formToJSONNewBeverage(brid, bdescription, bname, bprice),
+		success : function(data) {
+
+			window.location.href = "RestaurantManagerHome.html";
+		}
+	});
+});
+// *********************************************************************************
+//JELO
+$(document).on('submit', '.newMenuForm', function(e) {
+	e.preventDefault();
+	console.log("Add new Menu begin");
+	var mrid = $(this).find("input[name=mrid]").val();
+	var mdescription = $(this).find("input[name=mdescription]").val();
+	var mprice = $(this).find("input[name=mprice]").val();
+	var mrate = $(this).find("input[name=mrate]").val();
+	$.ajax({
+		type : 'POST',
+		url : newMenuURL,
+		contentType : 'application/json',
+		dataType : "text",
+		data : formToJSONNewMenu(mrid, mdescription, mprice, mrate),
 		success : function(data) {
 
 			window.location.href = "RestaurantManagerHome.html";
@@ -263,5 +279,15 @@ function formToJSONNewBeverage(restaurantId, beveragesDescription, beveragesName
 		"beveragesDescription" : beveragesDescription,
 		"beveragesName" : beveragesName,
 		"beveragesPrice" : beveragesPrice,
+	});
+}
+
+function formToJSONNewMenu(restaurantId, menuMealDescription, menuMealPrice,
+		menuMealRate) {
+	return JSON.stringify({
+		"restaurantId" : restaurantId,
+		"menuMealDescription" : menuMealDescription,
+		"menuMealPrice" : menuMealPrice,
+		"menuMealRate" : menuMealRate,
 	});
 }

@@ -241,7 +241,7 @@ public class TablesAndBillController {
 				status="Done";
 			}
 			
-			OrderImmitation ox =  new OrderImmitation(om.getOrderedMealID(),om.getMenu().getMenu_meal_description(), om.getQuantity(), om.getOrderedMealNote(), "","","",idStola,"m","");
+			OrderImmitation ox =  new OrderImmitation(om.getOrderedMealID(),om.getMenu().getMenuMealDescription(), om.getQuantity(), om.getOrderedMealNote(), "","","",idStola,"m","");
 			ox.setNovitet("no");
 			ox.setStatus(status);
 			ox.setGuestOrderID(om.getGuestsOrder().getOrderID());
@@ -345,7 +345,7 @@ public class TablesAndBillController {
 			{
 				status="Done";
 			}
-			OrderImmitation ox =  new OrderImmitation(om.getOrderedMealID(),om.getMenu().getMenu_meal_description(), om.getQuantity(), om.getOrderedMealNote(), "","","",idStola,"m","");
+			OrderImmitation ox =  new OrderImmitation(om.getOrderedMealID(),om.getMenu().getMenuMealDescription(), om.getQuantity(), om.getOrderedMealNote(), "","","",idStola,"m","");
 			ox.setNovitet("no");
 			ox.setStatus(status);
 			ox.setGuestOrderID(om.getGuestsOrder().getOrderID());
@@ -466,7 +466,7 @@ public class TablesAndBillController {
 			{
 				status="Done";
 			}
-			OrderImmitation ox =  new OrderImmitation(om.getOrderedMealID(),om.getMenu().getMenu_meal_description(), om.getQuantity(), om.getOrderedMealNote(), "","","",idStola,"m","");
+			OrderImmitation ox =  new OrderImmitation(om.getOrderedMealID(),om.getMenu().getMenuMealDescription(), om.getQuantity(), om.getOrderedMealNote(), "","","",idStola,"m","");
 			ox.setNovitet("no");
 			ox.setStatus(status);
 			ox.setGuestOrderID(om.getGuestsOrder().getOrderID());
