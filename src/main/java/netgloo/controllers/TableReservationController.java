@@ -15,18 +15,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import netgloo.dao.BeveragesDao;
 import netgloo.dao.DinningTableDao;
 import netgloo.dao.FriendshipsDao;
 import netgloo.dao.GuestsOrderDao;
 import netgloo.dao.InviteFriendDao;
+import netgloo.dao.MenuDao;
 import netgloo.dao.RestaurantDao;
 import netgloo.dao.TableReservationDao;
 import netgloo.dao.UserDao;
+import netgloo.models.Beverages;
 import netgloo.models.DiningTable;
 import netgloo.models.Friendships;
 import netgloo.models.GuestsOrder;
 import netgloo.models.InviteFriend;
 import netgloo.models.InviteFriendPom;
+import netgloo.models.Menu;
 import netgloo.models.Restaurant;
 import netgloo.models.TableReservation;
 import netgloo.models.TableReservationPom;
@@ -50,12 +54,18 @@ public class TableReservationController {
 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private BeveragesDao beveragesDao;
 
 	@Autowired
 	private SmtpMailSender smtpMailSender;
 
 	@Autowired
 	private FriendshipsDao friendshipsDao;
+
+	@Autowired
+	private MenuDao menuDao;
 
 	@Autowired
 	private GuestsOrderDao guestsOrderDao;
@@ -66,6 +76,9 @@ public class TableReservationController {
 	public ArrayList<User> allFriends = new ArrayList<User>();
 	public InviteFriend tr1 = null;
 	public ArrayList<TableReservation> getTableReservation = new ArrayList<TableReservation>();
+
+	public ArrayList<Menu> getRestaurantMenu = new ArrayList<Menu>();
+	public ArrayList<Beverages> getRestaurantBeverage = new ArrayList<Beverages>();
 
 	// METODE--------------------------
 
@@ -84,17 +97,17 @@ public class TableReservationController {
 		restaurantCombo = (ArrayList<Restaurant>) lu;
 		return restaurantCombo;
 	}
-	
+
 	@RequestMapping(value = "/getTablesReservation33", method = RequestMethod.GET)
 	public ArrayList<TableReservation> getTablesReservation33(HttpServletRequest request) {
 		getTableReservation.clear();
 		User user = (User) request.getSession().getAttribute("user");
 		List<InviteFriend> lu = (List<InviteFriend>) inviteFriendDao.findAll();
-		for(int i = 0; i< lu.size();i++) {
-			if(lu.get(i).getUserId().getEmail().equals(user.getEmail()))
+		for (int i = 0; i < lu.size(); i++) {
+			if (lu.get(i).getUserId().getEmail().equals(user.getEmail()))
 				getTableReservation.add(lu.get(i).getTableReservationId());
 		}
-		
+
 		return getTableReservation;
 	}
 
@@ -136,6 +149,45 @@ public class TableReservationController {
 		return tableReservation;
 	}
 
+	@RequestMapping(value = "/getRestaurantMeal", method = RequestMethod.POST, headers = {
+			"content-type=application/json" })
+	public ArrayList<Menu> getRestaurantMeal(@RequestBody TableReservationPom tableReservationPom,
+			HttpServletRequest request) {
+		getRestaurantMenu.clear();
+		String tableResId = tableReservationPom.getTableReservationId();
+		TableReservation tableReservation = tableReservationDao.findByTableReservationId(Integer.parseInt(tableResId));
+		Restaurant restaurant = tableReservation.getRestaurantId();
+
+		List<Menu> lu = (List<Menu>) menuDao.findAll();
+
+		for (int i = 0; i < lu.size(); i++) {
+			if (lu.get(i).getRestaurantId().getRestaurantId().equals(restaurant.getRestaurantId()))
+				getRestaurantMenu.add(lu.get(i));
+		}
+
+		return getRestaurantMenu;
+	}
+
+	// ---------BEVERAGES
+	@RequestMapping(value = "/getRestaurantBeverages", method = RequestMethod.POST, headers = {
+			"content-type=application/json" })
+	public ArrayList<Beverages> getRestaurantBeverages(@RequestBody TableReservationPom tableReservationPom,
+			HttpServletRequest request) {
+		getRestaurantBeverage.clear();
+		String tableResId = tableReservationPom.getTableReservationId();
+		TableReservation tableReservation = tableReservationDao.findByTableReservationId(Integer.parseInt(tableResId));
+		Restaurant restaurant = tableReservation.getRestaurantId();
+
+		List<Beverages> lu = (List<Beverages>) beveragesDao.findAll();
+
+		for (int i = 0; i < lu.size(); i++) {
+			if (lu.get(i).getRestaurantId().getRestaurantId().equals(restaurant.getRestaurantId()))
+				getRestaurantBeverage.add(lu.get(i));
+		}
+
+		return getRestaurantBeverage;
+	}
+
 	@RequestMapping(value = "/restaurantReservation", method = RequestMethod.POST, headers = {
 			"content-type=application/json" })
 	public String restaurantReservation(@RequestBody TableReservationPom tableReservationPom,
@@ -152,7 +204,6 @@ public class TableReservationController {
 					tableReservationPom.getTime(), Integer.parseInt(tableReservationPom.getHours()), diningTable, user);
 			tableReservationDao.save(tableReservation);
 
-			
 			System.out.println("ISPIS DATUM..." + tableReservationPom.getDate());
 			System.out.println("ISPIS VRIJEME..." + tableReservationPom.getTime() + ":00");
 			String startDateString = tableReservationPom.getDate();
@@ -170,8 +221,6 @@ public class TableReservationController {
 			GuestsOrder guestsOrder = new GuestsOrder(restaurant, null, user, diningTable, false, tableReservation,
 					later);
 			guestsOrderDao.save(guestsOrder);
-
-
 
 		} catch (Exception e) {
 			e.printStackTrace();
