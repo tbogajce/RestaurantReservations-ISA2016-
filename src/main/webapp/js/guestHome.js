@@ -37,7 +37,8 @@ $(document).on('click', '#makeOrderButton', function(e) {
 	$('#callFriendPanel').hide();
 	$('#makeOrderPanel').show();
 	$('#historyVisitsPanel').hide();
-
+	
+	restaurantCombo33();
 });
 
 

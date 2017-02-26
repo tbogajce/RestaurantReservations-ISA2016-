@@ -65,6 +65,7 @@ public class TableReservationController {
 	public ArrayList<TableReservation> reservedRestaurant = new ArrayList<TableReservation>();
 	public ArrayList<User> allFriends = new ArrayList<User>();
 	public InviteFriend tr1 = null;
+	public ArrayList<TableReservation> getTableReservation = new ArrayList<TableReservation>();
 
 	// METODE--------------------------
 
@@ -82,6 +83,19 @@ public class TableReservationController {
 		List<Restaurant> lu = (List<Restaurant>) restaurantDao.findAll();
 		restaurantCombo = (ArrayList<Restaurant>) lu;
 		return restaurantCombo;
+	}
+	
+	@RequestMapping(value = "/getTablesReservation33", method = RequestMethod.GET)
+	public ArrayList<TableReservation> getTablesReservation33(HttpServletRequest request) {
+		getTableReservation.clear();
+		User user = (User) request.getSession().getAttribute("user");
+		List<InviteFriend> lu = (List<InviteFriend>) inviteFriendDao.findAll();
+		for(int i = 0; i< lu.size();i++) {
+			if(lu.get(i).getUserId().getEmail().equals(user.getEmail()))
+				getTableReservation.add(lu.get(i).getTableReservationId());
+		}
+		
+		return getTableReservation;
 	}
 
 	@RequestMapping(value = "/getAllFriends", method = RequestMethod.GET)
