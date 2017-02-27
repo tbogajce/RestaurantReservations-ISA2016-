@@ -318,6 +318,14 @@ public class TableReservationController {
 
 		return "OK";
 	}
+	
+	//--------getAllRestaurants
+	@RequestMapping(value = "/getAllRestaurants", method = RequestMethod.GET)
+	public ArrayList<Restaurant> getAllRestaurants(HttpServletRequest request) {
+
+			ArrayList<Restaurant> fs = (ArrayList<Restaurant>) restaurantDao.findAll();
+		return fs;
+	}
 
 	public void sendMail(TableReservation tableReservation, User user) throws MessagingException {
 		StringBuffer sb = new StringBuffer();

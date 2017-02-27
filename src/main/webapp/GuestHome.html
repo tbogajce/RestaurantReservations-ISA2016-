@@ -71,6 +71,7 @@
 				<li><a href="#" id="callFriendButton">Call friend</a></li>
 				<li><a href="#" id="makeOrderButton">Make order</a></li>
 				<li><a href="#" id="historyVisitsButton">History visits</a></li>
+				<li><a href="#" id="allRestaurantsButton">Show all restaurants</a></li>
 			</ul>
 		</div>
 
@@ -351,6 +352,55 @@
 				</div>
 				<!-------------------------------- END prvo prikazi tabelu kupac --------------------------------------->
 			</div>
+			
+			
+						<!-- PODJELA PANELA -->
+			<div class="panel panel-default" id="allRestaurantsPanel">  <!-- KOMPLETAN PANEL PROIZVODA -->
+				<div class="panel-heading">SHOWING ALL RESTAURANTS</div>
+				<div class="panel-body">
+				<div class="container"  style="width:90%">
+
+						<hr>
+
+						<div class="row">
+							<div class="panel panel-primary filterable">
+								<div class="panel-heading">
+									<h3 class="panel-title">All restaurants: </h3>
+									<div class="pull-right" style="margin-top: -19px;">
+										<button class="btn btn-default btn-xs btn-filter">Filter</button>
+									</div>
+
+								</div>
+								<form class="clearForm" action="" method="post">
+									<table class="table">
+										<thead class="thead">
+											<tr class="filters">
+												<th><input type="text" class="form-control"
+													placeholder="Name" disabled></th>
+												<th><input type="text" class="form-control"
+													placeholder="Type" disabled></th>
+												<th><input type="text" class="form-control"
+													placeholder="Adress" disabled></th>
+											</tr>
+										</thead>
+										<tbody id="allRestaurantsData">
+											<!-- guests friends list -->
+										</tbody>
+									</table>
+
+
+
+
+								</form>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-------------------------------- END prvo prikazi tabelu kupac --------------------------------------->
+			</div>
+			
 			</div>
 			
 			

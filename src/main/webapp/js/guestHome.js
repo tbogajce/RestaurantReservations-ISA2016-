@@ -1,7 +1,7 @@
 var restaurantCombo = "tableReservation/getRestaurantCombo";
 var restaurantTables = "tableReservation/restaurantTables";
 var restaurantReservation = "tableReservation/restaurantReservation";
-
+var getAllRestaurantsFun = "tableReservation/getAllRestaurants";
 
 
 $( document ).ready(function() {
@@ -9,6 +9,7 @@ $( document ).ready(function() {
 	$('#callFriendPanel').hide();
 	$('#makeOrderPanel').hide();
 	$('#historyVisitsPanel').hide();
+	$('#allRestaurantsPanel').hide();
 	restaurantCombo22();
 });
 
@@ -17,6 +18,7 @@ $(document).on('click', '#reservationButton', function(e) {
 	$('#callFriendPanel').hide();
 	$('#makeOrderPanel').hide();
 	$('#historyVisitsPanel').hide();
+	$('#allRestaurantsPanel').hide();
 	restaurantCombo22();
 
 });
@@ -27,6 +29,7 @@ $(document).on('click', '#callFriendButton', function(e) {
 	$('#tableReservationPanel').hide();
 	$('#makeOrderPanel').hide();
 	$('#historyVisitsPanel').hide();
+	$('#allRestaurantsPanel').hide();
 	
 	tableReservationInvite();
 	getAllFriends1();
@@ -37,8 +40,19 @@ $(document).on('click', '#makeOrderButton', function(e) {
 	$('#callFriendPanel').hide();
 	$('#makeOrderPanel').show();
 	$('#historyVisitsPanel').hide();
+	$('#allRestaurantsPanel').hide();
 	
 	restaurantCombo33();
+});
+
+$(document).on('click', '#allRestaurantsButton', function(e) {
+	$('#tableReservationPanel').hide();
+	$('#callFriendPanel').hide();
+	$('#makeOrderPanel').hide();
+	$('#historyVisitsPanel').hide();
+	$('#allRestaurantsPanel').show();
+	
+	printAllRestaurants();
 });
 
 
@@ -138,3 +152,108 @@ function formToJSONReservation(restaurantId, date, time, hours, diningTableId) {
 	});
 }
 
+//----------
+///GET ALL RESTAURANTS
+
+function printAllRestaurants() {
+	$.ajax({
+		type : 'GET',
+		url : getAllRestaurantsFun,
+		dataType : "json", // data type of response
+		success : function(data) {
+			allRestaurantsPrint(data);
+		}
+	});
+}
+
+function allRestaurantsPrint(data) {
+	// JAX-RS serializes an empty list as null, and a 'collection of one' as an
+	// object (not an 'array of one')
+	$('#allRestaurantsData').empty();
+	var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
+	$.each(list,function(index, restaurant) {
+						var tr = $('<tr></tr>');
+						tr.append('<td>' + restaurant.restaurantName + '</td>'+ 
+										'<td>' + restaurant.restaurantType + '</td>' +
+										'<td>' + restaurant.restaurantAdress + '</td>');
+						$('#allRestaurantsData').append(tr);
+					});
+}
+
+
+///////////TABELA FILTER
+//----------------------tabela-----------------------
+$(document)
+		.ready(
+				function() {
+					$(document)
+							.on(
+									'click',
+									'.filterable .btn-filter',
+									function() {
+										var $panel = $(this).parents(
+												'.filterable'), $filters = $panel
+												.find('.filters input'), $tbody = $panel
+												.find('.table tbody');
+										if ($filters.prop('disabled') == true) {
+											$filters.prop('disabled', false);
+											$filters.first().focus();
+										} else {
+											$filters.val('').prop('disabled',
+													true);
+											$tbody.find('.no-result').remove();
+											$tbody.find('tr').show();
+										}
+									});
+
+					$('.filterable .filters input')
+							.keyup(
+									function(e) {
+										/* Ignore tab key */
+										var code = e.keyCode || e.which;
+										if (code == '9')
+											return;
+										/* Useful DOM data and selectors */
+										var $input = $(this), inputContent = $input
+												.val().toLowerCase(), $panel = $input
+												.parents('.filterable'), column = $panel
+												.find('.filters th').index(
+														$input.parents('th')), $table = $panel
+												.find('.table'), $rows = $table
+												.find('tbody tr');
+										/* Dirtiest filter function ever ;) */
+										var $filteredRows = $rows
+												.filter(function() {
+													var value = $(this).find(
+															'td').eq(column)
+															.text()
+															.toLowerCase();
+													return value
+															.indexOf(inputContent) === -1;
+												});
+										/* Clean previous no-result if exist */
+										$table.find('tbody .no-result')
+												.remove();
+										/*
+										 * Show all rows, hide filtered ones
+										 * (never do that outside of a demo !
+										 * xD)
+										 */
+										$rows.show();
+										$filteredRows.hide();
+										/*
+										 * Prepend no-result row if all rows are
+										 * filtered
+										 */
+										if ($filteredRows.length === $rows.length) {
+											$table
+													.find('tbody')
+													.prepend(
+															$('<tr class="no-result text-center"><td colspan="'
+																	+ $table
+																			.find('.filters th').length
+																	+ '">No result found</td></tr>'));
+										}
+									});
+				});
+// --------------------------kraj tabela------------------------------------

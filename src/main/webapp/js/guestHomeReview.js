@@ -11,6 +11,7 @@ $(document).on('click', '#historyVisitsButton', function(e) {
 	$('#callFriendPanel').hide();
 	$('#makeOrderPanel').hide();
 	$('#historyVisitsPanel').show();
+	$('#allRestaurantsPanel').hide();
 	
 	//tu dodas poziv nekih funkcija koje se okidaju cim se otvori tab Review Restaurants
 	
