@@ -25,5 +25,6 @@ public interface UserDao extends CrudRepository<User, Integer> {
    */
   public User findByEmail(String email);
   public User findByUserId(Long userId);
-
+  
+  
 } // class UserDao

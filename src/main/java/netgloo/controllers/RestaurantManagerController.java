@@ -25,6 +25,7 @@ import netgloo.models.RestaurantManager;
 import netgloo.models.RestaurantManagerPom;
 import netgloo.models.SystemManager;
 import netgloo.models.User;
+import netgloo.models.UserEmployeePom;
 import netgloo.models.UserProba;
 
 @RestController
@@ -151,38 +152,39 @@ public class RestaurantManagerController {
 	// *********************************************************************************************************
 	@RequestMapping(value = "/createNewEmployee", method = RequestMethod.POST, headers = {
 			"content-type=application/json" })
-	public String createEmployee(@RequestBody UserProba user1, EmployeePom employee, HttpServletRequest request) {
+	public String createEmployee(@RequestBody UserEmployeePom ue1, HttpServletRequest request) {
 
 		try {
 
 			User user = null;
 			String user_reg_date = new SimpleDateFormat("dd-MMM-yyyy").format(new Date());
-			user = new User(user1.getEmail(), user1.getPassword(), user1.getName(), user1.getSurname(),
-					user1.getBirthDate().trim(), user_reg_date, "Employee", false);
+			user = new User(ue1.getEmail(), ue1.getPassword(), ue1.getName(), ue1.getSurname(),
+					ue1.getBirthDate().trim(), user_reg_date, "Employee", false);
 			userDao.save(user);
 			
 			System.out.println("RADNIK USER DEO ZAVRSEN");
 			
-			//DEO PODATAKA ZA USERA SE USPESNO SACUVA U BAZI
-			
-			System.out.println(employee.getRestaurantId());
-			System.out.println(employee.getUserId());
-			
-			//OVDE JE IDEJA DA UZMEM ID RESTORANA CIJI JE MENADZER ULOGOVAN
-			//I DA UZMEM ID USERA KOJI JE UPRAVO DODAT PRILIKOM DODAVANJA RADNIKA
-			
-			//Restaurant restaurant = restDao.findByRestaurantId(Long.parseLong(employee.getRestaurantId()));
 			RestaurantManager rmkkk = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
 			Restaurant restaurant = rmkkk.getRestaurantId();
 			
-			System.out.println("Restoran broj: " + restaurant);
+			/*User ukkk = (User) request.getSession().getAttribute("user"); 
+			User userid = ukkk.getUserId();
+			
+			*/
 			
 			
-			User userid = userDao.findByUserId(Long.parseLong(employee.getUserId()));
+			//Restaurant restaurant = restDao.findByRestaurantId(Long.parseLong(employee.getRestaurantId()));
+			//RestaurantManager rmkkk = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
+			//Restaurant restaurant = rmkkk.getRestaurantId();
+			
+			//System.out.println("Restoran broj: " + restaurant);
+			
+			
+			User userid = userDao.findByEmail(ue1.getEmail());
 
 			Employee emp = null;
-			emp = new Employee(userid, restaurant, emp.getEmployeeRole(), emp.getEmployeeConfectionNumber(),
-					emp.getEmployeeShoeSize(), emp.getEmployeeRate(), false,0,0);
+			emp = new Employee(userid, restaurant, ue1.getEmployeeRole(), ue1.getEmployeeConfectionNumber(),
+					ue1.getEmployeeShoeSize(), ue1.getEmployeeRate(), false,0,0);
 			empDao.save(emp);
 			
 			System.out.println("RADNIK EMPLOYEE DEO ZAVRSEN");

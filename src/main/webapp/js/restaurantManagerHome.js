@@ -74,7 +74,7 @@ $(function() {
 		$(this).addClass('active');
 		e.preventDefault();
 	});
-	
+
 	$('#create-new-menu').click(function(e) {
 		// e.preventDefault();
 		$("#add-new-menu-form").delay(300).fadeIn(100);
@@ -94,9 +94,6 @@ $(function() {
 
 });
 
-
-
-
 $(document).ready
 {
 	console.log("Ovo se izvrsilox");
@@ -114,7 +111,7 @@ $(document).ready
 	$('#create-new-employee').removeClass('active');
 	$('#create-new-provider').removeClass('active');
 	$('#create-new-beverage').removeClass('active');
-	$('#edit-info').removeClass('active'); 
+	$('#edit-info').removeClass('active');
 	var apc = $.ajax({
 		type : 'GET',
 		url : getRestDataURL,
@@ -135,17 +132,18 @@ $(document).ready
 				// $('edit-info-form').find("input[name=nick]").val(data.manager_email);
 				// $('.editInfo').find("input[name=nick]").prop('value',data.manager_email);
 				// $('.editInfo').find("input[name=nick]").prop('placeholder',data.manager_email);
-				  $('#rname').val(data.restaurantName);
-				  $('#rtype').val(data.restaurantType);
-				  $('#rcoordinates').val(data.restaurantCoordinates);
-				  $('#radress').val(data.restaurantAdress);
-				  $('#rrate').val(data.restaurantRate);
-				  $('#rvisitsnumber').val(data.restaurantVisitsNumber);
-				  $('#rincome').val(data.restaurantIncome); 
+				$('#rname').val(data.restaurantName);
+				$('#rtype').val(data.restaurantType);
+				$('#rcoordinates').val(data.restaurantCoordinates);
+				$('#radress').val(data.restaurantAdress);
+				$('#rrate').val(data.restaurantRate);
+				$('#rvisitsnumber').val(data.restaurantVisitsNumber);
+				$('#rincome').val(data.restaurantIncome);
 				// console.log(data.manager_email)
 
 			} else {
-				console.log("Ovo se ELSE izvrsilo");;
+				console.log("Ovo se ELSE izvrsilo");
+				;
 				window.location.href = "RestaurantManagerHome.html";
 			}
 			// window.location.href =
@@ -177,95 +175,76 @@ $(document).on('submit', '.newProviderForm', function(e) {
 	});
 });
 
+// *********************************************************************************
+// RADNIK
 
-//*********************************************************************************
-//RADNIK
+// NE ZNAM DA LI OVAKO MOZE RAZDVOJENO DA SE POSMATRA SUBMIT NA ISTU FORMU
 
-//NE ZNAM DA LI OVAKO MOZE RAZDVOJENO DA SE POSMATRA SUBMIT NA ISTU FORMU
+/*
+ * $(document).on('submit', '.newEmployeeForm', function(e) {
+ * e.preventDefault(); console.log("Add new Provider USER begin"); var erole =
+ * $(this).find("input[name=erole]").val(); var ecnumber =
+ * $(this).find("input[name=ecnumber]").val(); var erate =
+ * $(this).find("input[name=erate]").val(); var essize =
+ * $(this).find("input[name=essize]").val(); $.ajax({ type : 'POST', url :
+ * newEmployeeURL, contentType : 'application/json', dataType : "text", data :
+ * formToJSONNewEmployee(erole, ecnumber, erate, essize), success :
+ * function(data) {
+ * 
+ * window.location.href = "RestaurantManagerHome.html"; } }); });
+ */
 
-/*$(document).on('submit', '.newEmployeeForm', function(e) {
-	e.preventDefault();
-	console.log("Add new Provider USER begin");
-	var erole = $(this).find("input[name=erole]").val();
-	var ecnumber = $(this).find("input[name=ecnumber]").val();
-	var erate = $(this).find("input[name=erate]").val();
-	var essize = $(this).find("input[name=essize]").val();
-	$.ajax({
-		type : 'POST',
-		url : newEmployeeURL,
-		contentType : 'application/json',
-		dataType : "text",
-		data : formToJSONNewEmployee(erole, ecnumber, erate, essize),
-		success : function(data) {
+/*
+ * function formToJSONNewEmployee(employeeRole, employeeConfectionNumber,
+ * employeeRate, employeeShoeSize) { return JSON.stringify({ "employeeRole" :
+ * employeeRole, "employeeConfectionNumber" : employeeConfectionNumber,
+ * "employeeRate" : employeeRate, "employeeShoeSize" : employeeShoeSize, }); }
+ */
 
-			window.location.href = "RestaurantManagerHome.html";
-		}
-	});
-});*/
+$(document).on(
+		'submit',
+		'.newEmployeeForm',
+		function(e) {
+			e.preventDefault();
+			console.log("Add new Provider USER begin");
+			var email = $(this).find("input[name=eemail]").val();
+			var password = $(this).find("input[name=epassword]").val();
+			var name = $(this).find("input[name=ename]").val();
+			var surname = $(this).find("input[name=esurname]").val();
+			var birthDate = $(this).find("input[name=ebirthDate]").val();
 
-function formToJSONNewEmployee(employeeRole, employeeConfectionNumber, employeeRate,
-		employeeShoeSize) {
-	return JSON.stringify({
-		"employeeRole" : employeeRole,
-		"employeeConfectionNumber" : employeeConfectionNumber,
-		"employeeRate" : employeeRate,
-		"employeeShoeSize" : employeeShoeSize,
-	});
-}
+			var erole = $(this).find("input[name=erole]").val();
+			var ecnumber = $(this).find("input[name=ecnumber]").val();
+			var erate = $(this).find("input[name=erate]").val();
+			var essize = $(this).find("input[name=essize]").val();
 
-
-$(document).on('submit', '.newEmployeeForm', function(e) {
-	e.preventDefault();
-	console.log("Add new Provider USER begin");
-	var email = $(this).find("input[name=eemail]").val();
-	var password = $(this).find("input[name=epassword]").val();
-	var name = $(this).find("input[name=ename]").val();
-	var surname = $(this).find("input[name=esurname]").val();
-	var birthDate = $(this).find("input[name=ebirthDate]").val();
-	
-	var erole = $(this).find("input[name=erole]").val();
-	var ecnumber = $(this).find("input[name=ecnumber]").val();
-	var erate = $(this).find("input[name=erate]").val();
-	var essize = $(this).find("input[name=essize]").val();
-	
-	
-	$.ajax({
-		type : 'POST',
-		url : newEmployeeURL,
-		contentType : 'application/json',
-		dataType : "text",
-		data : formToJSONRegistration(email, password, name, surname, birthDate),
-		success: function(data) {
-			
 			$.ajax({
 				type : 'POST',
 				url : newEmployeeURL,
 				contentType : 'application/json',
 				dataType : "text",
-				data : formToJSONNewEmployee(erole, ecnumber, erate, essize),
+				data : formToJSONUserEmployee(email, password, name, surname,
+						birthDate, erole, ecnumber, erate, essize),
 				success : function(data) {
-
 					window.location.href = "RestaurantManagerHome.html";
 				}
 			});
-			
-			
-			
-			window.location.href = "RestaurantManagerHome.html";
-		}
-	});
-});
+		});
 
-function formToJSONRegistration(email, password, name, surname, birthDate) {
+function formToJSONUserEmployee(email, password, name, surname, birthDate,
+		employeeRole, employeeConfectionNumber, employeeRate, employeeShoeSize) {
 	return JSON.stringify({
 		"email" : email,
 		"password" : password,
 		"name" : name,
 		"surname" : surname,
 		"birthDate" : birthDate,
+		"employeeRole" : employeeRole,
+		"employeeConfectionNumber" : employeeConfectionNumber,
+		"employeeRate" : employeeRate,
+		"employeeShoeSize" : employeeShoeSize,
 	});
 }
-
 
 // *********************************************************************************
 // IZMENA RESTORANA
@@ -318,7 +297,7 @@ $(document).on('submit', '.newBeverageForm', function(e) {
 	});
 });
 // *********************************************************************************
-//JELO
+// JELO
 $(document).on('submit', '.newMenuForm', function(e) {
 	e.preventDefault();
 	console.log("Add new Menu begin");
@@ -364,8 +343,8 @@ function formToJSONNewProvider(providerNickId, providerMail, providerName,
 	});
 }
 
-function formToJSONNewBeverage(restaurantId, beveragesDescription, beveragesName,
-		beveragesPrice) {
+function formToJSONNewBeverage(restaurantId, beveragesDescription,
+		beveragesName, beveragesPrice) {
 	return JSON.stringify({
 		"restaurantId" : restaurantId,
 		"beveragesDescription" : beveragesDescription,
