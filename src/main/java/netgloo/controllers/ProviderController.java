@@ -145,4 +145,16 @@ public class ProviderController {
 		return "OK";
 	}
 
+	@RequestMapping(value = "/logoutProvider", method = RequestMethod.GET, headers = {
+			"content-type=application/json" })
+	public String logoutProvider(HttpServletRequest request) {
+
+		try {
+			request.getSession().invalidate();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "logout";
+	}
+
 }

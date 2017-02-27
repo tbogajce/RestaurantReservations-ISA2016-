@@ -147,9 +147,6 @@ public class RestaurantManagerController {
 		return null;
 	}
 
-	// *********************************************************************************************************
-	// RADNIK
-	// *********************************************************************************************************
 	@RequestMapping(value = "/createNewEmployee", method = RequestMethod.POST, headers = {
 			"content-type=application/json" })
 	public String createEmployee(@RequestBody UserEmployeePom ue1, HttpServletRequest request) {
@@ -161,33 +158,16 @@ public class RestaurantManagerController {
 			user = new User(ue1.getEmail(), ue1.getPassword(), ue1.getName(), ue1.getSurname(),
 					ue1.getBirthDate().trim(), user_reg_date, "Employee", false);
 			userDao.save(user);
-			
-			System.out.println("RADNIK USER DEO ZAVRSEN");
-			
+
 			RestaurantManager rmkkk = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
 			Restaurant restaurant = rmkkk.getRestaurantId();
-			
-			/*User ukkk = (User) request.getSession().getAttribute("user"); 
-			User userid = ukkk.getUserId();
-			
-			*/
-			
-			
-			//Restaurant restaurant = restDao.findByRestaurantId(Long.parseLong(employee.getRestaurantId()));
-			//RestaurantManager rmkkk = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
-			//Restaurant restaurant = rmkkk.getRestaurantId();
-			
-			//System.out.println("Restoran broj: " + restaurant);
-			
-			
+
 			User userid = userDao.findByEmail(ue1.getEmail());
 
 			Employee emp = null;
 			emp = new Employee(userid, restaurant, ue1.getEmployeeRole(), ue1.getEmployeeConfectionNumber(),
-					ue1.getEmployeeShoeSize(), ue1.getEmployeeRate(), false,0,0);
+					ue1.getEmployeeShoeSize(), ue1.getEmployeeRate(), false, 0, 0);
 			empDao.save(emp);
-			
-			System.out.println("RADNIK EMPLOYEE DEO ZAVRSEN");
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -195,6 +175,16 @@ public class RestaurantManagerController {
 		}
 		return "OK";
 	}
-	// *********************************************************************************************************
-	// *********************************************************************************************************
+
+	@RequestMapping(value = "/logoutRestaurantManager", method = RequestMethod.GET, headers = {
+			"content-type=application/json" })
+	public String logoutRestaurantManager(HttpServletRequest request) {
+
+		try {
+			request.getSession().invalidate();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "logout";
+	}
 }

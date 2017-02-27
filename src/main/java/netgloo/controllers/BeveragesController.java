@@ -2,6 +2,8 @@ package netgloo.controllers;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,7 @@ import netgloo.dao.RestaurantDao;
 import netgloo.models.Beverages;
 import netgloo.models.BeveragesPom;
 import netgloo.models.Restaurant;
+import netgloo.models.RestaurantManager;
 import netgloo.models.SystemManager;
 
 @RestController
@@ -29,11 +32,14 @@ public class BeveragesController {
 
 	@RequestMapping(value = "/createNewBeverage", method = RequestMethod.POST, headers = {
 			"content-type=application/json" })
-	public String createSystemManager(@RequestBody BeveragesPom b1) {
+	public String createSystemManager(@RequestBody BeveragesPom b1, HttpServletRequest request) {
 
 		try {
-
-			Restaurant restaurant = restDao.findByRestaurantId(Long.parseLong(b1.getRestaurantId()));
+			
+			RestaurantManager rmkkk = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
+			Restaurant restaurant = rmkkk.getRestaurantId();
+			
+			//Restaurant restaurant = restDao.findByRestaurantId(Long.parseLong(b1.getRestaurantId()));
 
 			Beverages beverages = null;
 			// String user_reg_date = new

@@ -3,6 +3,8 @@ package netgloo.controllers;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import netgloo.dao.RestaurantDao;
 import netgloo.models.Menu;
 import netgloo.models.MenuPom;
 import netgloo.models.Restaurant;
+import netgloo.models.RestaurantManager;
 
 @RestController
 @RequestMapping("/menuController")
@@ -29,11 +32,14 @@ public class MenuController {
 
 	@RequestMapping(value = "/createNewMenu", method = RequestMethod.POST, headers = {
 			"content-type=application/json" })
-	public String createMenu(@RequestBody MenuPom m1) {
+	public String createMenu(@RequestBody MenuPom m1, HttpServletRequest request) {
 
 		try {
-
-			Restaurant restaurant = restDao.findByRestaurantId(Long.parseLong(m1.getRestaurantId()));
+			
+			RestaurantManager rmkkk = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
+			Restaurant restaurant = rmkkk.getRestaurantId();
+			
+			//Restaurant restaurant = restDao.findByRestaurantId(Long.parseLong(m1.getRestaurantId()));
 
 			Menu menu = null;
 			// String user_reg_date = new

@@ -2,6 +2,7 @@ var getProviderDataURL = "providerController/providerData";
 var getUpdProviderDataURL = "providerController/updateProvider";
 var hasChangedPass = "providerController/hasChangedPass";
 var changePass = "providerController/changePass";
+var logoutURL = "providerController/logoutProvider";
 
 $(function() {
 
@@ -131,6 +132,28 @@ $(document).on('submit', '.editInfoForm', function(e) {
 	});
 });
 // *********************************************************************************
+
+//*********************************************************************************
+//LOGOUT
+$(document).on('click', '#logoutButton', function(e) {
+	e.preventDefault();
+	console.log("logout");
+	$.ajax({
+		type : 'GET',
+		url : logoutURL,
+		contentType : 'application/json',
+		dataType : "text",
+		success : function(data) {
+			if(data=="logout") {
+				window.location.href = "ProviderLogin.html";
+			}
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("AJAX ERROR: " + errorThrown);
+		}
+	});
+});
+//*********************************************************************************
 
 function formToJSONNewProvider(providerNickId, providerMail, providerName,
 		providerSurname, providerPassword) {

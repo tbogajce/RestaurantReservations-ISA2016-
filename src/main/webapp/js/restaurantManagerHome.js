@@ -4,6 +4,7 @@ var getRestDataURL = "restaurantManagerController/restaurantData";
 var newBeverageURL = "beveragesController/createNewBeverage";
 var newMenuURL = "menuController/createNewMenu";
 var newEmployeeURL = "restaurantManagerController/createNewEmployee";
+var logoutURL = "restaurantManagerController/logoutRestaurantManager";
 
 $(function() {
 
@@ -178,29 +179,6 @@ $(document).on('submit', '.newProviderForm', function(e) {
 // *********************************************************************************
 // RADNIK
 
-// NE ZNAM DA LI OVAKO MOZE RAZDVOJENO DA SE POSMATRA SUBMIT NA ISTU FORMU
-
-/*
- * $(document).on('submit', '.newEmployeeForm', function(e) {
- * e.preventDefault(); console.log("Add new Provider USER begin"); var erole =
- * $(this).find("input[name=erole]").val(); var ecnumber =
- * $(this).find("input[name=ecnumber]").val(); var erate =
- * $(this).find("input[name=erate]").val(); var essize =
- * $(this).find("input[name=essize]").val(); $.ajax({ type : 'POST', url :
- * newEmployeeURL, contentType : 'application/json', dataType : "text", data :
- * formToJSONNewEmployee(erole, ecnumber, erate, essize), success :
- * function(data) {
- * 
- * window.location.href = "RestaurantManagerHome.html"; } }); });
- */
-
-/*
- * function formToJSONNewEmployee(employeeRole, employeeConfectionNumber,
- * employeeRate, employeeShoeSize) { return JSON.stringify({ "employeeRole" :
- * employeeRole, "employeeConfectionNumber" : employeeConfectionNumber,
- * "employeeRate" : employeeRate, "employeeShoeSize" : employeeShoeSize, }); }
- */
-
 $(document).on(
 		'submit',
 		'.newEmployeeForm',
@@ -280,7 +258,6 @@ $(document).on(
 $(document).on('submit', '.newBeverageForm', function(e) {
 	e.preventDefault();
 	console.log("Add new Beverage begin");
-	var brid = $(this).find("input[name=brid]").val();
 	var bname = $(this).find("input[name=bname]").val();
 	var bdescription = $(this).find("input[name=bdescription]").val();
 	var bprice = $(this).find("input[name=bprice]").val();
@@ -289,7 +266,7 @@ $(document).on('submit', '.newBeverageForm', function(e) {
 		url : newBeverageURL,
 		contentType : 'application/json',
 		dataType : "text",
-		data : formToJSONNewBeverage(brid, bdescription, bname, bprice),
+		data : formToJSONNewBeverage(bdescription, bname, bprice),
 		success : function(data) {
 
 			window.location.href = "RestaurantManagerHome.html";
@@ -301,7 +278,6 @@ $(document).on('submit', '.newBeverageForm', function(e) {
 $(document).on('submit', '.newMenuForm', function(e) {
 	e.preventDefault();
 	console.log("Add new Menu begin");
-	var mrid = $(this).find("input[name=mrid]").val();
 	var mdescription = $(this).find("input[name=mdescription]").val();
 	var mprice = $(this).find("input[name=mprice]").val();
 	var mrate = $(this).find("input[name=mrate]").val();
@@ -310,7 +286,7 @@ $(document).on('submit', '.newMenuForm', function(e) {
 		url : newMenuURL,
 		contentType : 'application/json',
 		dataType : "text",
-		data : formToJSONNewMenu(mrid, mdescription, mprice, mrate),
+		data : formToJSONNewMenu(mdescription, mprice, mrate),
 		success : function(data) {
 
 			window.location.href = "RestaurantManagerHome.html";
@@ -318,6 +294,27 @@ $(document).on('submit', '.newMenuForm', function(e) {
 	});
 });
 // *********************************************************************************
+//LOGOUT
+$(document).on('click', '#logoutButton', function(e) {
+	e.preventDefault();
+	console.log("logout");
+	$.ajax({
+		type : 'GET',
+		url : logoutURL,
+		contentType : 'application/json',
+		dataType : "text",
+		success : function(data) {
+			if(data=="logout") {
+				window.location.href = "RestaurantManagerLogin.html";
+			}
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("AJAX ERROR: " + errorThrown);
+		}
+	});
+});
+//*********************************************************************************
+
 function formToJSONNewRest(restaurantName, restaurantType,
 		restaurantCoordinates, restaurantAdress, restaurantRate,
 		restaurantVisitsNumber, restaurantIncome) {
@@ -343,20 +340,18 @@ function formToJSONNewProvider(providerNickId, providerMail, providerName,
 	});
 }
 
-function formToJSONNewBeverage(restaurantId, beveragesDescription,
+function formToJSONNewBeverage(beveragesDescription,
 		beveragesName, beveragesPrice) {
 	return JSON.stringify({
-		"restaurantId" : restaurantId,
 		"beveragesDescription" : beveragesDescription,
 		"beveragesName" : beveragesName,
 		"beveragesPrice" : beveragesPrice,
 	});
 }
 
-function formToJSONNewMenu(restaurantId, menuMealDescription, menuMealPrice,
+function formToJSONNewMenu(menuMealDescription, menuMealPrice,
 		menuMealRate) {
 	return JSON.stringify({
-		"restaurantId" : restaurantId,
 		"menuMealDescription" : menuMealDescription,
 		"menuMealPrice" : menuMealPrice,
 		"menuMealRate" : menuMealRate,
