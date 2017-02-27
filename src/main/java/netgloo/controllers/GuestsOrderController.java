@@ -110,6 +110,7 @@ public class GuestsOrderController {
 				orderedBeverage.setBartender(emp);
 				*/
 				orderedBeverage.setIsCanceled(true);
+				orderedBeverage.setBartender(emp);
 				obDao.save(orderedBeverage);
 				
 			}
@@ -128,6 +129,7 @@ public class GuestsOrderController {
 				orderedMeal.setCook(emp);
 				*/
 				orderedMeal.setIsCanceled(true);
+				orderedMeal.setCook(emp);
 				omDao.save(orderedMeal);
 				
 			}

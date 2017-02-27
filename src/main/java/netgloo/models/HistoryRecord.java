@@ -151,6 +151,12 @@ public class HistoryRecord {
 		this.guestsOrder = guestsOrder;
 		this.user = user;
 		this.dateOfVisit = dateOfVisit;
+		this.restaurantGrade=0;
+		this.serviceGrade=0;
+		this.mealGrade=0;
+		this.hasAlreadyGradedMeal=false;
+		this.hasAlreadyGradedRestaurant=false;
+		this.hasAlreadyGradedService=false;
 	}
 	
 	
