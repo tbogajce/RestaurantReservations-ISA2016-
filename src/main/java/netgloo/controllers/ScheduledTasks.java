@@ -57,35 +57,39 @@ public class ScheduledTasks {
     	
     	for (GuestsOrder go : listaOrdera)
     	{
-    		TableReservation tr = go.getTableReservation();
-    		DiningTable dt = go.getDiningTable();
-    		
-    		Timestamp goTime = go.getOrderReceivedTime();
-    		Timestamp curTime = null;
-    		Calendar calx = Calendar.getInstance();
-    		calx.setTime(Calendar.getInstance().getTime());
-    		//cal.add(Calendar.DAY_OF_MONTH, -1);
-    		curTime = new Timestamp(calx.getTime().getTime());
-    		//curTime.setTime(curTime.);
-    		
-    		Timestamp petnesMinRanije = null;
-			//System.out.println(timestamp.toString());
-			int sec = 900; // 15 minuta
-			Calendar cal2 = Calendar.getInstance();
-			//cal2.setTimeInMillis(timestamp.getTime());
-			cal2.setTime(Calendar.getInstance().getTime());
-			cal2.add(Calendar.SECOND, -sec);
-			//Timestamp later = new Timestamp(cal2.getTime().getTime());
-			petnesMinRanije = new Timestamp(cal2.getTime().getTime());
-			//System.out.println("OVO JE POMJERENO VRIJEME" + later);
-    		
-    		if(dt.getOccupied()==false)
+    		if(go.getIsPaid()==false)
     		{
-    			if(goTime.after(petnesMinRanije) && goTime.before(curTime))
+    			TableReservation tr = go.getTableReservation();
+    			DiningTable dt = go.getDiningTable();
+
+    			Timestamp goTime = go.getOrderReceivedTime();
+    			Timestamp curTime = null;
+    			Calendar calx = Calendar.getInstance();
+    			calx.setTime(Calendar.getInstance().getTime());
+    			//cal.add(Calendar.DAY_OF_MONTH, -1);
+    			curTime = new Timestamp(calx.getTime().getTime());
+    			//curTime.setTime(curTime.);
+
+    			Timestamp petnesMinRanije = null;
+    			//System.out.println(timestamp.toString());
+    			int sec = 900; // 15 minuta
+    			Calendar cal2 = Calendar.getInstance();
+    			//cal2.setTimeInMillis(timestamp.getTime());
+    			cal2.setTime(Calendar.getInstance().getTime());
+    			cal2.add(Calendar.SECOND, -sec);
+    			//Timestamp later = new Timestamp(cal2.getTime().getTime());
+    			petnesMinRanije = new Timestamp(cal2.getTime().getTime());
+    			//System.out.println("OVO JE POMJERENO VRIJEME" + later);
+
+    			if(dt.getOccupied()==false && dt.getCurrentGuestsOrder()==null)
     			{
-    				System.out.println("USLO U OVO ZA MJENJANJE!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    				dt.setOccupied(true);
-    				dinTabDao.save(dt);
+    				if(goTime.after(petnesMinRanije) && goTime.before(curTime))
+    				{
+    					System.out.println("USLO U OVO ZA MJENJANJE!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    					dt.setOccupied(true);
+    					dt.setCurrentGuestsOrder(go);
+    					dinTabDao.save(dt);
+    				}
     			}
     		}
     		

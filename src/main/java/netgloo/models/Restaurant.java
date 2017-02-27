@@ -1,5 +1,6 @@
 package netgloo.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,9 +36,36 @@ public class Restaurant {
 
 	@NotNull
 	private Float restaurantIncome;
+	
+	@Column(nullable=true)
+	private int totalNumberOfVoters;
+	
+	@Column(nullable=true)
+	private int sumOfVotes;
+	
+	
+	
+
+	public int getTotalNumberOfVoters() {
+		return totalNumberOfVoters;
+	}
+
+	public void setTotalNumberOfVoters(int totalNumberOfVoters) {
+		this.totalNumberOfVoters = totalNumberOfVoters;
+	}
+
+	public int getSumOfVotes() {
+		return sumOfVotes;
+	}
+
+	public void setSumOfVotes(int sumOfVotes) {
+		this.sumOfVotes = sumOfVotes;
+	}
+	
+	
 
 	public Restaurant(Long restaurantId, String restaurantName, String restaurantType, String restaurantCoordinates,
-			String restaurantAdress, Float restaurantRate, Integer restaurantVisitsNumber, Float restaurantIncome) {
+			String restaurantAdress, Float restaurantRate, Integer restaurantVisitsNumber, Float restaurantIncome, int totalNumberOfVoters, int sumOfVotes) {
 		super();
 		this.restaurantId = restaurantId;
 		this.restaurantName = restaurantName;
@@ -47,10 +75,12 @@ public class Restaurant {
 		this.restaurantRate = restaurantRate;
 		this.restaurantVisitsNumber = restaurantVisitsNumber;
 		this.restaurantIncome = restaurantIncome;
+		this.totalNumberOfVoters=totalNumberOfVoters;
+		this.sumOfVotes=sumOfVotes;
 	}
 
 	public Restaurant(String restaurantName, String restaurantType, String restaurantCoordinates,
-			String restaurantAdress, Float restaurantRate, Integer restaurantVisitsNumber, Float restaurantIncome) {
+			String restaurantAdress, Float restaurantRate, Integer restaurantVisitsNumber, Float restaurantIncome, int totalNumberOfVoters, int sumOfVotes) {
 		super();
 		this.restaurantName = restaurantName;
 		this.restaurantType = restaurantType;
@@ -59,6 +89,8 @@ public class Restaurant {
 		this.restaurantRate = restaurantRate;
 		this.restaurantVisitsNumber = restaurantVisitsNumber;
 		this.restaurantIncome = restaurantIncome;
+		this.totalNumberOfVoters=totalNumberOfVoters;
+		this.sumOfVotes=sumOfVotes;
 	}
 	
 	public Restaurant(Long restaurantId) {

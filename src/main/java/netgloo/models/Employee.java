@@ -45,11 +45,36 @@ public class Employee {
 	
 	@Column(nullable=true)
 	private Boolean changedPass;
+	
+	@Column(nullable=true)
+	private int totalNumberOfVoters;
+	
+	@Column(nullable=true)
+	private int sumOfVotes;
+	
+	
+	
+
+	public int getTotalNumberOfVoters() {
+		return totalNumberOfVoters;
+	}
+
+	public void setTotalNumberOfVoters(int totalNumberOfVoters) {
+		this.totalNumberOfVoters = totalNumberOfVoters;
+	}
+
+	public int getSumOfVotes() {
+		return sumOfVotes;
+	}
+
+	public void setSumOfVotes(int sumOfVotes) {
+		this.sumOfVotes = sumOfVotes;
+	}
 
 	
 
 	public Employee(Long employeeId, User userId, Restaurant restaurantId, String employeeRole,
-			String employeeConfectionNumber, String employeeShoeSize, String employeeRate, Boolean changedPass) {
+			String employeeConfectionNumber, String employeeShoeSize, String employeeRate, Boolean changedPass, int totalNumberOfVoters, int sumOfVotes) {
 		super();
 		this.employeeId = employeeId;
 		this.userId = userId;
@@ -59,6 +84,8 @@ public class Employee {
 		this.employeeShoeSize = employeeShoeSize;
 		this.employeeRate = employeeRate;
 		this.changedPass = changedPass;
+		this.totalNumberOfVoters=totalNumberOfVoters;
+		this.sumOfVotes=sumOfVotes;
 	}
 	
 	//*********************************************************************************************************
@@ -66,7 +93,7 @@ public class Employee {
 
 
 	public Employee(User userId, Restaurant restaurantId, String employeeRole, String employeeConfectionNumber,
-			String employeeShoeSize, String employeeRate, Boolean changedPass) {
+			String employeeShoeSize, String employeeRate, Boolean changedPass, int totalNumberOfVoters, int sumOfVotes) {
 		super();
 		this.userId = userId;
 		this.restaurantId = restaurantId;
@@ -75,6 +102,8 @@ public class Employee {
 		this.employeeShoeSize = employeeShoeSize;
 		this.employeeRate = employeeRate;
 		this.changedPass = changedPass;
+		this.totalNumberOfVoters=totalNumberOfVoters;
+		this.sumOfVotes=sumOfVotes;
 	}
 
 	//*********************************************************************************************************

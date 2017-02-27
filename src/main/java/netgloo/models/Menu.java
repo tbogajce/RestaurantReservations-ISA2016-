@@ -1,5 +1,6 @@
 package netgloo.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,15 +33,42 @@ public class Menu {
 
 	@NotNull
 	private Float menuMealRate;
+	
+	@Column(nullable=true)
+	private int totalNumberOfVoters;
+	
+	@Column(nullable=true)
+	private int sumOfVotes;
+	
+	
+	
+
+	public int getTotalNumberOfVoters() {
+		return totalNumberOfVoters;
+	}
+
+	public void setTotalNumberOfVoters(int totalNumberOfVoters) {
+		this.totalNumberOfVoters = totalNumberOfVoters;
+	}
+
+	public int getSumOfVotes() {
+		return sumOfVotes;
+	}
+
+	public void setSumOfVotes(int sumOfVotes) {
+		this.sumOfVotes = sumOfVotes;
+	}
 
 	public Menu(Restaurant restaurantId, Long menuMealId, String menuMealDescription, Float menuMealPrice,
-			Float menuMealRate) {
+			Float menuMealRate, int totalNumberOfVoters, int sumOfVotes) {
 		super();
 		this.restaurantId = restaurantId;
 		this.menuMealId = menuMealId;
 		this.menuMealDescription = menuMealDescription;
 		this.menuMealPrice = menuMealPrice;
 		this.menuMealRate = menuMealRate;
+		this.totalNumberOfVoters=totalNumberOfVoters;
+		this.sumOfVotes=sumOfVotes;
 	}
 
 	public Menu() {

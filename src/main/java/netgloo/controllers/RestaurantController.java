@@ -32,7 +32,7 @@ public class RestaurantController {
 			Restaurant restaurant = null;
 			restaurant = new Restaurant(r1.getRestaurantName(), r1.getRestaurantType(), r1.getRestaurantCoordinates(),
 					r1.getRestaurantAdress(), r1.getRestaurantRate(), r1.getRestaurantVisitsNumber(),
-					r1.getRestaurantIncome());
+					r1.getRestaurantIncome(),0,0);
 			restDao.save(restaurant);
 		} catch (Exception ex) {
 			ex.printStackTrace();

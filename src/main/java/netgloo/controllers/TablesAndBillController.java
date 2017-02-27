@@ -196,7 +196,7 @@ public class TablesAndBillController {
 		
 		
 		
-		
+		/*
 		
 		
 		for(DiningTable dt: dtList)
@@ -283,17 +283,38 @@ public class TablesAndBillController {
 				System.out.println("STO: " + dt.getGeneralTableID()+ " GO: " + pravi.getOrderID() + " Waiter: " + waiterx);
 				
 				
-				tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID()/*, dt.getGuestsOrder().getOrderID()*/,waiterx,pravi.getOrderID()));
+				tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),waiterx,pravi.getOrderID()));
 
 			}
 			else
 			{
 				System.out.println("STO: " + dt.getGeneralTableID()+ " GO: null Waiter: " + -1);
 				
-				tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID()/*, dt.getGuestsOrder().getOrderID()*/,(long)-1,-1));
+				tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),(long)-1,-1));
 
 			}
 
+		}
+*/
+
+		for(DiningTable dt: dtList)
+		{
+			if(dt.getCurrentGuestsOrder()!=null)
+			{
+				if(dt.getCurrentGuestsOrder().getWaiter()!=null)
+				{
+					tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),dt.getCurrentGuestsOrder().getWaiter().getEmployeeId(), dt.getCurrentGuestsOrder().getOrderID()));
+				}
+				else
+				{
+					tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),(long) -1, dt.getCurrentGuestsOrder().getOrderID()));
+				}
+			}
+			else
+			{
+				tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),(long) -1, -1));
+
+			}
 		}
 		
 		for(DiningTable dt: dtList)
@@ -697,6 +718,7 @@ public class TablesAndBillController {
 		}
 		
 		dinTab.setOccupied(false);
+		dinTab.setCurrentGuestsOrder(null);
 		
 		dtDao.save(dinTab);
 		
@@ -710,21 +732,6 @@ public class TablesAndBillController {
 		dtList = dtDao.findAllByArea(areax);
 		
 		/*
-		for(DiningTable dt: dtList)
-		{
-			tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID()));
-		}
-		
-		for(DiningTable dt: dtList)
-		{
-			System.out.println("Table: " + dt.getPositionX()+", "+dt.getPositionY()+ " -> area: "+dt.getArea());
-		}
-		*/
-		
-		
-
-		
-		
 		for(DiningTable dt: dtList)
 		{
 			
@@ -803,18 +810,39 @@ public class TablesAndBillController {
 				System.out.println("STO: " + dt.getGeneralTableID()+ " GO: " + pravi.getOrderID() + " Waiter: " + waiterx);
 				
 				
-				tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID()/*, dt.getGuestsOrder().getOrderID()*/,waiterx,pravi.getOrderID()));
+				tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),waiterx,pravi.getOrderID()));
 
 			}
 			else
 			{
 				System.out.println("STO: " + dt.getGeneralTableID()+ " GO: null Waiter: " + -1);
 				
-				tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID()/*, dt.getGuestsOrder().getOrderID()*/,(long)-1,-1));
+				tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),(long)-1,-1));
 
 			}
 
 		}
+		*/
+		for(DiningTable dt: dtList)
+		{
+			if(dt.getCurrentGuestsOrder()!=null)
+			{
+				if(dt.getCurrentGuestsOrder().getWaiter()!=null)
+				{
+					tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),dt.getCurrentGuestsOrder().getWaiter().getEmployeeId(), dt.getCurrentGuestsOrder().getOrderID()));
+				}
+				else
+				{
+					tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),(long) -1, dt.getCurrentGuestsOrder().getOrderID()));
+				}
+			}
+			else
+			{
+				tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),(long) -1, -1));
+
+			}
+		}
+		
 		
 		for(DiningTable dt: dtList)
 		{

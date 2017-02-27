@@ -40,6 +40,11 @@ public class DiningTable {
 	@JoinColumn(name="segment", referencedColumnName="segmentID", nullable=false)
 	private Segment segment;
 	
+	@JsonBackReference("guestsOrder-diningTable")
+	@ManyToOne
+	@JoinColumn(name="currentGuestsOrder", referencedColumnName="orderID", nullable=true)
+	private GuestsOrder currentGuestsOrder;
+	
 	/*
 	//OVDE CE PISATI POSLJEDNJI ORDER UKOLIKO JE STO ZAUZET
 	@JsonBackReference("guestsOrder-diningTable")
@@ -64,15 +69,13 @@ public class DiningTable {
 	@Column(name = "positionY", nullable =true)
 	private int positionY;
 
+	public GuestsOrder getCurrentGuestsOrder() {
+		return currentGuestsOrder;
+	}
+	public void setCurrentGuestsOrder(GuestsOrder currentGuestsOrder) {
+		this.currentGuestsOrder = currentGuestsOrder;
+	}
 
-	
-
-	
-	
-	
-
-	
-	
 	public DiningTable(Long generalTableID, Restaurant restaurant, Long tableNumberInRestaurant, Integer numberOfSeats,
 			Area area, Segment segment, String note, Boolean occupied, int positionX, int positionY/*, GuestsOrder guestsOrder*/) {
 		super();

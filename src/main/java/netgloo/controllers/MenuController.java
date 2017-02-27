@@ -38,7 +38,7 @@ public class MenuController {
 			Menu menu = null;
 			// String user_reg_date = new
 			// SimpleDateFormat("dd-MMM-yyyy").format(new Date());
-			menu = new Menu(restaurant, m1.getMenuMealId(), m1.getMenuMealDescription(), m1.getMenuMealPrice(), m1.getMenuMealRate());
+			menu = new Menu(restaurant, m1.getMenuMealId(), m1.getMenuMealDescription(), m1.getMenuMealPrice(), m1.getMenuMealRate(),0,0);
 			menuDao.save(menu);
 		} catch (Exception ex) {
 			ex.printStackTrace();

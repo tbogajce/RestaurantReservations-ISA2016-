@@ -182,7 +182,7 @@ public class RestaurantManagerController {
 
 			Employee emp = null;
 			emp = new Employee(userid, restaurant, emp.getEmployeeRole(), emp.getEmployeeConfectionNumber(),
-					emp.getEmployeeShoeSize(), emp.getEmployeeRate(), false);
+					emp.getEmployeeShoeSize(), emp.getEmployeeRate(), false,0,0);
 			empDao.save(emp);
 			
 			System.out.println("RADNIK EMPLOYEE DEO ZAVRSEN");

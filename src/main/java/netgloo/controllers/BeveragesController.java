@@ -39,7 +39,7 @@ public class BeveragesController {
 			// String user_reg_date = new
 			// SimpleDateFormat("dd-MMM-yyyy").format(new Date());
 			beverages = new Beverages(restaurant, b1.getBeveragesId(), b1.getBeveragesDescription(),
-					b1.getBeveragesName(), b1.getBeveragesPrice());
+					b1.getBeveragesName(), b1.getBeveragesPrice(),0,0);
 			bavDao.save(beverages);
 		} catch (Exception ex) {
 			ex.printStackTrace();
