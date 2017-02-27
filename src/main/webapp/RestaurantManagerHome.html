@@ -72,6 +72,15 @@ body {
 							<div class="col-xs-6">
 								<a href="#" id="create-new-menu">Add new Meal</a>
 							</div>
+							<div class="col-xs-6">
+								<a href="#" id="create-new-shift">Add new Working Shift</a>
+							</div>
+							<div class="col-xs-6">
+								<a href="#" id="create-new-sc">Add new Seating Configuration</a>
+							</div>
+							<div class="col-xs-6">
+								<a href="#" id="create-new-report">See Restaurant Report</a>
+							</div>
 
 						</div>
 						<hr>
@@ -317,6 +326,45 @@ body {
 										</div>
 									</div>
 								</form>
+								
+								<form id="add-new-shift-form" action="" method="post" role="form"
+									class="newShiftForm" style="display: none;">
+
+									<div class="form-group">
+										<input type="text" name="snote" id="snote"
+											tabindex="1" class="form-control" placeholder="Note"
+											value="">
+									</div>
+									
+									<div class="form-group">
+										<input type="date" name="sbeginDate" id="sbeginDate"
+											tabindex="2" class="form-control" placeholder="Shift Begin Date"
+											value="">
+									</div>
+									
+									<div class="form-group">
+										<input type="date" name="sendDate" id="sendDate"
+											tabindex="3" class="form-control" placeholder="Shift End Date"
+											value="">
+									</div>
+									
+									<div class="form-group">
+										<input type="text" name="semployeeId" id="semployeeId" tabindex="4"
+											class="form-control" placeholder="Employee ID" value="">
+									</div>
+
+
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-8 col-sm-offset-2">
+												<input type="submit" name="new-shift-submit"
+													id="new-shift-submit" tabindex="5"
+													class="form-control btn btn-success" value="Add new Working Shift">
+											</div>
+										</div>
+									</div>
+								</form>
+								
 
 
 							</div>

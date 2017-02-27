@@ -57,6 +57,18 @@ public class WorkingShift {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+
+	public WorkingShift(Restaurant restaurant, Employee worker, Timestamp shiftBeginningTime, Timestamp shiftEndTime,
+			String note) {
+		super();
+		this.restaurant = restaurant;
+		this.worker = worker;
+		this.shiftBeginningTime = shiftBeginningTime;
+		this.shiftEndTime = shiftEndTime;
+		this.note = note;
+	}
+
 
 
 	public Long getWorkingShiftID() {

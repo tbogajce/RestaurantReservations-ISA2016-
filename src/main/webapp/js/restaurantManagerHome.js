@@ -4,6 +4,7 @@ var getRestDataURL = "restaurantManagerController/restaurantData";
 var newBeverageURL = "beveragesController/createNewBeverage";
 var newMenuURL = "menuController/createNewMenu";
 var newEmployeeURL = "restaurantManagerController/createNewEmployee";
+var newShiftURL = "workingShiftController/createNewShift";
 var logoutURL = "restaurantManagerController/logoutRestaurantManager";
 
 $(function() {
@@ -16,10 +17,14 @@ $(function() {
 		$("#add-new-provider-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
+		$("#add-new-shift-form").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
 		$('#create-new-provider').removeClass('active');
 		$('#create-new-beverage').removeClass('active');
 		$('#create-new-menu').removeClass('active');
+		$('#create-new-shift').removeClass('active');
+		$('#create-new-report').removeClass('active');
+		$('#create-new-sc').removeClass('active');
 		$('#edit-info').removeClass('active');
 		$(this).addClass('active');
 		e.preventDefault();
@@ -33,10 +38,14 @@ $(function() {
 		$("#add-new-employee-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
+		$("#add-new-shift-form").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
 		$('#create-new-employee').removeClass('active');
 		$('#create-new-beverage').removeClass('active');
 		$('#create-new-menu').removeClass('active');
+		$('#create-new-shift').removeClass('active');
+		$('#create-new-report').removeClass('active');
+		$('#create-new-sc').removeClass('active');
 		$('#edit-info').removeClass('active');
 		$(this).addClass('active');
 		e.preventDefault();
@@ -49,12 +58,16 @@ $(function() {
 		$("#greetings").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
+		$("#add-new-shift-form").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
 		$('#create-new-employee').removeClass('active');
 		$('#create-new-beverage').removeClass('active');
 		$('#create-new-provider').removeClass('active');
 		$('#create-new-menu').removeClass('active');
+		$('#create-new-report').removeClass('active');
+		$('#create-new-shift').removeClass('active');
+		$('#create-new-sc').removeClass('active');
 		$(this).addClass('active');
 		e.preventDefault();
 	});
@@ -68,9 +81,13 @@ $(function() {
 		$("#add-new-provider-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
+		$("#add-new-shift-form").fadeOut(100);
 		$('#create-new-employee').removeClass('active');
 		$('#create-new-provider').removeClass('active');
 		$('#create-new-menu').removeClass('active');
+		$('#create-new-shift').removeClass('active');
+		$('#create-new-report').removeClass('active');
+		$('#create-new-sc').removeClass('active');
 		$('#edit-info').removeClass('active');
 		$(this).addClass('active');
 		e.preventDefault();
@@ -83,11 +100,78 @@ $(function() {
 		$("#greetings").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
+		$("#add-new-shift-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
 		$('#create-new-employee').removeClass('active');
 		$('#create-new-provider').removeClass('active');
 		$('#create-new-beverage').removeClass('active');
+		$('#create-new-shift').removeClass('active');
+		$('#create-new-report').removeClass('active');
+		$('#create-new-sc').removeClass('active');
+		$('#edit-info').removeClass('active');
+		$(this).addClass('active');
+		e.preventDefault();
+	});
+
+	$('#create-new-shift').click(function(e) {
+		// e.preventDefault();
+		$("#add-new-shift-form").delay(300).fadeIn(100);
+
+		$("#greetings").fadeOut(100);
+		$("#add-new-employee-form").fadeOut(100);
+		$("#add-new-provider-form").fadeOut(100);
+		$("#add-new-beverage-form").fadeOut(100);
+		$("#add-new-menu-form").fadeOut(100);
+		$("#edit-info-form").fadeOut(100);
+		$('#create-new-employee').removeClass('active');
+		$('#create-new-provider').removeClass('active');
+		$('#create-new-beverage').removeClass('active');
+		$('#create-new-sc').removeClass('active');
+		$('#create-new-menu').removeClass('active');
+		$('#create-new-report').removeClass('active');
+		$('#edit-info').removeClass('active');
+		$(this).addClass('active');
+		e.preventDefault();
+	});
+
+	$('#create-new-sc').click(function(e) {
+		// e.preventDefault();
+
+		$("#greetings").fadeOut(100);
+		$("#add-new-employee-form").fadeOut(100);
+		$("#add-new-provider-form").fadeOut(100);
+		$("#add-new-shift-form").fadeOut(100);
+		$("#add-new-beverage-form").fadeOut(100);
+		$("#add-new-menu-form").fadeOut(100);
+		$("#edit-info-form").fadeOut(100);
+		$('#create-new-employee').removeClass('active');
+		$('#create-new-provider').removeClass('active');
+		$('#create-new-beverage').removeClass('active');
+		$('#create-new-shift').removeClass('active');
+		$('#create-new-menu').removeClass('active');
+		$('#create-new-report').removeClass('active');
+		$('#edit-info').removeClass('active');
+		$(this).addClass('active');
+		e.preventDefault();
+	});
+
+	$('#create-new-report').click(function(e) {
+		// e.preventDefault();
+
+		$("#greetings").fadeOut(100);
+		$("#add-new-employee-form").fadeOut(100);
+		$("#add-new-provider-form").fadeOut(100);
+		$("#add-new-beverage-form").fadeOut(100);
+		$("#add-new-shift-form").fadeOut(100);
+		$("#add-new-menu-form").fadeOut(100);
+		$("#edit-info-form").fadeOut(100);
+		$('#create-new-employee').removeClass('active');
+		$('#create-new-provider').removeClass('active');
+		$('#create-new-beverage').removeClass('active');
+		$('#create-new-shift').removeClass('active');
+		$('#create-new-menu').removeClass('active');
+		$('#create-new-sc').removeClass('active');
 		$('#edit-info').removeClass('active');
 		$(this).addClass('active');
 		e.preventDefault();
@@ -209,21 +293,6 @@ $(document).on(
 			});
 		});
 
-function formToJSONUserEmployee(email, password, name, surname, birthDate,
-		employeeRole, employeeConfectionNumber, employeeRate, employeeShoeSize) {
-	return JSON.stringify({
-		"email" : email,
-		"password" : password,
-		"name" : name,
-		"surname" : surname,
-		"birthDate" : birthDate,
-		"employeeRole" : employeeRole,
-		"employeeConfectionNumber" : employeeConfectionNumber,
-		"employeeRate" : employeeRate,
-		"employeeShoeSize" : employeeShoeSize,
-	});
-}
-
 // *********************************************************************************
 // IZMENA RESTORANA
 $(document).on(
@@ -293,8 +362,31 @@ $(document).on('submit', '.newMenuForm', function(e) {
 		}
 	});
 });
+
 // *********************************************************************************
-//LOGOUT
+// RASPORED RADA
+$(document).on('submit', '.newShiftForm', function(e) {
+	e.preventDefault();
+	console.log("Add new Provider begin");
+	var snote = $(this).find("input[name=snote]").val();
+	var sbeginDate = $(this).find("input[name=sbeginDate]").val();
+	var sendDate = $(this).find("input[name=sendDate]").val();
+	var semployeeId = $(this).find("input[name=semployeeId]").val();
+	$.ajax({
+		type : 'POST',
+		url : newShiftURL,
+		contentType : 'application/json',
+		dataType : "text",
+		data : formToJSONNewShift(semployeeId, sbeginDate, sendDate, snote),
+		success : function(data) {
+
+			window.location.href = "RestaurantManagerHome.html";
+		}
+	});
+});
+
+// *********************************************************************************
+// LOGOUT
 $(document).on('click', '#logoutButton', function(e) {
 	e.preventDefault();
 	console.log("logout");
@@ -304,7 +396,7 @@ $(document).on('click', '#logoutButton', function(e) {
 		contentType : 'application/json',
 		dataType : "text",
 		success : function(data) {
-			if(data=="logout") {
+			if (data == "logout") {
 				window.location.href = "RestaurantManagerLogin.html";
 			}
 		},
@@ -313,7 +405,7 @@ $(document).on('click', '#logoutButton', function(e) {
 		}
 	});
 });
-//*********************************************************************************
+// *********************************************************************************
 
 function formToJSONNewRest(restaurantName, restaurantType,
 		restaurantCoordinates, restaurantAdress, restaurantRate,
@@ -340,8 +432,8 @@ function formToJSONNewProvider(providerNickId, providerMail, providerName,
 	});
 }
 
-function formToJSONNewBeverage(beveragesDescription,
-		beveragesName, beveragesPrice) {
+function formToJSONNewBeverage(beveragesDescription, beveragesName,
+		beveragesPrice) {
 	return JSON.stringify({
 		"beveragesDescription" : beveragesDescription,
 		"beveragesName" : beveragesName,
@@ -349,11 +441,34 @@ function formToJSONNewBeverage(beveragesDescription,
 	});
 }
 
-function formToJSONNewMenu(menuMealDescription, menuMealPrice,
-		menuMealRate) {
+function formToJSONNewMenu(menuMealDescription, menuMealPrice, menuMealRate) {
 	return JSON.stringify({
 		"menuMealDescription" : menuMealDescription,
 		"menuMealPrice" : menuMealPrice,
 		"menuMealRate" : menuMealRate,
+	});
+}
+
+function formToJSONUserEmployee(email, password, name, surname, birthDate,
+		employeeRole, employeeConfectionNumber, employeeRate, employeeShoeSize) {
+	return JSON.stringify({
+		"email" : email,
+		"password" : password,
+		"name" : name,
+		"surname" : surname,
+		"birthDate" : birthDate,
+		"employeeRole" : employeeRole,
+		"employeeConfectionNumber" : employeeConfectionNumber,
+		"employeeRate" : employeeRate,
+		"employeeShoeSize" : employeeShoeSize,
+	});
+}
+
+function formToJSONNewShift(worker, shiftBeginningTime, shiftEndTime, note) {
+	return JSON.stringify({
+		"worker" : worker,
+		"shiftBeginningTime" : shiftBeginningTime,
+		"shiftEndTime" : shiftEndTime,
+		"note" : note,
 	});
 }
