@@ -74,6 +74,28 @@ public class OrderedMeal {
 		this.doneTime = doneTime;
 	}
 	
+	
+
+
+
+	public OrderedMeal(GuestsOrder guestsOrder, Employee cook, Menu menu, Integer quantity, String orderedMealNote,
+			Boolean isAccepted, Boolean isDone, Timestamp acceptedTime, Timestamp doneTime) {
+		super();
+		this.guestsOrder = guestsOrder;
+		this.cook = cook;
+		this.menu = menu;
+		this.quantity = quantity;
+		this.orderedMealNote = orderedMealNote;
+		IsAccepted = isAccepted;
+		IsDone = isDone;
+		this.acceptedTime = acceptedTime;
+		this.doneTime = doneTime;
+	}
+
+
+
+
+
 	public OrderedMeal(GuestsOrder guestsOrder, Menu menu, Integer quantity,
 			String orderedMealNote) {
 		super();

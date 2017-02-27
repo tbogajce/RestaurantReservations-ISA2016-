@@ -11,5 +11,6 @@ import netgloo.models.Restaurant;
 public interface MenuDao extends CrudRepository<Menu, Long> {
 	
 	public ArrayList<Menu> findAllByRestaurantId(Restaurant rest);
+	public Menu findByMenuMealId(Long menuMealId);
 
 }

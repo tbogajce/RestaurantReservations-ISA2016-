@@ -21,6 +21,8 @@ import netgloo.dao.FriendshipsDao;
 import netgloo.dao.GuestsOrderDao;
 import netgloo.dao.InviteFriendDao;
 import netgloo.dao.MenuDao;
+import netgloo.dao.OrderedBeverageDao;
+import netgloo.dao.OrderedMealDao;
 import netgloo.dao.RestaurantDao;
 import netgloo.dao.TableReservationDao;
 import netgloo.dao.UserDao;
@@ -31,6 +33,8 @@ import netgloo.models.GuestsOrder;
 import netgloo.models.InviteFriend;
 import netgloo.models.InviteFriendPom;
 import netgloo.models.Menu;
+import netgloo.models.OrderedBeverage;
+import netgloo.models.OrderedMeal;
 import netgloo.models.Restaurant;
 import netgloo.models.TableReservation;
 import netgloo.models.TableReservationPom;
@@ -69,6 +73,12 @@ public class TableReservationController {
 
 	@Autowired
 	private GuestsOrderDao guestsOrderDao;
+	
+	@Autowired
+	private OrderedBeverageDao orderedBeverageDao;
+	
+	@Autowired
+	private OrderedMealDao orderedMealDao;
 
 	public ArrayList<Restaurant> restaurantCombo = new ArrayList<Restaurant>();
 	public ArrayList<DiningTable> diningTableList = new ArrayList<DiningTable>();
@@ -143,16 +153,22 @@ public class TableReservationController {
 			"content-type=application/json" })
 	public TableReservation getReservedRestaurantData(@RequestBody TableReservationPom tableReservationPom,
 			HttpServletRequest request) {
+		try {
 		String tableResId = tableReservationPom.getTableReservationId();
 		TableReservation tableReservation = tableReservationDao.findByTableReservationId(Integer.parseInt(tableResId));
 
 		return tableReservation;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@RequestMapping(value = "/getRestaurantMeal", method = RequestMethod.POST, headers = {
 			"content-type=application/json" })
 	public ArrayList<Menu> getRestaurantMeal(@RequestBody TableReservationPom tableReservationPom,
 			HttpServletRequest request) {
+		try {
 		getRestaurantMenu.clear();
 		String tableResId = tableReservationPom.getTableReservationId();
 		TableReservation tableReservation = tableReservationDao.findByTableReservationId(Integer.parseInt(tableResId));
@@ -166,6 +182,10 @@ public class TableReservationController {
 		}
 
 		return getRestaurantMenu;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	// ---------BEVERAGES
@@ -173,6 +193,7 @@ public class TableReservationController {
 			"content-type=application/json" })
 	public ArrayList<Beverages> getRestaurantBeverages(@RequestBody TableReservationPom tableReservationPom,
 			HttpServletRequest request) {
+		try {
 		getRestaurantBeverage.clear();
 		String tableResId = tableReservationPom.getTableReservationId();
 		TableReservation tableReservation = tableReservationDao.findByTableReservationId(Integer.parseInt(tableResId));
@@ -186,6 +207,10 @@ public class TableReservationController {
 		}
 
 		return getRestaurantBeverage;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@RequestMapping(value = "/restaurantReservation", method = RequestMethod.POST, headers = {
@@ -238,8 +263,55 @@ public class TableReservationController {
 			TableReservation tableReservation = tableReservationDao.findByTableReservationId(Integer.parseInt(id));
 
 			InviteFriend inviteFriend = new InviteFriend(tableReservation, user, false);
+			String startDateString = tableReservation.getDate();
+			String timeString = tableReservation.getTime();
+			java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf(startDateString + " " + timeString + ":00");
+			int sec = 900; // 15 minuta
+			Calendar cal = Calendar.getInstance();
+			cal.setTimeInMillis(timestamp.getTime());
+			cal.add(Calendar.SECOND, -sec);
+			Timestamp later = new Timestamp(cal.getTime().getTime());
+			System.out.println("OVO JE POMJERENO VRIJEME" + later);
+
+			GuestsOrder guestsOrder = new GuestsOrder(tableReservation.getRestaurantId(), null, user, tableReservation.getDiningTableId(), false, tableReservation,
+					later);
+			guestsOrderDao.save(guestsOrder);
+			
 			inviteFriendDao.save(inviteFriend);
 			sendMail(tableReservation, user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "OK";
+	}
+	
+	
+	///////////nastaviti tu
+	@RequestMapping(value = "/sendOrder", method = RequestMethod.POST, headers = { "content-type=application/json" })
+	public String sendOrder(@RequestBody InviteFriendPom inviteFriendPom, HttpServletRequest request) {
+
+		try {
+			User user = (User) request.getSession().getAttribute("user");
+			String id = inviteFriendPom.getTableReservationId();
+			GuestsOrder guestsOrder = null;
+			TableReservation tableReservation = tableReservationDao.findByTableReservationId(Integer.parseInt(id));
+			List<GuestsOrder> lu = (List<GuestsOrder>) guestsOrderDao.findAll();
+			for(int i=0; i<lu.size(); i++) {
+				if(lu.get(i).getGuest().getEmail().equals(user.getEmail()) && 
+						lu.get(i).getTableReservation().getTableReservationId().equals(tableReservation.getTableReservationId())){
+					guestsOrder = lu.get(i);
+				}	
+			}
+			Menu menu = menuDao.findByMenuMealId(Long.parseLong(inviteFriendPom.getMenuId()));
+			Beverages beverage = beveragesDao.findByBeveragesId(Long.parseLong(inviteFriendPom.getBeverageId()));
+			
+			OrderedMeal orderedMeal = new OrderedMeal(guestsOrder, null, menu, 1, null, null, null, null, null);
+			OrderedBeverage orderedBeverage = new OrderedBeverage(guestsOrder, null, beverage, 1, null, null, null, null, null);
+			
+			orderedMealDao.save(orderedMeal);
+			orderedBeverageDao.save(orderedBeverage);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

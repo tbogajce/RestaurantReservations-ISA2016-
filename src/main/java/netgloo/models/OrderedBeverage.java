@@ -75,6 +75,25 @@ public class OrderedBeverage {
 		this.doneTime = doneTime;
 	}
 	
+	
+	
+	public OrderedBeverage(GuestsOrder guestsOrder, Employee bartender, Beverages beverage, Integer quantity,
+			String orderedBeverageNote, Boolean isAccepted, Boolean isDone, Timestamp acceptedTime,
+			Timestamp doneTime) {
+		super();
+		this.guestsOrder = guestsOrder;
+		this.bartender = bartender;
+		this.beverage = beverage;
+		this.quantity = quantity;
+		this.orderedBeverageNote = orderedBeverageNote;
+		IsAccepted = isAccepted;
+		IsDone = isDone;
+		this.acceptedTime = acceptedTime;
+		this.doneTime = doneTime;
+	}
+
+
+
 	public OrderedBeverage(GuestsOrder guestsOrder,  Beverages beverage,
 			Integer quantity, String orderedBeverageNote) {
 		super();

@@ -12,5 +12,6 @@ public interface BeveragesDao extends CrudRepository<Beverages, Long> {
 	
 	
 	public ArrayList<Beverages> findAllByRestaurantId(Restaurant rest);
+	public Beverages findByBeveragesId(Long beveragesId);
 
 }

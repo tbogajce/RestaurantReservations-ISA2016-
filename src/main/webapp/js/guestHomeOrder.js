@@ -2,6 +2,7 @@ var tableReservationURL = "tableReservation/getTablesReservation33";
 var tableResInfo = "tableReservation/getReservedRestaurantData";
 var getMeal1 = "tableReservation/getRestaurantMeal";
 var getSelectDrink = "tableReservation/getRestaurantBeverages";
+var sendOrder = "tableReservation/sendOrder"
 
 $(document).on('change', '.findRestaurant', function(e) {
 	getReservationData();
@@ -32,7 +33,7 @@ function restaurantCombo33() {
 
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
-					alert("AJAX ERROR: " + errorThrown);
+					//alert("AJAX ERROR: " + errorThrown);
 				}
 			});
 }
@@ -55,7 +56,7 @@ function getReservationData(){
 			});
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			alert("AJAX ERROR: " + errorThrown);
+			//alert("AJAX ERROR: " + errorThrown);
 		}
 	});
 }
@@ -82,7 +83,7 @@ function returnMeals() {
 			});
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			alert("AJAX ERROR: " + errorThrown);
+			//alert("AJAX ERROR: " + errorThrown);
 		}
 	});
 }
@@ -110,7 +111,43 @@ function returnBeverages() {
 			});
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			//alert("AJAX ERROR: " + errorThrown);
+		}
+	});
+}
+
+
+//-----------------------SUBMITOVANJE SVEGA NA SERVER
+
+
+$(document).on('submit', '.formReservationOrder', function(e) {
+	e.preventDefault();
+	var tableReservationId=$('.findRestaurant').find(":selected").val();
+	var menuId =$('.selectMeal').find(":selected").val();
+	var beverageId =$('.selectDrink').find(":selected").val();
+	
+	console.log(tableReservationId + " " + menuId + "  " + beverageId )
+	$.ajax({
+		type : 'POST',
+		url : sendOrder,
+		contentType : 'application/json',
+		dataType : "text",
+		data : formToJSONOrder(tableReservationId, menuId, beverageId),
+		success : function(data) {
+				
+			location.reload(true);
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			alert("AJAX ERROR: " + errorThrown);
 		}
+	});
+	
+});
+
+function formToJSONOrder(tableReservationId, menuId, beverageId) {
+	return JSON.stringify({
+		"tableReservationId" : tableReservationId,
+		"menuId" : menuId,
+		"beverageId" : beverageId,
 	});
 }
