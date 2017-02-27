@@ -60,7 +60,25 @@ public class Employee {
 		this.employeeRate = employeeRate;
 		this.changedPass = changedPass;
 	}
+	
+	//*********************************************************************************************************
+		//*********************************************************************************************************
 
+
+	public Employee(User userId, Restaurant restaurantId, String employeeRole, String employeeConfectionNumber,
+			String employeeShoeSize, String employeeRate, Boolean changedPass) {
+		super();
+		this.userId = userId;
+		this.restaurantId = restaurantId;
+		this.employeeRole = employeeRole;
+		this.employeeConfectionNumber = employeeConfectionNumber;
+		this.employeeShoeSize = employeeShoeSize;
+		this.employeeRate = employeeRate;
+		this.changedPass = changedPass;
+	}
+
+	//*********************************************************************************************************
+		//*********************************************************************************************************
 
 
 	public Employee() {

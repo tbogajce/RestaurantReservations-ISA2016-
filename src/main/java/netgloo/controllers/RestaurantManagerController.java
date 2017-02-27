@@ -1,6 +1,8 @@
 package netgloo.controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,12 +13,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import netgloo.dao.EmployeeDao;
 import netgloo.dao.RestaurantDao;
 import netgloo.dao.RestaurantManagerDao;
+import netgloo.dao.UserDao;
+import netgloo.models.Employee;
+import netgloo.models.EmployeePom;
+import netgloo.models.Provider;
 import netgloo.models.Restaurant;
 import netgloo.models.RestaurantManager;
 import netgloo.models.RestaurantManagerPom;
 import netgloo.models.SystemManager;
+import netgloo.models.User;
+import netgloo.models.UserProba;
 
 @RestController
 @RequestMapping("/restaurantManagerController")
@@ -28,19 +37,18 @@ public class RestaurantManagerController {
 	@Autowired
 	private RestaurantDao restDao;
 
+	@Autowired
+	private UserDao userDao;
+
+	@Autowired
+	private EmployeeDao empDao;
+
 	ArrayList<RestaurantManager> listOfRestaurantManagers = new ArrayList<RestaurantManager>();
 
 	@RequestMapping(value = "/createNewRestaurantManager", method = RequestMethod.POST, headers = {
 			"content-type=application/json" })
 	public String createRestaurantManager(@RequestBody RestaurantManagerPom rm1) {
 		System.out.println("ispis iz managera --" + rm1.getRestaurantId());
-		// msm da ne radi jer ti sa restom posaljes ID, recimo 1
-		// i pokusavas da u objekat RestaurantManager ubacis samo 1
-		// moras ubaciti, kao 6-ti parametar, citav objekat..ne moze on skontati
-		// na osnovu 1, da je to taj objekat
-		// ispis u konzoli je da je restauran_id null i da ne moze biti null..to
-		// je zato jer prosledjujes kao broj, a ne citav objekat
-		// nazovi me :D
 		try {
 
 			Restaurant restaurant = restDao.findByRestaurantId(Long.parseLong(rm1.getRestaurantId()));
@@ -80,66 +88,105 @@ public class RestaurantManagerController {
 	@RequestMapping(value = "/updateRestaurant", method = RequestMethod.POST, headers = {
 			"content-type=application/json" })
 	@ResponseBody
-	public String updateRestaurant(@RequestBody Restaurant r1, RestaurantManager rm1,HttpServletRequest request) {
+	public String updateRestaurant(@RequestBody Restaurant r1, RestaurantManager rm1, HttpServletRequest request) {
 		try {
 			/*
-			if (restDao.findByRestaurantId(r1.getRestaurantId()) == rm1.getRestaurantId()) {
-				System.out.println("ID menadzera i restorana JESU isti");
-				if (restDao.findByRestaurantId(r1.getRestaurantId()) != null) {
-					*/
+			 * if (restDao.findByRestaurantId(r1.getRestaurantId()) ==
+			 * rm1.getRestaurantId()) { System.out.println(
+			 * "ID menadzera i restorana JESU isti"); if
+			 * (restDao.findByRestaurantId(r1.getRestaurantId()) != null) {
+			 */
 
-					RestaurantManager rm = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
-					
-					if(rm!=null)
-					{
-						if(rm.getRestaurantId()!=null)
-						{
-							Restaurant restaurant = rm.getRestaurantId();
-							//Restaurant restaurant = restDao.findByRestaurantId(r1.getRestaurantId());
-							restaurant.setRestaurantName(r1.getRestaurantName());
-							restaurant.setRestaurantType(r1.getRestaurantType());
-							restaurant.setRestaurantCoordinates(r1.getRestaurantCoordinates());
-							restaurant.setRestaurantAdress(r1.getRestaurantAdress());
-							restaurant.setRestaurantRate(r1.getRestaurantRate());
-							restaurant.setRestaurantVisitsNumber(r1.getRestaurantVisitsNumber());
-							restaurant.setRestaurantIncome(r1.getRestaurantIncome());
-							restDao.save(restaurant);
-						}
-					}
-					
-					System.out.println("JE LI RAVNO OVO? JE LI RAVNO OVO?");
-					
-					//return "OK";
-					/*
-				} else {
-					return "NOT_OK";
+			RestaurantManager rm = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
+
+			if (rm != null) {
+				if (rm.getRestaurantId() != null) {
+					Restaurant restaurant = rm.getRestaurantId();
+					// Restaurant restaurant =
+					// restDao.findByRestaurantId(r1.getRestaurantId());
+					restaurant.setRestaurantName(r1.getRestaurantName());
+					restaurant.setRestaurantType(r1.getRestaurantType());
+					restaurant.setRestaurantCoordinates(r1.getRestaurantCoordinates());
+					restaurant.setRestaurantAdress(r1.getRestaurantAdress());
+					restaurant.setRestaurantRate(r1.getRestaurantRate());
+					restaurant.setRestaurantVisitsNumber(r1.getRestaurantVisitsNumber());
+					restaurant.setRestaurantIncome(r1.getRestaurantIncome());
+					restDao.save(restaurant);
 				}
-			}else{
-				System.out.println("ID menadzera i restorana NISU isti");
 			}
-			*/
+
+			System.out.println("JE LI RAVNO OVO? JE LI RAVNO OVO?");
+
+			// return "OK";
+			/*
+			 * } else { return "NOT_OK"; } }else{ System.out.println(
+			 * "ID menadzera i restorana NISU isti"); }
+			 */
 		} catch (Exception ex) {
 			return "Error updating restaurant: " + ex.toString();
 		}
-		//return null;
+		// return null;
 		return null;
 	}
-	
+
 	@RequestMapping(value = "/restaurantData", method = RequestMethod.GET)
 	public Restaurant restaurantData(HttpServletRequest request) {
-		try{
-			if(request.getSession().getAttribute("restaurantManager")!=null)
-			{
+		try {
+			if (request.getSession().getAttribute("restaurantManager") != null) {
 				System.out.println("PROCURILO U OVO ... sto je dobro");
 				RestaurantManager rmkkk = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
-				Restaurant restaurant =rmkkk.getRestaurantId(); //(Restaurant) request.getSession().getAttribute("restaurantManager");
+				Restaurant restaurant = rmkkk.getRestaurantId(); // (Restaurant)
+																	// request.getSession().getAttribute("restaurantManager");
 				return restaurant;
 			}
-			
+
 		} catch (Exception e) {
 			System.out.println("no restaurant data");
 		}
 		return null;
 	}
 
+	// *********************************************************************************************************
+	// RADNIK
+	// *********************************************************************************************************
+	@RequestMapping(value = "/createNewEmployee", method = RequestMethod.POST, headers = {
+			"content-type=application/json" })
+	public String createEmployee(@RequestBody UserProba user1, EmployeePom employee) {
+
+		try {
+
+			User user = null;
+			String user_reg_date = new SimpleDateFormat("dd-MMM-yyyy").format(new Date());
+			user = new User(user1.getEmail(), user1.getPassword(), user1.getName(), user1.getSurname(),
+					user1.getBirthDate().trim(), user_reg_date, "Employee", false);
+			userDao.save(user);
+			
+			System.out.println("RADNIK USER DEO ZAVRSEN");
+			
+			//DEO PODATAKA ZA USERA SE USPESNO SACUVA U BAZI
+			
+			System.out.println(employee.getRestaurantId());
+			System.out.println(employee.getUserId());
+			
+			//OVDE JE IDEJA DA UZMEM ID RESTORANA CIJI JE MENADZER ULOGOVAN
+			//I DA UZMEM ID USERA KOJI JE UPRAVO DODAT PRILIKOM DODAVANJA RADNIKA
+			
+			Restaurant restaurant = restDao.findByRestaurantId(Long.parseLong(employee.getRestaurantId()));
+			User userid = userDao.findByUserId(Long.parseLong(employee.getUserId()));
+
+			Employee emp = null;
+			emp = new Employee(userid, restaurant, emp.getEmployeeRole(), emp.getEmployeeConfectionNumber(),
+					emp.getEmployeeShoeSize(), emp.getEmployeeRate(), false);
+			empDao.save(emp);
+			
+			System.out.println("RADNIK EMPLOYEE DEO ZAVRSEN");
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return "EXCEPTION";
+		}
+		return "OK";
+	}
+	// *********************************************************************************************************
+	// *********************************************************************************************************
 }

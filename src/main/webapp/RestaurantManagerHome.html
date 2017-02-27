@@ -182,45 +182,74 @@ body {
 									</div>
 								</form>
 
+
+		
+
+
 								<form id="add-new-employee-form" action="" method="post"
 									role="form" class="newEmployeeForm" style="display: none;">
 									<div class="form-group">
-										<input type="text" name="enick" id="enick" tabindex="1"
-											class="form-control" placeholder="Nickame" value="">
-									</div>
-
-									<div class="form-group">
-										<input type="text" name="eemail" id="eemail" tabindex="2"
+										<input type="text" name="eemail" id="eemail" tabindex="1"
 											class="form-control" placeholder="Email" value="">
 									</div>
 
 									<div class="form-group">
 										<input type="password" name="epassword" id="epassword"
-											tabindex="3" class="form-control" placeholder="Password"
+											tabindex="2" class="form-control" placeholder="Password"
 											value="">
 									</div>
 
 									<div class="form-group">
 										<input type="password" name="epasswordRepeat"
-											id="epasswordRepeat" tabindex="4" class="form-control"
+											id="epasswordRepeat" tabindex="3" class="form-control"
 											placeholder="Confirm password" value="">
 									</div>
 
 									<div class="form-group">
-										<input type="text" name="ename" id="ename" tabindex="5"
+										<input type="text" name="ename" id="ename" tabindex="4"
 											class="form-control" placeholder="Name" value="">
 									</div>
 
 									<div class="form-group">
-										<input type="text" name="esurname" id="esurname" tabindex="6"
+										<input type="text" name="esurname" id="esurname" tabindex="5"
 											class="form-control" placeholder="Surname" value="">
+									</div>
+
+									<div class="form-group">
+										<input type="date" name="ebirthDate" id="ebirthDate"
+											tabindex="6" class="form-control" placeholder="Birth date"
+											value="">
+									</div>
+									
+									<div class="form-group">
+										<input type="text" name="erole" id="erole"
+											tabindex="7" class="form-control" placeholder="Role"
+											value="">
+									</div>
+									
+									<div class="form-group">
+										<input type="text" name="ecnumber" id="ecnumber"
+											tabindex="8" class="form-control" placeholder="Confection number"
+											value="">
+									</div>
+									
+									<div class="form-group">
+										<input type="text" name="erate" id="erate"
+											tabindex="9" class="form-control" placeholder="Rate"
+											value="">
+									</div>
+									
+									<div class="form-group">
+										<input type="text" name="essize" id="essize"
+											tabindex="10" class="form-control" placeholder="Shoe size"
+											value="">
 									</div>
 
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-8 col-sm-offset-2">
 												<input type="submit" name="new-employee-submit"
-													id="new-employee-submit" tabindex="7"
+													id="new-employee-submit" tabindex="11"
 													class="form-control btn btn-success"
 													value="Add new Employee">
 											</div>
@@ -262,23 +291,23 @@ body {
 										</div>
 									</div>
 								</form>
-								
-								<form id="add-new-menu-form" action="" method="post"
-									role="form" class="newMenuForm" style="display: none;">
+
+								<form id="add-new-menu-form" action="" method="post" role="form"
+									class="newMenuForm" style="display: none;">
 									<div class="form-group">
 										<input type="text" name="mrid" id="mrid" tabindex="1"
 											class="form-control" placeholder="Restaurant ID" value="">
 									</div>
 
 									<div class="form-group">
-										<input type="text" name="mdescription" id="mdescription" tabindex="2"
-											class="form-control" placeholder="Description" value="">
+										<input type="text" name="mdescription" id="mdescription"
+											tabindex="2" class="form-control" placeholder="Description"
+											value="">
 									</div>
 
 									<div class="form-group">
-										<input type="text" name="mprice" id="mprice"
-											tabindex="3" class="form-control" placeholder="Price"
-											value="">
+										<input type="text" name="mprice" id="mprice" tabindex="3"
+											class="form-control" placeholder="Price" value="">
 									</div>
 
 									<div class="form-group">
@@ -291,8 +320,7 @@ body {
 											<div class="col-sm-8 col-sm-offset-2">
 												<input type="submit" name="new-menu-submit"
 													id="new-menu-submit" tabindex="5"
-													class="form-control btn btn-success"
-													value="Add new Meal">
+													class="form-control btn btn-success" value="Add new Meal">
 											</div>
 										</div>
 									</div>

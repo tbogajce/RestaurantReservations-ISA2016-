@@ -3,6 +3,7 @@ var getUpdRestDataURL = "restaurantManagerController/updateRestaurant";
 var getRestDataURL = "restaurantManagerController/restaurantData";
 var newBeverageURL = "beveragesController/createNewBeverage";
 var newMenuURL = "menuController/createNewMenu";
+var newEmployeeURL = "restaurantManagerController/createNewEmployee";
 
 $(function() {
 
@@ -175,6 +176,75 @@ $(document).on('submit', '.newProviderForm', function(e) {
 		}
 	});
 });
+
+
+//*********************************************************************************
+//RADNIK
+
+//NE ZNAM DA LI OVAKO MOZE RAZDVOJENO DA SE POSMATRA SUBMIT NA ISTU FORMU
+
+$(document).on('submit', '.newEmployeeForm', function(e) {
+	e.preventDefault();
+	console.log("Add new Provider USER begin");
+	var erole = $(this).find("input[name=erole]").val();
+	var ecnumber = $(this).find("input[name=ecnumber]").val();
+	var erate = $(this).find("input[name=erate]").val();
+	var essize = $(this).find("input[name=essize]").val();
+	$.ajax({
+		type : 'POST',
+		url : newEmployeeURL,
+		contentType : 'application/json',
+		dataType : "text",
+		data : formToJSONNewEmployee(erole, ecnumber, erate, essize),
+		success : function(data) {
+
+			window.location.href = "RestaurantManagerHome.html";
+		}
+	});
+});
+
+function formToJSONNewEmployee(employeeRole, employeeConfectionNumber, employeeRate,
+		employeeShoeSize) {
+	return JSON.stringify({
+		"employeeRole" : employeeRole,
+		"employeeConfectionNumber" : employeeConfectionNumber,
+		"employeeRate" : employeeRate,
+		"employeeShoeSize" : employeeShoeSize,
+	});
+}
+
+
+$(document).on('submit', '.newEmployeeForm', function(e) {
+	e.preventDefault();
+	console.log("Add new Provider USER begin");
+	var email = $(this).find("input[name=eemail]").val();
+	var password = $(this).find("input[name=epassword]").val();
+	var name = $(this).find("input[name=ename]").val();
+	var surname = $(this).find("input[name=esurname]").val();
+	var birthDate = $(this).find("input[name=ebirthDate]").val();
+	$.ajax({
+		type : 'POST',
+		url : newEmployeeURL,
+		contentType : 'application/json',
+		dataType : "text",
+		data : formToJSONRegistration(email, password, name, surname, birthDate),
+		success: function(data) {
+			window.location.href = "http://localhost:8080/RegistrationPage.html";
+		}
+	});
+});
+
+function formToJSONRegistration(email, password, name, surname, birthDate) {
+	return JSON.stringify({
+		"email" : email,
+		"password" : password,
+		"name" : name,
+		"surname" : surname,
+		"birthDate" : birthDate,
+	});
+}
+
+
 // *********************************************************************************
 // IZMENA RESTORANA
 $(document).on(
