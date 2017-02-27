@@ -151,7 +151,7 @@ public class RestaurantManagerController {
 	// *********************************************************************************************************
 	@RequestMapping(value = "/createNewEmployee", method = RequestMethod.POST, headers = {
 			"content-type=application/json" })
-	public String createEmployee(@RequestBody UserProba user1, EmployeePom employee) {
+	public String createEmployee(@RequestBody UserProba user1, EmployeePom employee, HttpServletRequest request) {
 
 		try {
 
@@ -171,7 +171,13 @@ public class RestaurantManagerController {
 			//OVDE JE IDEJA DA UZMEM ID RESTORANA CIJI JE MENADZER ULOGOVAN
 			//I DA UZMEM ID USERA KOJI JE UPRAVO DODAT PRILIKOM DODAVANJA RADNIKA
 			
-			Restaurant restaurant = restDao.findByRestaurantId(Long.parseLong(employee.getRestaurantId()));
+			//Restaurant restaurant = restDao.findByRestaurantId(Long.parseLong(employee.getRestaurantId()));
+			RestaurantManager rmkkk = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
+			Restaurant restaurant = rmkkk.getRestaurantId();
+			
+			System.out.println("Restoran broj: " + restaurant);
+			
+			
 			User userid = userDao.findByUserId(Long.parseLong(employee.getUserId()));
 
 			Employee emp = null;

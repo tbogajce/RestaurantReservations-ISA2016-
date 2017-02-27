@@ -183,7 +183,7 @@ $(document).on('submit', '.newProviderForm', function(e) {
 
 //NE ZNAM DA LI OVAKO MOZE RAZDVOJENO DA SE POSMATRA SUBMIT NA ISTU FORMU
 
-$(document).on('submit', '.newEmployeeForm', function(e) {
+/*$(document).on('submit', '.newEmployeeForm', function(e) {
 	e.preventDefault();
 	console.log("Add new Provider USER begin");
 	var erole = $(this).find("input[name=erole]").val();
@@ -201,7 +201,7 @@ $(document).on('submit', '.newEmployeeForm', function(e) {
 			window.location.href = "RestaurantManagerHome.html";
 		}
 	});
-});
+});*/
 
 function formToJSONNewEmployee(employeeRole, employeeConfectionNumber, employeeRate,
 		employeeShoeSize) {
@@ -222,6 +222,13 @@ $(document).on('submit', '.newEmployeeForm', function(e) {
 	var name = $(this).find("input[name=ename]").val();
 	var surname = $(this).find("input[name=esurname]").val();
 	var birthDate = $(this).find("input[name=ebirthDate]").val();
+	
+	var erole = $(this).find("input[name=erole]").val();
+	var ecnumber = $(this).find("input[name=ecnumber]").val();
+	var erate = $(this).find("input[name=erate]").val();
+	var essize = $(this).find("input[name=essize]").val();
+	
+	
 	$.ajax({
 		type : 'POST',
 		url : newEmployeeURL,
@@ -229,7 +236,22 @@ $(document).on('submit', '.newEmployeeForm', function(e) {
 		dataType : "text",
 		data : formToJSONRegistration(email, password, name, surname, birthDate),
 		success: function(data) {
-			window.location.href = "http://localhost:8080/RegistrationPage.html";
+			
+			$.ajax({
+				type : 'POST',
+				url : newEmployeeURL,
+				contentType : 'application/json',
+				dataType : "text",
+				data : formToJSONNewEmployee(erole, ecnumber, erate, essize),
+				success : function(data) {
+
+					window.location.href = "RestaurantManagerHome.html";
+				}
+			});
+			
+			
+			
+			window.location.href = "RestaurantManagerHome.html";
 		}
 	});
 });
