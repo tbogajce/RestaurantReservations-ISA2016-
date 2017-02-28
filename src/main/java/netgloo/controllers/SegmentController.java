@@ -12,17 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import netgloo.dao.AreaDao;
 import netgloo.dao.RestaurantDao;
+import netgloo.dao.SegmentDao;
 import netgloo.models.Area;
-import netgloo.models.Beverages;
-import netgloo.models.BeveragesPom;
 import netgloo.models.Restaurant;
 import netgloo.models.RestaurantManager;
+import netgloo.models.Segment;
 
 @RestController
-@RequestMapping("/areaController")
-public class AreaController {
-
-	private static final Area ArrayList = null;
+@RequestMapping("/segmentController")
+public class SegmentController {
 
 	@Autowired
 	private RestaurantDao restDao;
@@ -30,33 +28,38 @@ public class AreaController {
 	@Autowired
 	private AreaDao areaDao;
 
-	ArrayList<Area> listOfAreas = new ArrayList<Area>();
+	@Autowired
+	private SegmentDao segDao;
 
-	@RequestMapping(value = "/createNewArea", method = RequestMethod.POST, headers = {
+	ArrayList<Segment> listOfSegments = new ArrayList<Segment>();
+
+	@RequestMapping(value = "/createNewSegment", method = RequestMethod.POST, headers = {
 			"content-type=application/json" })
-	public String createArea(@RequestBody Area a1, HttpServletRequest request) {
-
+	public String createSegment(@RequestBody Segment s1, HttpServletRequest request) {
+		System.out.println("SEGMENT KRENUO");
 		try {
 
 			RestaurantManager rmkkk = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
 			Restaurant restaurant = rmkkk.getRestaurantId();
-
+			Area area = areaDao.findByRestaurant(restaurant);
+			System.out.println("USAO U KREIRANJE Segment");
+			
 			// Area svi = (Area)
-			ArrayList<Area> areasList = (java.util.ArrayList<Area>) areaDao.findAll();
+			ArrayList<Segment> areasList = (java.util.ArrayList<Segment>) segDao.findAll();
 
 			Long max = (long) 0;
 
-			for (Area a : areasList) {
-				if (a.getAreaID() > max) {
-					max = a.getAreaID();
+			for (Segment a : areasList) {
+				if (a.getSegmentID() > max) {
+					max = a.getSegmentID();
 				}
 			}
-
+			
 			// String user_reg_date = new
 			// SimpleDateFormat("dd-MMM-yyyy").format(new Date());
-			Area area = new Area(max + 1, restaurant, a1.getAreaName(), "0", a1.getSpaceX(), a1.getSpaceY(),
-					a1.getNote());
-			areaDao.save(area);
+			Segment segment = new Segment(max+1, restaurant, area, s1.getSegmentName(), s1.getSegmentSpace(), s1.getNote());
+			System.out.println("DODAO OBJEKAT Segment");
+			segDao.save(segment);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return "EXCEPTION";

@@ -44,9 +44,22 @@ public class Segment {
 		this.segmentSpace = segmentSpace;
 		this.note = note;
 	}
+	
+	
+	
+	
+	public Segment(Restaurant restaurant, Area area, String segmentName, String segmentSpace, String note) {
+		super();
+		this.restaurant = restaurant;
+		this.area = area;
+		this.segmentName = segmentName;
+		this.segmentSpace = segmentSpace;
+		this.note = note;
+	}
 
-	
-	
+
+
+
 	public Segment() {
 		super();
 		// TODO Auto-generated constructor stub

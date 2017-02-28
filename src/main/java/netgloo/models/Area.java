@@ -18,96 +18,50 @@ public class Area {
 
 	@Id
 	private Long areaID;
-	
+
 	@JsonBackReference("restaurant-area")
 	@ManyToOne
-	@JoinColumn(name="restaurant", referencedColumnName="restaurantId", nullable=false)
+	@JoinColumn(name = "restaurant", referencedColumnName = "restaurantId", nullable = false)
 	private Restaurant restaurant;
-	
+
 	@NotNull
 	private String areaName;
-	
-	
-	//DO NOT USE THIS ANYMORE
-	//@NotNull
-	//private String areaSpace;
-	
-	
-	
+
+	// DO NOT USE THIS ANYMORE
+	@NotNull
+	private String areaSpace;
+
 	// s lijeva na desno koliko celija
-	@Column(name = "spaceX", nullable =true)
+	@Column(name = "spaceX", nullable = true)
 	private int spaceX;
-	
-	
-	//ozgo ka dole koliko celija
-	@Column(name = "spaceY",nullable =true)
+
+	// ozgo ka dole koliko celija
+	@Column(name = "spaceY", nullable = true)
 	private int spaceY;
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	public Area(Long areaID, Restaurant restaurant, String areaName, int spaceX, int spaceY, String note) {
+	@NotNull
+	private String note;
+
+	public Area() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Area(Long areaID, Restaurant restaurant, String areaName, String areaSpace, int spaceX, int spaceY,
+			String note) {
 		super();
 		this.areaID = areaID;
 		this.restaurant = restaurant;
 		this.areaName = areaName;
+		this.areaSpace = areaSpace;
 		this.spaceX = spaceX;
 		this.spaceY = spaceY;
 		this.note = note;
-	}
-	
-	
-	
-
-	public Area(Restaurant restaurant, String areaName, int spaceX, int spaceY, String note) {
-		super();
-		this.restaurant = restaurant;
-		this.areaName = areaName;
-		this.spaceX = spaceX;
-		this.spaceY = spaceY;
-		this.note = note;
-	}
-
-
-
-
-	public int getSpaceX() {
-		return spaceX;
-	}
-
-	public void setSpaceX(int spaceX) {
-		this.spaceX = spaceX;
-	}
-
-	public int getSpaceY() {
-		return spaceY;
-	}
-
-	public void setSpaceY(int spaceY) {
-		this.spaceY = spaceY;
-	}
-
-
-
-	private String note;
-
-
-	
-	public Area()
-	{
-		super();
 	}
 
 	public Long getAreaID() {
 		return areaID;
 	}
-	
-	
 
 	public void setAreaID(Long areaID) {
 		this.areaID = areaID;
@@ -129,7 +83,29 @@ public class Area {
 		this.areaName = areaName;
 	}
 
+	public String getAreaSpace() {
+		return areaSpace;
+	}
 
+	public void setAreaSpace(String areaSpace) {
+		this.areaSpace = areaSpace;
+	}
+
+	public int getSpaceX() {
+		return spaceX;
+	}
+
+	public void setSpaceX(int spaceX) {
+		this.spaceX = spaceX;
+	}
+
+	public int getSpaceY() {
+		return spaceY;
+	}
+
+	public void setSpaceY(int spaceY) {
+		this.spaceY = spaceY;
+	}
 
 	public String getNote() {
 		return note;
@@ -138,7 +114,6 @@ public class Area {
 	public void setNote(String note) {
 		this.note = note;
 	}
-	
-	
+
 	
 }

@@ -13,5 +13,6 @@ public interface AreaDao extends CrudRepository<Area, Long>{
 	
 	
 	public ArrayList<Area> findAllByRestaurant(Restaurant restaurant);
-
+	
+	public Area findByRestaurant(Restaurant restaurant);
 }
