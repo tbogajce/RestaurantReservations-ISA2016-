@@ -175,7 +175,9 @@ function allRestaurantsPrint(data) {
 						var tr = $('<tr></tr>');
 						tr.append('<td>' + restaurant.restaurantName + '</td>'+ 
 										'<td>' + restaurant.restaurantType + '</td>' +
-										'<td>' + restaurant.restaurantAdress + '</td>');
+										'<td>' + restaurant.restaurantAdress + '</td>'+
+										'<td>' + restaurant.sumOfVotes/restaurant.totalNumberOfVoters + '</td>'
+						);
 						$('#allRestaurantsData').append(tr);
 					});
 }
