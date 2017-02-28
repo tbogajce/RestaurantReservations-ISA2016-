@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Provider offer</title>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/logout.js"></script>
+<script type="text/javascript" src="js/providerOffer.js"></script>
+<script type="text/javascript" src="js/filterTable.js"></script>
+
+<script src="js/bootstrap.min.js"></script>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+	<!-------------------------------- Header ------------------------------------>
+	<nav class="navbar navbar-default navbar-default"
+		style="border-radius: 0px !important; margin-bottom: 0px;">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+					aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">RestarauntApp</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="#">Locations</a></li>
+
+				</ul>
+
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">More<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li id="logoutButton"><a href="#">Log out</a></li>
+						</ul></li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+	<!--------------------------------- End Header -------------------------------------------->
+	
+		
+			<!--------------------------------- navigation -------------------------------------------->
+
+	<div class="container-fluid main-container" style="margin-top: 20px">
+		<div class="col-md-2 sidebar">
+			<ul class="nav nav-pills nav-stacked">
+				<li><a href="#" id="allOffersButton">Offers</a></li>
+				<li><a href="#" id="makeOfferButton">Make offer</a></li>
+			</ul>
+		</div>
+
+		<div class="col-md-10 content">
+			
+			<div class="panel panel-default" id="allOffersPanel"> 
+				<div class="panel-heading">ALL OFFERS</div>
+				<div class="panel-body">
+					<!------------------------------------ prvo prikazi tabelu kupac --------------------------------------------->
+				<div class="container" style="width:90%">
+
+						<hr>
+
+						<div class="row">
+							<div class="panel panel-primary filterable">
+								<div class="panel-heading">
+									<h3 class="panel-title">ALL OFFERS: </h3>
+									<div class="pull-right" style="margin-top: -19px;">
+										<button class="btn btn-default btn-xs btn-filter">Filter</button>
+									</div>
+
+								</div>
+								<form class="clearForm" action="" method="post">
+									<table class="table">
+										<thead class="thead">
+											<tr class="filters">
+												<th><input type="text" class="form-control"
+													placeholder="ID offer" disabled></th>
+												<th><input type="text" class="form-control"
+													placeholder="Deadline" disabled></th>
+												<th><input type="text" class="form-control"
+													placeholder="Note" disabled></th>
+												<th></th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody id="allOfferData">
+											<!-- your offers list -->
+										</tbody>
+									</table>
+
+
+
+
+								</form>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-------------------------------- END prvo prikazi tabelu kupac --------------------------------------->
+			</div> 
+			
+			
+									<div class="panel panel-default" id="makeOfferPanel">  
+				<div class="panel-heading">MAKE OFFER: </div>
+				<div class="panel-body">
+					<!------------------------------------ prvo prikazi tabelu kupac --------------------------------------------->
+					<div class="container" style="margin-left: -10px;">
+
+						<div class="row">
+							<div class="panel panel-primary filterable">
+
+								<!-- panel preview -->
+								<div class="col-sm-7" style="margin-left: 200px;">
+									<h4></h4>
+									<div class="panel panel-default">
+										<div class="panel-body form-horizontal payment-form">
+										<!--  TU SE DODAJE TABELA -->
+										
+								<form class="makeOfferForm"> 
+															
+										<div class="form-group"> 
+											 <label for="concept" class="col-sm-3 control-label">Offer id:</label>
+											<div class="col-sm-9"> 
+												<select class="form-control selectOfferManager" style="width: 125px">
+
+												</select> 
+											</div> 
+										</div>
+
+								
+							<div class="form-group"> 
+							 <label for="concept" class="col-sm-3 control-label">Note</label>
+							<div class="col-sm-9"> 
+								<textarea rows="3" cols="50" name="textAreaNote"></textarea>
+							</div> 
+							</div>
+							
+								<div class="form-group"> 
+								 <label for="concept" class="col-sm-3 control-label">Price </label>
+								<div class="col-sm-9"> 
+									<input type="number" class="form-control" name="price"> 
+								</div> 
+								</div>
+						
+						<button class="btn btn-success btn-block makeOffer" type="submit">Make offer</button>
+						</form>
+										
+										
+										
+										
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- / panel preview -->
+
+						</div>
+					</div>
+				</div>
+				<!-------------------------------- END prvo prikazi tabelu kupac --------------------------------------->
+			</div>
+			
+			
+			<!-- END FRIEND REQUESTS -->
+			</div>
+			
+			
+		</div>
+
+</body>
+</html>
