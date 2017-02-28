@@ -272,6 +272,47 @@ public class RestaurantManagerController {
 		
 	}
 	
+	
+	@RequestMapping(value = "/addTableRM", method = RequestMethod.POST, headers = { "content-type=application/json" })
+	public String addTableRM(@RequestBody TablePrint tabPrint, HttpServletRequest request) {
+		
+		
+		
+		RestaurantManager rManager = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
+		
+		Restaurant restaurant = rManager.getRestaurantId();
+		
+		int numbOfSeats = tabPrint.getGuestOrderID();
+		int x = tabPrint.getPositionX();
+		int y = tabPrint.getPositionY();
+		
+		Long areaID = tabPrint.getAreaID();
+		
+		Long numbInRestaurant = tabPrint.getResTableID();
+		
+		Area area = aDao.findOne(areaID);
+		
+		DiningTable dt = new DiningTable(restaurant,numbInRestaurant,numbOfSeats,area,null,"",false,x,y);
+		
+		dtDao.save(dt);
+		
+		//Area areax = aDao.findOne(ai.getAreaID());
+		
+		//SpaceXY sxy = new SpaceXY(areax.getSpaceX(),areax.getSpaceY());
+		/*
+		Long gtID = tabPrint.getGeneralTableID();
+		
+		DiningTable dt = dtDao.findByGeneralTableID(gtID);
+		
+		dt.setActive(false);
+		
+		dtDao.save(dt);
+		*/
+		
+		return "super";
+		
+	}
+	
 	@RequestMapping(value = "/getAreaTablesRM", method = RequestMethod.POST, headers = { "content-type=application/json" })
 	public ArrayList<TablePrint> getAreaTablesRM(@RequestBody AreaImmitation ai, HttpServletRequest request) {
 		
@@ -318,6 +359,9 @@ public class RestaurantManagerController {
 		
 		return tp;
 	}
+	
+	
+	
 	
 	
 	

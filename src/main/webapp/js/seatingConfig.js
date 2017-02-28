@@ -3,6 +3,7 @@ var getAreasForRM = "restaurantManagerController/getAreasForRM";
 var getAreaTablesRM = "restaurantManagerController/getAreaTablesRM";
 var getAreaSpaceRM = "restaurantManagerController/getAreaSpaceRM";
 var removeTableRM = "restaurantManagerController/removeTableRM";
+var addTableRM = "restaurantManagerController/addTableRM";
 
 
 var areaSpaceX=0;
@@ -431,24 +432,58 @@ $(document).on('click', '.removeTable',function(e)
 
 $(document).on('click', '.addTable',function(e)
 		{
+	e.preventDefault();
+	//var tableID = $(this).find("input[name=tableIDw]").val();
+	var areaID = $(this).find("input[name=areaID]").val();
+	var x = $(this).find("input[name=x]").val();
+	var y = $(this).find("input[name=y]").val();
+	//var g = $(this).find("input[name=g]").val();
+	//console.log("zauzmi Sto");
+	//console.log(areaID);
+
+	$('#choseWhat').empty();
+	tekst_za_append='<form id="addTable2" action="" method="post" role="form" class="addTable2" >'
+		+'<input type="hidden" id="areaID" name="areaID" value="'+areaID+'" >'
+		+'<input type="hidden" id="x" name="x" value="'+x+'" >'
+		+'<input type="hidden" id="y" name="y" value="'+y+'" >'
+		+'Number of seats: <input type="number" name="nos">'
+		+'Number in restaurant: <input type="number" name="nir">'
+		+'<input type="submit" name="zauzmiSto-submit" role="button" id="zauzmiSto-submit" tabindex="7" class="form-control btn btn-success" value="Add a new Table">'
+		+'</form>';
+
+	$('#choseWhat').append(tekst_za_append);
+
+
+		});
+
+$(document).on('submit', '.addTable2',function(e)
+		{
 			e.preventDefault();
-			var tableID = $(this).find("input[name=tableIDw]").val();
+			//var tableID = $(this).find("input[name=tableIDw]").val();
 			var areaID = $(this).find("input[name=areaID]").val();
-			var areaID = $(this).find("input[name=areaID]").val();
-			var areaID = $(this).find("input[name=areaID]").val();
+			var x = $(this).find("input[name=x]").val();
+			var y = $(this).find("input[name=y]").val();
+			var nos = $(this).find("input[name=nos]").val();
+			var nor = $(this).find("input[name=nir]").val();
+			
+			
+			//var y = $(this).find("input[name=y]").val();
 			//var g = $(this).find("input[name=g]").val();
 			//console.log("zauzmi Sto");
 			//console.log(areaID);
 			$.ajax({
 				type:'POST',
-				url : removeTableRM,
+				url : addTableRM,
 				contentType:'application/json',
 				dataType : "text",
-				data: formatToTablePrintID(tableID),
+				data: formatToTablePrintID2(areaID,x,y,nos,nor),
 				success : function(data)
 				{
+					console.log("ovoe");
+					//$('#tablesData').empty();
+					printTables2(areaID);
 					$('#choseWhat').empty();
-					
+					console.log("ovoe 2");
 					
 				}	
 			});
@@ -504,6 +539,21 @@ function formatToTablePrintID(idXXX)
 	return JSON.stringify(
 			{
 				"generalTableID":idXXX
+			}
+			);
+	
+}
+
+function formatToTablePrintID2(areaID,positionX,positionY,numberOfSeats,numberInRestoraunt)
+{
+	return JSON.stringify(
+			{
+				"positionX":positionX,
+				"positionY":positionY,
+				"areaID":areaID,
+				"guestOrderID":numberOfSeats,
+				"resTableID":numberInRestoraunt
+				
 			}
 			);
 	

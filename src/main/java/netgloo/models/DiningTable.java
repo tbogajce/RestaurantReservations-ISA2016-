@@ -37,7 +37,7 @@ public class DiningTable {
 	
 	@JsonBackReference("segment-diningTable")
 	@ManyToOne
-	@JoinColumn(name="segment", referencedColumnName="segmentID", nullable=false)
+	@JoinColumn(name="segment", referencedColumnName="segmentID", nullable=true)
 	private Segment segment;
 	
 	@JsonBackReference("guestsOrder-diningTable")
@@ -80,10 +80,10 @@ public class DiningTable {
 		this.isActive = isActive;
 	}
 	
-	public DiningTable(Long generalTableID, Restaurant restaurant, Long tableNumberInRestaurant, Integer numberOfSeats,
+	public DiningTable(/*Long generalTableID,*/ Restaurant restaurant, Long tableNumberInRestaurant, Integer numberOfSeats,
 			Area area, Segment segment, String note, Boolean occupied, int positionX, int positionY/*, GuestsOrder guestsOrder*/) {
 		super();
-		this.generalTableID = generalTableID;
+		/*this.generalTableID = generalTableID;*/
 		this.restaurant = restaurant;
 		this.tableNumberInRestaurant = tableNumberInRestaurant;
 		this.numberOfSeats = numberOfSeats;
