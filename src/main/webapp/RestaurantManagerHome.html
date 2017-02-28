@@ -76,6 +76,12 @@ body {
 								<a href="#" id="create-new-shift">Add new Working Shift</a>
 							</div>
 							<div class="col-xs-6">
+								<a href="#" id="create-new-area">Add new Area</a>
+							</div>
+							<div class="col-xs-6">
+								<a href="#" id="create-new-segment">Add new Segment</a>
+							</div>
+							<div class="col-xs-6">
 								<a href="#" id="create-new-sc">Add new Seating Configuration</a>
 							</div>
 							<div class="col-xs-6">
@@ -390,6 +396,49 @@ body {
 										</div>
 									</div>
 								</form>
+								
+								<form id="add-new-area-form" action="" method="post" role="form"
+									class="newAreaForm" style="display: none;">
+
+									<div class="form-group">
+										<input type="text" name="aname" id="aname"
+											tabindex="1" class="form-control" placeholder="Name"
+											value="">
+									</div>
+
+									<div class="form-group">
+										<input type="text" name="anote" id="anote" tabindex="2"
+											class="form-control" placeholder="Note" value="">
+									</div>
+
+									<div class="col-xs-3">
+										<input type="text" name="aspacex" id="aspacex" tabindex="3"
+											class="form-control" placeholder="Space X" value="">
+									</div>
+									<div class="col-xs-1">
+										<p>X</p>
+									</div>
+									
+									<div class="col-xs-3">
+										<input type="text" name="aspacey" id="aspacey" tabindex="4"
+											class="form-control" placeholder="Space Y" value="">
+									</div>
+
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-8 col-sm-offset-2">
+												<input type="submit" name="new-area-submit"
+													id="new-area-submit" tabindex="5"
+													class="form-control btn btn-success" value="Add new Area">
+											</div>
+										</div>
+									</div>
+								</form>
+								
+								
+								
+								
+								
 								
 
 

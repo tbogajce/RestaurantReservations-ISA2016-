@@ -5,6 +5,7 @@ var newBeverageURL = "beveragesController/createNewBeverage";
 var newMenuURL = "menuController/createNewMenu";
 var newEmployeeURL = "restaurantManagerController/createNewEmployee";
 var newShiftURL = "workingShiftController/createNewShift";
+var newAreaURL = "areaController/createNewArea";
 var logoutURL = "restaurantManagerController/logoutRestaurantManager";
 var beveragesURL = "beveragesController/getBeverages";
 
@@ -20,6 +21,7 @@ $(function() {
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
+		$("#add-new-area-form").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
 		$('#create-new-provider').removeClass('active');
 		$('#create-new-beverage').removeClass('active');
@@ -27,6 +29,7 @@ $(function() {
 		$('#create-new-shift').removeClass('active');
 		$('#create-new-report').removeClass('active');
 		$('#create-new-sc').removeClass('active');
+		$('#create-new-area').removeClass('active');
 		$('#edit-info').removeClass('active');
 		$(this).addClass('active');
 		e.preventDefault();
@@ -41,6 +44,7 @@ $(function() {
 		$("#add-new-employee-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
+		$("#add-new-area-form").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
 		$('#create-new-employee').removeClass('active');
@@ -50,6 +54,7 @@ $(function() {
 		$('#create-new-report').removeClass('active');
 		$('#create-new-sc').removeClass('active');
 		$('#edit-info').removeClass('active');
+		$('#create-new-area').removeClass('active');
 		$(this).addClass('active');
 		e.preventDefault();
 	});
@@ -63,6 +68,7 @@ $(function() {
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
+		$("#add-new-area-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
 		$("#beveragesListForm").fadeOut(100);
 		$('#create-new-employee').removeClass('active');
@@ -71,6 +77,7 @@ $(function() {
 		$('#create-new-menu').removeClass('active');
 		$('#create-new-report').removeClass('active');
 		$('#create-new-shift').removeClass('active');
+		$('#create-new-area').removeClass('active');
 		$('#create-new-sc').removeClass('active');
 		$(this).addClass('active');
 		e.preventDefault();
@@ -86,6 +93,7 @@ $(function() {
 		$("#add-new-provider-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
+		$("#add-new-area-form").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
 		$('#create-new-employee').removeClass('active');
 		$('#create-new-provider').removeClass('active');
@@ -93,6 +101,7 @@ $(function() {
 		$('#create-new-shift').removeClass('active');
 		$('#create-new-report').removeClass('active');
 		$('#create-new-sc').removeClass('active');
+		$('#create-new-area').removeClass('active');
 		$('#edit-info').removeClass('active');
 		$(this).addClass('active');
 		e.preventDefault();
@@ -105,6 +114,7 @@ $(function() {
 		$("#greetings").fadeOut(100);
 		$("#beveragesListForm").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
+		$("#add-new-area-form").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
@@ -114,6 +124,7 @@ $(function() {
 		$('#create-new-beverage').removeClass('active');
 		$('#create-new-shift').removeClass('active');
 		$('#create-new-report').removeClass('active');
+		$('#create-new-area').removeClass('active');
 		$('#create-new-sc').removeClass('active');
 		$('#edit-info').removeClass('active');
 		$(this).addClass('active');
@@ -128,6 +139,7 @@ $(function() {
 		$("#beveragesListForm").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
+		$("#add-new-area-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
@@ -137,6 +149,7 @@ $(function() {
 		$('#create-new-sc').removeClass('active');
 		$('#create-new-menu').removeClass('active');
 		$('#create-new-report').removeClass('active');
+		$('#create-new-area').removeClass('active');
 		$('#edit-info').removeClass('active');
 		$(this).addClass('active');
 		e.preventDefault();
@@ -150,6 +163,7 @@ $(function() {
 		$("#add-new-employee-form").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
+		$("#add-new-area-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
@@ -157,6 +171,7 @@ $(function() {
 		$('#create-new-provider').removeClass('active');
 		$('#create-new-beverage').removeClass('active');
 		$('#create-new-shift').removeClass('active');
+		$('#create-new-area').removeClass('active');
 		$('#create-new-menu').removeClass('active');
 		$('#create-new-report').removeClass('active');
 		$('#edit-info').removeClass('active');
@@ -171,6 +186,7 @@ $(function() {
 		$("#beveragesListForm").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
+		$("#add-new-area-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
@@ -181,6 +197,31 @@ $(function() {
 		$('#create-new-shift').removeClass('active');
 		$('#create-new-menu').removeClass('active');
 		$('#create-new-sc').removeClass('active');
+		$('#create-new-area').removeClass('active');
+		$('#edit-info').removeClass('active');
+		$(this).addClass('active');
+		e.preventDefault();
+	});
+	
+	$('#create-new-area').click(function(e) {
+		// e.preventDefault();
+		$("#add-new-area-form").delay(300).fadeIn(100);
+
+		$("#greetings").fadeOut(100);
+		$("#beveragesListForm").fadeOut(100);
+		$("#add-new-employee-form").fadeOut(100);
+		$("#add-new-provider-form").fadeOut(100);
+		$("#add-new-beverage-form").fadeOut(100);
+		$("#add-new-menu-form").fadeOut(100);
+		$("#add-new-shift-form").fadeOut(100);
+		$("#edit-info-form").fadeOut(100);
+		$('#create-new-employee').removeClass('active');
+		$('#create-new-provider').removeClass('active');
+		$('#create-new-beverage').removeClass('active');
+		$('#create-new-sc').removeClass('active');
+		$('#create-new-menu').removeClass('active');
+		$('#create-new-report').removeClass('active');
+		$('#create-new-shift').removeClass('active');
 		$('#edit-info').removeClass('active');
 		$(this).addClass('active');
 		e.preventDefault();
@@ -404,6 +445,28 @@ $(document).on('submit', '.newMenuForm', function(e) {
 });
 
 // *********************************************************************************
+//AREA
+$(document).on('submit', '.newAreaForm', function(e) {
+	e.preventDefault();
+	console.log("Add new Area begin");
+	var aname = $(this).find("input[name=aname]").val();
+	var anote = $(this).find("input[name=anote]").val();
+	var aspacex = $(this).find("input[name=aspacex]").val();
+	var aspacey = $(this).find("input[name=aspacey]").val();
+	$.ajax({
+		type : 'POST',
+		url : newAreaURL,
+		contentType : 'application/json',
+		dataType : "text",
+		data : formToJSONNewArea(aname, aspacex, aspacey, anote),
+		success : function(data) {
+
+			window.location.href = "RestaurantManagerHome.html";
+		}
+	});
+});
+
+// *********************************************************************************
 // RASPORED RADA
 $(document).on('submit', '.newShiftForm', function(e) {
 	e.preventDefault();
@@ -509,6 +572,15 @@ function formToJSONNewShift(worker, shiftBeginningTime, shiftEndTime, note) {
 		"worker" : worker,
 		"shiftBeginningTime" : shiftBeginningTime,
 		"shiftEndTime" : shiftEndTime,
+		"note" : note,
+	});
+}
+
+function formToJSONNewArea(areaName, spaceX, spaceY, note) {
+	return JSON.stringify({
+		"areaName" : areaName,
+		"spaceX" : spaceX,
+		"spaceY" : spaceY,
 		"note" : note,
 	});
 }
