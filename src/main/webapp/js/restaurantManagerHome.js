@@ -6,6 +6,7 @@ var newMenuURL = "menuController/createNewMenu";
 var newEmployeeURL = "restaurantManagerController/createNewEmployee";
 var newShiftURL = "workingShiftController/createNewShift";
 var logoutURL = "restaurantManagerController/logoutRestaurantManager";
+var beveragesURL = "beveragesController/getBeverages";
 
 $(function() {
 
@@ -14,6 +15,7 @@ $(function() {
 		$("#add-new-employee-form").delay(300).fadeIn(100);
 
 		$("#greetings").fadeOut(100);
+		$("#beveragesListForm").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
@@ -35,6 +37,7 @@ $(function() {
 		$("#add-new-provider-form").delay(300).fadeIn(100);
 
 		$("#greetings").fadeOut(100);
+		$("#beveragesListForm").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
@@ -61,6 +64,7 @@ $(function() {
 		$("#add-new-shift-form").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
+		$("#beveragesListForm").fadeOut(100);
 		$('#create-new-employee').removeClass('active');
 		$('#create-new-beverage').removeClass('active');
 		$('#create-new-provider').removeClass('active');
@@ -75,7 +79,8 @@ $(function() {
 	$('#create-new-beverage').click(function(e) {
 		// e.preventDefault();
 		$("#add-new-beverage-form").delay(300).fadeIn(100);
-
+		$('#beveragesListForm').delay(300).fadeIn(100);
+		
 		$("#greetings").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
@@ -98,6 +103,7 @@ $(function() {
 		$("#add-new-menu-form").delay(300).fadeIn(100);
 
 		$("#greetings").fadeOut(100);
+		$("#beveragesListForm").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
@@ -119,6 +125,7 @@ $(function() {
 		$("#add-new-shift-form").delay(300).fadeIn(100);
 
 		$("#greetings").fadeOut(100);
+		$("#beveragesListForm").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
@@ -139,6 +146,7 @@ $(function() {
 		// e.preventDefault();
 
 		$("#greetings").fadeOut(100);
+		$("#beveragesListForm").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
@@ -160,6 +168,7 @@ $(function() {
 		// e.preventDefault();
 
 		$("#greetings").fadeOut(100);
+		$("#beveragesListForm").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
@@ -342,6 +351,37 @@ $(document).on('submit', '.newBeverageForm', function(e) {
 		}
 	});
 });
+
+function printBeverages() {
+	console.log("USAO U BAVERAGES LISTU");
+	$.ajax({
+		type : 'GET',
+		url : beveragesURL,
+		dataType : "json", // data type of response
+		success : function(data) {
+			beveragesPrint(data);
+		}
+	});
+}
+
+function beveragesPrint(data) {
+	// JAX-RS serializes an empty list as null, and a 'collection of one' as an
+	// object (not an 'array of one')
+	console.log("PRINTA BAVERAGES LISTU");
+	
+	$('#beveragesData').empty();
+	var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
+	$.each(list,function(index, beverage) {
+						var tr = $('<tr></tr>');
+						tr.append('<td>' + beverage.beveragesDescription + '</td>'+ 
+										'<td>' + beverage.beveragesName + '</td>' +
+										'<td>' + beverage.beveragesPrice + '</td>' + 
+										'<td>');
+						$('#beveragesData').append(tr);
+					});
+}
+
+
 // *********************************************************************************
 // JELO
 $(document).on('submit', '.newMenuForm', function(e) {

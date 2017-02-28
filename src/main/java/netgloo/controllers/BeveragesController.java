@@ -14,9 +14,11 @@ import netgloo.dao.BeveragesDao;
 import netgloo.dao.RestaurantDao;
 import netgloo.models.Beverages;
 import netgloo.models.BeveragesPom;
+import netgloo.models.Friendships;
 import netgloo.models.Restaurant;
 import netgloo.models.RestaurantManager;
 import netgloo.models.SystemManager;
+import netgloo.models.User;
 
 @RestController
 @RequestMapping("/beveragesController")
@@ -52,6 +54,30 @@ public class BeveragesController {
 			return "EXCEPTION";
 		}
 		return "OK";
+	}
+	
+	@RequestMapping(value = "/getBeverages", method = RequestMethod.GET)
+	public ArrayList<Beverages> getBeverages(@RequestBody Beverages b, HttpServletRequest request) {
+		System.out.println("JE LI RAVNO OVO?");
+		listOfBeverages.clear();
+		try {
+			System.out.println("BARBE IMAL RIBE?");
+			
+			RestaurantManager rmkkk = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
+			Restaurant restaurant = rmkkk.getRestaurantId();
+			
+			Beverages beverages = b;
+			
+			ArrayList<Beverages> fs = (ArrayList<Beverages>) bavDao.findAllByRestaurantId(restaurant); 
+			for (int i = 0; i < fs.size(); i++) {
+					//listOfBeverages.add(fs.get(i).beverages);
+					listOfBeverages.add(i, null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return listOfBeverages;
 	}
 
 }
