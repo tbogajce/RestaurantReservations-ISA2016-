@@ -2,6 +2,8 @@ package netgloo.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -60,6 +62,19 @@ public class Area {
 	}
 	
 	
+	
+
+	public Area(Restaurant restaurant, String areaName, int spaceX, int spaceY, String note) {
+		super();
+		this.restaurant = restaurant;
+		this.areaName = areaName;
+		this.spaceX = spaceX;
+		this.spaceY = spaceY;
+		this.note = note;
+	}
+
+
+
 
 	public int getSpaceX() {
 		return spaceX;
