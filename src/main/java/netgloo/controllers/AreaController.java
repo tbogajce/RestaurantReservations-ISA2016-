@@ -43,14 +43,26 @@ public class AreaController {
 
 			System.out.println("USAO U KREIRANJE AREA");
 			
-			Area svi = (Area) 
+			//Area svi = (Area) 
+			ArrayList<Area> areasList= (java.util.ArrayList<Area>) areaDao.findAll();
+			
+			
+			Long max =(long) 0;
+			
+			for(Area a : areasList)
+			{
+				if(a.getAreaID()>max)
+				{
+					max=a.getAreaID();
+				}
+			}
 			
 			
 			
-			Area area = null;
+			
 			// String user_reg_date = new
 			// SimpleDateFormat("dd-MMM-yyyy").format(new Date());
-			area = new Area(areaid, restaurant, a1.getAreaName(), a1.getSpaceX(), a1.getSpaceY(), a1.getNote());
+			Area area = new Area(max+1, restaurant, a1.getAreaName(), a1.getSpaceX(), a1.getSpaceY(), a1.getNote());
 			System.out.println("DODAO OBJEKAT AREA");
 			areaDao.save(area);
 		} catch (Exception ex) {

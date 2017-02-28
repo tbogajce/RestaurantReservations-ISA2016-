@@ -162,29 +162,7 @@ $(function() {
 	});
 
 
-<<<<<<< HEAD
-=======
-		$("#greetings").fadeOut(100);
-		$("#beveragesListForm").fadeOut(100);
-		$("#add-new-employee-form").fadeOut(100);
-		$("#add-new-provider-form").fadeOut(100);
-		$("#add-new-shift-form").fadeOut(100);
-		$("#add-new-area-form").fadeOut(100);
-		$("#add-new-beverage-form").fadeOut(100);
-		$("#add-new-menu-form").fadeOut(100);
-		$("#edit-info-form").fadeOut(100);
-		$('#create-new-employee').removeClass('active');
-		$('#create-new-provider').removeClass('active');
-		$('#create-new-beverage').removeClass('active');
-		$('#create-new-shift').removeClass('active');
-		$('#create-new-area').removeClass('active');
-		$('#create-new-menu').removeClass('active');
-		$('#create-new-report').removeClass('active');
-		$('#edit-info').removeClass('active');
-		$(this).addClass('active');
-		e.preventDefault();
-	});
->>>>>>> origin/master
+
 
 	$('#create-new-report').click(function(e) {
 		// e.preventDefault();
