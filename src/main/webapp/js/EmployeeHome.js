@@ -1145,19 +1145,12 @@ $(document).on('click', '.tableForm',function(e)
 			var w = $(this).find("input[name=w]").val();
 			
 			console.log("GGGGGGGGGGGG: [table form]"+ g);
-			//var guestsOrderx = $(this).find("input[name=guestsOrderx]").val();
-			//console.log(orderxxID);
-			//console.log(whatIsItxx);
-			
-			
+
 			console.log(typeof oc);
 			$('#seeTableOrdersDiv').hide();
-			//console.log(guestsOrderx);
 			
 			if(oc=="true" )
 			{
-			//console.log("OC JE TRUE");
-			//console.log("zasto se ne izvrsi");
 				if(g!=-1 && w!=-1)
 				{
 					$('#choseWhat').empty();
@@ -1176,19 +1169,11 @@ $(document).on('click', '.tableForm',function(e)
 
 							$('#seeTableOrdersDiv').show();
 
-
-							//printTables2(areaID);
-							//$('#choseWhat').empty();
-							//console.log("ovoe 2");
-
 						}	
 					});
 				}
 				if(g!=-1 && w==-1)
 				{
-					//console.log("OC JE FALSE");
-					//alert("ovaj sto nije zauzet x ... ");
-					//$('#seeTableOrdersDiv').empty();
 					
 					$('#seeTableOrdersDiv').hide();
 
@@ -1204,48 +1189,15 @@ $(document).on('click', '.tableForm',function(e)
 					$('#choseWhat').append(tekst_za_append);
 
 					console.log("Wut mate? u wut?");
-					 
-					//$('#choseWhat').show();	
-				}
 
-			//alert("ovaj sto je zauzet ... eto...");
-			
-			//$('#choseWhat').empty();
+				}
 			}
 			else if(oc == "false")
 			{
 				
 			}
-			
-			
 			console.log(areaID);
 			console.log(oc);
-			
-			/*
-			if(oc=="true")
-				{
-				
-					console.log("STVARNI TRUE");
-					
-				}
-			else if(oc== "false")
-				{
-					console.log("STVARNI FALSE");
-				}
-				*/
-			/*
-			$.ajax({
-				type:'POST',
-				url: doneOrder,
-				contentType:'application/json',
-				data: formatToOrderID(orderxxID),
-				success : function()
-				{
-					showOrdersx();
-				}
-				
-			});
-			*/
 			
 		});
 

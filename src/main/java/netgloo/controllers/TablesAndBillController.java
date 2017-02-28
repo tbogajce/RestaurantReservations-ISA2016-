@@ -191,129 +191,28 @@ public class TablesAndBillController {
 		Area areax = aDao.findOne(ai.getAreaID());
 		
 		dtList = dtDao.findAllByArea(areax);
-		
-		
-		
-		
-		
-		/*
-		
-		
+
+
 		for(DiningTable dt: dtList)
 		{
-			
-			//TableReservation tr = go.getTableReservation();
-			//DiningTable dt = go.getDiningTable();
-			
-			//Timestamp goTime = go.getOrderReceivedTime();
-			Timestamp curTime = null;
-			Calendar calx = Calendar.getInstance();
-			calx.setTime(Calendar.getInstance().getTime());
-			//calx.add(Calendar.SECOND, -900);
-			//cal.add(Calendar.DAY_OF_MONTH, -1);
-			curTime = new Timestamp(calx.getTime().getTime());
-			//curTime.setTime(curTime.);
-			
-			
-			 
-			
-			Timestamp sTime = null;
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(Calendar.getInstance().getTime());
-			//cal.add(Calendar.DAY_OF_MONTH, -1);
-			sTime = new Timestamp(cal.getTime().getTime());
-			sTime.setHours(0);
-			sTime.setMinutes(0);
-			sTime.setSeconds(0);
-			
-			Timestamp eTime = null;
-			Calendar cal1 = Calendar.getInstance();
-			cal1.setTime(Calendar.getInstance().getTime());
-			//cal1.add(Calendar.DAY_OF_MONTH, -1);
-			eTime = new Timestamp(cal1.getTime().getTime());
-			
-			ArrayList<GuestsOrder> goTodayList = goDao.getGuestsOrderesForTimeIntervalAndSpecificTable(sTime, eTime, dt);
-			
-			GuestsOrder pravi=null;
-			
-			if(goTodayList!=null && goTodayList.isEmpty()==false)
+			if(dt.isActive()==true)
 			{
-				for(GuestsOrder ggoo : goTodayList)
+				if(dt.getCurrentGuestsOrder()!=null)
 				{
-					System.out.println("NADJENI ZA DANAS!");
-					System.out.println(ggoo.getOrderID());
-					
-					TableReservation tabRes = ggoo.getTableReservation();
-					int trajanje = tabRes.getHours();
-					Timestamp zakazano = ggoo.getOrderReceivedTime();
-					System.out.println("ZAKAZANO: "+zakazano);
-					
-					Timestamp kasnije = null;
-					//System.out.println(timestamp.toString());
-					int sec = 3600*trajanje + 1800; // 15 minuta
-					Calendar cal2 = Calendar.getInstance();
-					//cal2.setTimeInMillis(timestamp.getTime());
-					cal2.setTime(zakazano);
-					cal2.add(Calendar.SECOND, +sec);
-					//Timestamp later = new Timestamp(cal2.getTime().getTime());
-					kasnije = new Timestamp(cal2.getTime().getTime());
-					System.out.println("TRENUTNO: "+curTime);
-					System.out.println("KASNIJE: "+kasnije);
-					//System.out.println("OVO JE POMJERENO VRIJEME" + later);
-					
-					if(curTime.after(zakazano) && kasnije.after(curTime) && ggoo.getIsPaid()!=true)
+					if(dt.getCurrentGuestsOrder().getWaiter()!=null)
 					{
-						System.out.println("Uslo je u ovo ..... valjda");
-						pravi=ggoo;
-						//break;
+						tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),dt.getCurrentGuestsOrder().getWaiter().getEmployeeId(), dt.getCurrentGuestsOrder().getOrderID()));
 					}
-					
-				}
-			}
-			
-			System.out.println("-----------------+++----------------");
-			if(pravi!=null)
-			{
-				Long waiterx = (long) -1;
-				if(pravi.getWaiter()!=null)
-				{
-					waiterx = pravi.getWaiter().getEmployeeId();
-				}
-				
-				System.out.println("STO: " + dt.getGeneralTableID()+ " GO: " + pravi.getOrderID() + " Waiter: " + waiterx);
-				
-				
-				tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),waiterx,pravi.getOrderID()));
-
-			}
-			else
-			{
-				System.out.println("STO: " + dt.getGeneralTableID()+ " GO: null Waiter: " + -1);
-				
-				tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),(long)-1,-1));
-
-			}
-
-		}
-*/
-
-		for(DiningTable dt: dtList)
-		{
-			if(dt.getCurrentGuestsOrder()!=null)
-			{
-				if(dt.getCurrentGuestsOrder().getWaiter()!=null)
-				{
-					tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),dt.getCurrentGuestsOrder().getWaiter().getEmployeeId(), dt.getCurrentGuestsOrder().getOrderID()));
+					else
+					{
+						tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),(long) -1, dt.getCurrentGuestsOrder().getOrderID()));
+					}
 				}
 				else
 				{
-					tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),(long) -1, dt.getCurrentGuestsOrder().getOrderID()));
-				}
-			}
-			else
-			{
-				tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),(long) -1, -1));
+					tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),(long) -1, -1));
 
+				}
 			}
 		}
 		
@@ -825,21 +724,25 @@ public class TablesAndBillController {
 		*/
 		for(DiningTable dt: dtList)
 		{
-			if(dt.getCurrentGuestsOrder()!=null)
+
+			if(dt.isActive()==true)
 			{
-				if(dt.getCurrentGuestsOrder().getWaiter()!=null)
+				if(dt.getCurrentGuestsOrder()!=null)
 				{
-					tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),dt.getCurrentGuestsOrder().getWaiter().getEmployeeId(), dt.getCurrentGuestsOrder().getOrderID()));
+					if(dt.getCurrentGuestsOrder().getWaiter()!=null)
+					{
+						tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),dt.getCurrentGuestsOrder().getWaiter().getEmployeeId(), dt.getCurrentGuestsOrder().getOrderID()));
+					}
+					else
+					{
+						tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),(long) -1, dt.getCurrentGuestsOrder().getOrderID()));
+					}
 				}
 				else
 				{
-					tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),(long) -1, dt.getCurrentGuestsOrder().getOrderID()));
-				}
-			}
-			else
-			{
-				tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),(long) -1, -1));
+					tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),(long) -1, -1));
 
+				}
 			}
 		}
 		

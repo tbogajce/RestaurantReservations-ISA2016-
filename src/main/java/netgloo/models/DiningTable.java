@@ -45,14 +45,6 @@ public class DiningTable {
 	@JoinColumn(name="currentGuestsOrder", referencedColumnName="orderID", nullable=true)
 	private GuestsOrder currentGuestsOrder;
 	
-	/*
-	//OVDE CE PISATI POSLJEDNJI ORDER UKOLIKO JE STO ZAUZET
-	@JsonBackReference("guestsOrder-diningTable")
-	@ManyToOne
-	@JoinColumn(name="guestsOrder", referencedColumnName="orderID", nullable=true)
-	private GuestsOrder guestsOrder;
-	*/
-	
 	@Column(nullable =true)
 	private String note;
 	
@@ -68,6 +60,11 @@ public class DiningTable {
 	//ozgo ka dole
 	@Column(name = "positionY", nullable =true)
 	private int positionY;
+	
+	
+	@Column(name = "isActive", nullable = false)
+	private boolean isActive;
+	
 
 	public GuestsOrder getCurrentGuestsOrder() {
 		return currentGuestsOrder;
@@ -76,6 +73,13 @@ public class DiningTable {
 		this.currentGuestsOrder = currentGuestsOrder;
 	}
 
+	public boolean isActive() {
+		return isActive;
+	}
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+	
 	public DiningTable(Long generalTableID, Restaurant restaurant, Long tableNumberInRestaurant, Integer numberOfSeats,
 			Area area, Segment segment, String note, Boolean occupied, int positionX, int positionY/*, GuestsOrder guestsOrder*/) {
 		super();
@@ -89,6 +93,7 @@ public class DiningTable {
 		this.occupied = occupied;
 		this.positionX = positionX;
 		this.positionY = positionY;
+		this.isActive=true;
 		/*this.guestsOrder = guestsOrder;*/
 	}
 

@@ -19,6 +19,7 @@ $(function() {
 		$("#add-new-provider-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
+		$("#seating-config-div").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
 		$('#create-new-provider').removeClass('active');
@@ -42,6 +43,7 @@ $(function() {
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
+		$("#seating-config-div").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
 		$('#create-new-employee').removeClass('active');
 		$('#create-new-beverage').removeClass('active');
@@ -64,6 +66,7 @@ $(function() {
 		$("#add-new-shift-form").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
+		$("#seating-config-div").fadeOut(100);
 		$("#beveragesListForm").fadeOut(100);
 		$('#create-new-employee').removeClass('active');
 		$('#create-new-beverage').removeClass('active');
@@ -85,6 +88,7 @@ $(function() {
 		$("#add-new-employee-form").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
+		$("#seating-config-div").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
 		$('#create-new-employee').removeClass('active');
@@ -108,6 +112,7 @@ $(function() {
 		$("#add-new-provider-form").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
+		$("#seating-config-div").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
 		$('#create-new-employee').removeClass('active');
 		$('#create-new-provider').removeClass('active');
@@ -130,6 +135,7 @@ $(function() {
 		$("#add-new-provider-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
+		$("#seating-config-div").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
 		$('#create-new-employee').removeClass('active');
 		$('#create-new-provider').removeClass('active');
@@ -142,27 +148,7 @@ $(function() {
 		e.preventDefault();
 	});
 
-	$('#create-new-sc').click(function(e) {
-		// e.preventDefault();
 
-		$("#greetings").fadeOut(100);
-		$("#beveragesListForm").fadeOut(100);
-		$("#add-new-employee-form").fadeOut(100);
-		$("#add-new-provider-form").fadeOut(100);
-		$("#add-new-shift-form").fadeOut(100);
-		$("#add-new-beverage-form").fadeOut(100);
-		$("#add-new-menu-form").fadeOut(100);
-		$("#edit-info-form").fadeOut(100);
-		$('#create-new-employee').removeClass('active');
-		$('#create-new-provider').removeClass('active');
-		$('#create-new-beverage').removeClass('active');
-		$('#create-new-shift').removeClass('active');
-		$('#create-new-menu').removeClass('active');
-		$('#create-new-report').removeClass('active');
-		$('#edit-info').removeClass('active');
-		$(this).addClass('active');
-		e.preventDefault();
-	});
 
 	$('#create-new-report').click(function(e) {
 		// e.preventDefault();
@@ -174,6 +160,7 @@ $(function() {
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
+		$("#seating-config-div").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
 		$('#create-new-employee').removeClass('active');
 		$('#create-new-provider').removeClass('active');

@@ -13,17 +13,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import netgloo.dao.AreaDao;
+import netgloo.dao.DinningTableDao;
 import netgloo.dao.EmployeeDao;
 import netgloo.dao.RestaurantDao;
 import netgloo.dao.RestaurantManagerDao;
 import netgloo.dao.UserDao;
+import netgloo.models.Area;
+import netgloo.models.AreaImmitation;
+import netgloo.models.DiningTable;
 import netgloo.models.Employee;
 import netgloo.models.EmployeePom;
 import netgloo.models.Provider;
 import netgloo.models.Restaurant;
 import netgloo.models.RestaurantManager;
 import netgloo.models.RestaurantManagerPom;
+import netgloo.models.SpaceXY;
 import netgloo.models.SystemManager;
+import netgloo.models.TablePrint;
 import netgloo.models.User;
 import netgloo.models.UserEmployeePom;
 import netgloo.models.UserProba;
@@ -43,6 +50,12 @@ public class RestaurantManagerController {
 
 	@Autowired
 	private EmployeeDao empDao;
+	
+	@Autowired
+	AreaDao aDao;
+	
+	@Autowired 
+	DinningTableDao dtDao;
 
 	ArrayList<RestaurantManager> listOfRestaurantManagers = new ArrayList<RestaurantManager>();
 
@@ -175,6 +188,8 @@ public class RestaurantManagerController {
 		}
 		return "OK";
 	}
+	
+	
 
 	@RequestMapping(value = "/logoutRestaurantManager", method = RequestMethod.GET, headers = {
 			"content-type=application/json" })
@@ -187,4 +202,125 @@ public class RestaurantManagerController {
 		}
 		return "logout";
 	}
+	
+	@RequestMapping(value = "/getAreasForRM", method = RequestMethod.POST)
+	public ArrayList<AreaImmitation> getAreasForRM(HttpServletRequest request) {
+		//friends.clear();
+		
+		 ArrayList<AreaImmitation> areasList = new ArrayList<AreaImmitation>();
+		areasList.clear();
+		
+		try {
+
+			RestaurantManager rManager = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
+			if(rManager!=null)
+			{
+
+
+				ArrayList<Area> al = new ArrayList<Area>();
+				al = aDao.findAllByRestaurant(rManager.getRestaurantId());
+
+				for(Area a : al)
+				{
+					areasList.add(new AreaImmitation(a.getAreaName(),a.getRestaurant().getRestaurantName(),a.getAreaID(),a.getRestaurant().getRestaurantId()));
+				}
+
+				for(AreaImmitation a : areasList)
+				{
+					System.out.println("AREA: " + a.getAreaName() +" , - r: " + a.getRestaurantName());
+				}
+			}		
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return areasList;
+	}
+	
+	
+	@RequestMapping(value = "/getAreaSpaceRM", method = RequestMethod.POST, headers = { "content-type=application/json" })
+	public SpaceXY getAreaSpaceRM(@RequestBody AreaImmitation ai, HttpServletRequest request) {
+		
+		
+		Area areax = aDao.findOne(ai.getAreaID());
+		
+		SpaceXY sxy = new SpaceXY(areax.getSpaceX(),areax.getSpaceY());
+		
+		return sxy;
+	}
+	
+	
+	@RequestMapping(value = "/removeTableRM", method = RequestMethod.POST, headers = { "content-type=application/json" })
+	public String removeTableRM(@RequestBody TablePrint tabPrint, HttpServletRequest request) {
+		
+		
+		//Area areax = aDao.findOne(ai.getAreaID());
+		
+		//SpaceXY sxy = new SpaceXY(areax.getSpaceX(),areax.getSpaceY());
+		
+		Long gtID = tabPrint.getGeneralTableID();
+		
+		DiningTable dt = dtDao.findByGeneralTableID(gtID);
+		
+		dt.setActive(false);
+		
+		dtDao.save(dt);
+		
+		
+		return "super";
+		
+	}
+	
+	@RequestMapping(value = "/getAreaTablesRM", method = RequestMethod.POST, headers = { "content-type=application/json" })
+	public ArrayList<TablePrint> getAreaTablesRM(@RequestBody AreaImmitation ai, HttpServletRequest request) {
+		
+		ArrayList<DiningTable> dtList = new ArrayList<DiningTable>();
+		ArrayList<TablePrint> tp = new ArrayList<TablePrint>();
+		System.out.println("USLO JE U OVO OVDE ZA TABLE");
+		System.out.println("SELECTED AREA: "+ ai.areaID);
+		
+		Area areax = aDao.findOne(ai.getAreaID());
+		
+		dtList = dtDao.findAllByArea(areax);
+
+
+		for(DiningTable dt: dtList)
+		{
+
+			if(dt.isActive()==true)
+			{
+
+
+				if(dt.getCurrentGuestsOrder()!=null)
+				{
+					if(dt.getCurrentGuestsOrder().getWaiter()!=null)
+					{
+						tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),dt.getCurrentGuestsOrder().getWaiter().getEmployeeId(), dt.getCurrentGuestsOrder().getOrderID()));
+					}
+					else
+					{
+						tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),(long) -1, dt.getCurrentGuestsOrder().getOrderID()));
+					}
+				}
+				else
+				{
+					tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),(long) -1, -1));
+
+				}
+			}
+		}
+		
+		for(DiningTable dt: dtList)
+		{
+			System.out.println("Table: " + dt.getPositionX()+", "+dt.getPositionY()+ " -> area: "+dt.getArea());
+		}
+		
+		return tp;
+	}
+	
+	
+	
+	
+	
 }
