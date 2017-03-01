@@ -3,7 +3,9 @@ package netgloo.controllers;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -124,17 +126,24 @@ public class TableReservationController {
 	@RequestMapping(value = "/getTablesReservation33", method = RequestMethod.GET)
 	public ArrayList<TableReservation> getTablesReservation33(HttpServletRequest request) {
 		getTableReservation.clear();
+		
 		User user = (User) request.getSession().getAttribute("user");
-//		List<InviteFriend> lu = (List<InviteFriend>) inviteFriendDao.findAll();
-//		for (int i = 0; i < lu.size(); i++) {
-//			if (lu.get(i).getUserId().getEmail().equals(user.getEmail()))
-//				getTableReservation.add(lu.get(i).getTableReservationId());
-//		}
+		List<InviteFriend> lu1 = (List<InviteFriend>) inviteFriendDao.findAll();
+		for (int i = 0; i < lu1.size(); i++) {
+			if (lu1.get(i).getUserId().getEmail().equals(user.getEmail()))
+				getTableReservation.add(lu1.get(i).getTableReservationId());
+		}
 		List<TableReservation> lu = (List<TableReservation>) tableReservationDao.findAll();
 		for(int i=0; i<lu.size(); i++) {
 			if(lu.get(i).getUserId().getUser_id().equals(user.getUser_id()))
 				getTableReservation.add(lu.get(i));
 		}
+		
+		Set<TableReservation> set = new HashSet<TableReservation>(getTableReservation);
+		getTableReservation.clear();
+		getTableReservation.addAll(set);
+		
+		
 
 		return getTableReservation;
 	}
