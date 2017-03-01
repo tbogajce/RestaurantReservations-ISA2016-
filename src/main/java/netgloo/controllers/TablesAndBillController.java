@@ -176,6 +176,10 @@ public class TablesAndBillController {
 	public ArrayList<Menu> getAllRestaurantMeals(HttpServletRequest request) {
 			Employee emp = (Employee) request.getSession().getAttribute("employee");
 			ArrayList<Menu> menuList = menuDao.findAllByRestaurantId(emp.getRestaurant_id());
+			for(Menu m : menuList)
+			{
+				System.out.println(m.getMenuMealDescription());
+			}
 		return menuList;
 	}
 	
@@ -201,15 +205,20 @@ public class TablesAndBillController {
 				{
 					if(dt.getCurrentGuestsOrder().getWaiter()!=null)
 					{
+						System.out.println("DT: "+dt.getGeneralTableID() + "G: " + dt.getCurrentGuestsOrder().getOrderID()+ "W: " + dt.getCurrentGuestsOrder().getWaiter().getEmployee_id());
 						tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),dt.getCurrentGuestsOrder().getWaiter().getEmployeeId(), dt.getCurrentGuestsOrder().getOrderID()));
 					}
 					else
 					{
+						System.out.println("DT: "+dt.getGeneralTableID() + "G: " + dt.getCurrentGuestsOrder().getOrderID()+ "W: " +-1);
+
 						tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),(long) -1, dt.getCurrentGuestsOrder().getOrderID()));
 					}
 				}
 				else
 				{
+					System.out.println("DT: "+dt.getGeneralTableID() + "G: " + -1+ "W: " +-1);
+
 					tp.add(new TablePrint(dt.getGeneralTableID(),dt.getOccupied(),dt.getPositionX(),dt.getPositionY(),areax.getSpaceX(),areax.getSpaceY(),dt.getTableNumberInRestaurant(),areax.getAreaID(),(long) -1, -1));
 
 				}

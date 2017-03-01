@@ -969,6 +969,7 @@ $(document).on('click', '.dnnmForm',function(e)
 					//printTableOrders(data);
 					console.log(data);
 					data = $.parseJSON(data);
+					
 					var list = data == null ? [] : (data instanceof Array ? data : [data]);
 					var tr = $('<tr></tr>');
 					var t1 = '<form id="saveNewOrderM" action="" method="post" role="form" class="saveNewOrderM" >'

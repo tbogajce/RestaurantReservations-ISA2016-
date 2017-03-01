@@ -32,6 +32,7 @@ $(document).on('click', '#create-new-sc', function(e) {
 	$("#ws-date-pick-form").fadeOut(100);
 	$("#workShiftDataForm").fadeOut(100);
 	$("#add-new-area-form").fadeOut(100);
+	$("#weListForm").fadeOut(100);
 	$("#add-new-employee-form").fadeOut(100);
 	$("#area-pick-form").fadeOut(100);
 	$("#add-new-provider-form").fadeOut(100);

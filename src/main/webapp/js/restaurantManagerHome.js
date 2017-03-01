@@ -10,7 +10,7 @@ var newSegmentURL = "segmentController/createNewSegment";
 var logoutURL = "restaurantManagerController/logoutRestaurantManager";
 var beveragesURL = "beveragesController/getBeverages";
 var menuURL = "menuController/getMenu";
-var wsURL = "workingShiftController/getWS";
+var weURL = "waiterEarningsController/getWaiterEarnings";
 var getWS = "workingShiftController/getWorkingShifts2";
 var getOneRestaurantURL = "tableReservation/getOneRestaurant";
 
@@ -27,6 +27,7 @@ $(function() {
 		$("#restaurantRatingForm").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#ws-date-pick-form").fadeOut(100);
+		$("#weListForm").fadeOut(100);
 		$("#workShiftDataForm").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
@@ -61,6 +62,7 @@ $(function() {
 		$("#ws-date-pick-form").fadeOut(100);
 		$("#workShiftDataForm").fadeOut(100);
 		$("#add-new-segment-form").fadeOut(100);
+		$("#weListForm").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#area-pick-form").fadeOut(100);
 		$("#seating-config-div").fadeOut(100);
@@ -93,6 +95,7 @@ $(function() {
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-segment-form").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
+		$("#weListForm").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#area-pick-form").fadeOut(100);
 		$("#add-new-area-form").fadeOut(100);
@@ -130,6 +133,7 @@ $(function() {
 		$("#restaurantRatingForm").fadeOut(100);
 		$("#area-pick-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
+		$("#weListForm").fadeOut(100);
 		$("#seating-config-div").fadeOut(100);
 		$("#seating-config-div").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
@@ -166,6 +170,7 @@ $(function() {
 		$("#seating-config-div").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#ws-date-pick-form").fadeOut(100);
+		$("#weListForm").fadeOut(100);
 		$("#workShiftDataForm").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
 		$("#area-pick-form").fadeOut(100);
@@ -203,6 +208,7 @@ $(function() {
 		$("#add-new-area-form").fadeOut(100);
 		$("#area-pick-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
+		$("#weListForm").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
 		$("#seating-config-div").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
@@ -218,7 +224,7 @@ $(function() {
 		$(this).addClass('active');
 		e.preventDefault();
 	});
-
+	
 
 
 
@@ -226,7 +232,9 @@ $(function() {
 		// e.preventDefault();
 		
 		printAllRestaurants();
+		printWE();
 		$("#restaurantRatingForm").delay(300).fadeIn(100);
+		$("#weListForm").delay(300).fadeIn(100);
 		$("#greetings").fadeOut(100);
 		$("#beveragesListForm").fadeOut(100);
 		$("#add-new-segment-form").fadeOut(100);
@@ -267,6 +275,7 @@ $(function() {
 		$("#menuListForm").fadeOut(100);
 		$("#ws-date-pick-form").fadeOut(100);
 		$("#workShiftDataForm").fadeOut(100);
+		$("#weListForm").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#area-pick-form").fadeOut(100);
 		$("#seating-config-div").fadeOut(100);
@@ -295,6 +304,7 @@ $(function() {
 		$("#greetings").fadeOut(100);
 		$("#beveragesListForm").fadeOut(100);
 		$("#menuListForm").fadeOut(100);
+		$("#weListForm").fadeOut(100);
 		$("#ws-date-pick-form").fadeOut(100);
 		$("#seating-config-div").fadeOut(100);
 		$("#workShiftDataForm").fadeOut(100);
@@ -633,36 +643,6 @@ $(document).on('submit', '.newShiftForm', function(e) {
 	});
 });
 
-/*function printWS() {
-	console.log("USAO U WS LISTU");
-	$.ajax({
-		type : 'GET',
-		url : wsURL,
-		dataType : "json", // data type of response
-		success : function(data) {
-			wsPrint(data);
-		}
-	});
-}
-
-function wsPrint(data) {
-	// JAX-RS serializes an empty list as null, and a 'collection of one' as an
-	// object (not an 'array of one')
-	console.log("PRINTA WS LISTU");
-	
-	$('#wsData').empty();
-	var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
-	$.each(list,function(index, ws) {
-						var tr = $('<tr></tr>');
-						tr.append('<td>' + ws.note + '</td>'+ 
-										'<td>' + ws.shiftBeginningTime + '</td>' +
-										'<td>' + ws.shiftEndTime + '</td>' + 
-										'<td>' + ws.worker + '</td>' + 
-										'<td>');
-						$('#wsData').append(tr);
-					});
-}*/
-
 
 $(document).on('submit','.wsDateForm',function(e)
 		{
@@ -725,8 +705,9 @@ function workingShiftPrint(data)
 }
 
 // *********************************************************************************
-///GET ALL RESTAURANTS
+///RESTAURANT STATISTIC
 
+//Restaurant rating
 function printAllRestaurants() {
 	$.ajax({
 		type : 'GET',
@@ -751,6 +732,38 @@ function allRestaurantsPrint(data) {
 						$('#allRestaurantsData').append(tr);
 					});
 }
+
+//Waiter earnings
+function printWE() {
+	console.log("USAO U WE LISTU");
+	$.ajax({
+		type : 'POST',
+		url : weURL,
+		dataType : "json", // data type of response
+		success : function(data) {
+			wePrint(data);
+		}
+	});
+}
+
+function wePrint(data) {
+	// JAX-RS serializes an empty list as null, and a 'collection of one' as an
+	// object (not an 'array of one')
+	console.log("PRINTA WE LISTU");
+	
+	$('#weData').empty();
+	var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
+	$.each(list,function(index, we) {
+						var tr = $('<tr></tr>');
+						tr.append('<td>' + we.name + '</td>'+ 
+										'<td>' + we.lastName + '</td>' +
+										'<td>' + we.date + '</td>' + 
+										'<td>' + we.earned + '</td>' + 
+										'<td>');
+						$('#weData').append(tr);
+					});
+}
+
 
 
 //*********************************************************************************
