@@ -9,6 +9,8 @@ var newAreaURL = "areaController/createNewArea";
 var newSegmentURL = "segmentController/createNewSegment";
 var logoutURL = "restaurantManagerController/logoutRestaurantManager";
 var beveragesURL = "beveragesController/getBeverages";
+var menuURL = "menuController/getMenu";
+var getOneRestaurantURL = "tableReservation/getOneRestaurant";
 
 $(function() {
 
@@ -18,6 +20,8 @@ $(function() {
 
 		$("#greetings").fadeOut(100);
 		$("#beveragesListForm").fadeOut(100);
+		$("#menuListForm").fadeOut(100);
+		$("#restaurantRatingForm").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
@@ -46,6 +50,8 @@ $(function() {
 
 		$("#greetings").fadeOut(100);
 		$("#beveragesListForm").fadeOut(100);
+		$("#menuListForm").fadeOut(100);
+		$("#restaurantRatingForm").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
 		$("#add-new-segment-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
@@ -74,6 +80,8 @@ $(function() {
 
 		$("#greetings").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
+		$("#menuListForm").fadeOut(100);
+		$("#restaurantRatingForm").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-segment-form").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
@@ -101,10 +109,14 @@ $(function() {
 		$("#add-new-beverage-form").delay(300).fadeIn(100);
 		$('#beveragesListForm').delay(300).fadeIn(100);
 		
+		printBeverages();
+		
 		$("#greetings").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
+		$("#menuListForm").fadeOut(100);
 		$("#add-new-segment-form").fadeOut(100);
+		$("#restaurantRatingForm").fadeOut(100);
 		$("#area-pick-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
 		$("#seating-config-div").fadeOut(100);
@@ -127,10 +139,14 @@ $(function() {
 	$('#create-new-menu').click(function(e) {
 		// e.preventDefault();
 		$("#add-new-menu-form").delay(300).fadeIn(100);
+		$('#menuListForm').delay(300).fadeIn(100);
+		
+		printMenu();
 
 		$("#greetings").fadeOut(100);
 		$("#beveragesListForm").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
+		$("#restaurantRatingForm").fadeOut(100);
 		$("#add-new-segment-form").fadeOut(100);
 		$("#add-new-area-form").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
@@ -161,6 +177,8 @@ $(function() {
 		$("#add-new-employee-form").fadeOut(100);
 		$("#add-new-segment-form").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
+		$("#menuListForm").fadeOut(100);
+		$("#restaurantRatingForm").fadeOut(100);
 		$("#add-new-area-form").fadeOut(100);
 		$("#area-pick-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
@@ -185,11 +203,14 @@ $(function() {
 
 	$('#create-new-report').click(function(e) {
 		// e.preventDefault();
-
+		
+		printAllRestaurants();
+		$("#restaurantRatingForm").delay(300).fadeIn(100);
 		$("#greetings").fadeOut(100);
 		$("#beveragesListForm").fadeOut(100);
 		$("#add-new-segment-form").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
+		$("#menuListForm").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#add-new-area-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
@@ -219,10 +240,12 @@ $(function() {
 		$("#beveragesListForm").fadeOut(100);
 		$("#add-new-segment-form").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
+		$("#menuListForm").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#area-pick-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
+		$("#restaurantRatingForm").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
 		$('#create-new-employee').removeClass('active');
@@ -244,10 +267,12 @@ $(function() {
 
 		$("#greetings").fadeOut(100);
 		$("#beveragesListForm").fadeOut(100);
+		$("#menuListForm").fadeOut(100);
 		$("#add-new-area-form").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
 		$("#area-pick-form").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
+		$("#restaurantRatingForm").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
@@ -280,10 +305,11 @@ $(document).ready
 	// $('#create-new-restaurant').removeClass('active');
 	// $('#create-new-restaurant-manager').removeClass('active');
 	// e.preventDefault();
-
 	$('#create-new-employee').removeClass('active');
+	$('#create-new-report').removeClass('active');
 	$('#create-new-provider').removeClass('active');
 	$('#create-new-beverage').removeClass('active');
+	
 	$('#edit-info').removeClass('active');
 	var apc = $.ajax({
 		type : 'GET',
@@ -423,7 +449,7 @@ $(document).on('submit', '.newBeverageForm', function(e) {
 		url : newBeverageURL,
 		contentType : 'application/json',
 		dataType : "text",
-		data : formToJSONNewBeverage(bdescription, bname, bprice),
+		data : formToJSONNewBeverage(bname, bdescription, bprice),
 		success : function(data) {
 
 			window.location.href = "RestaurantManagerHome.html";
@@ -452,8 +478,8 @@ function beveragesPrint(data) {
 	var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
 	$.each(list,function(index, beverage) {
 						var tr = $('<tr></tr>');
-						tr.append('<td>' + beverage.beveragesDescription + '</td>'+ 
-										'<td>' + beverage.beveragesName + '</td>' +
+						tr.append('<td>' + beverage.beveragesName + '</td>'+ 
+										'<td>' + beverage.beveragesDescription + '</td>' +
 										'<td>' + beverage.beveragesPrice + '</td>' + 
 										'<td>');
 						$('#beveragesData').append(tr);
@@ -481,6 +507,37 @@ $(document).on('submit', '.newMenuForm', function(e) {
 		}
 	});
 });
+
+function printMenu() {
+	console.log("USAO U MENU LISTU");
+	$.ajax({
+		type : 'GET',
+		url : menuURL,
+		dataType : "json", // data type of response
+		success : function(data) {
+			menuPrint(data);
+		}
+	});
+}
+
+function menuPrint(data) {
+	// JAX-RS serializes an empty list as null, and a 'collection of one' as an
+	// object (not an 'array of one')
+	console.log("PRINTA MENU LISTU");
+	
+	$('#menuData').empty();
+	var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
+	$.each(list,function(index, menu) {
+						var tr = $('<tr></tr>');
+						tr.append('<td>' + menu.menuMealDescription + '</td>'+ 
+										'<td>' + menu.menuMealPrice + '</td>' +
+										'<td>' + menu.menuMealRate + '</td>' + 
+										'<td>');
+						$('#menuData').append(tr);
+					});
+}
+
+
 
 // *********************************************************************************
 //AREA
@@ -550,6 +607,35 @@ $(document).on('submit', '.newShiftForm', function(e) {
 });
 
 // *********************************************************************************
+///GET ALL RESTAURANTS
+
+function printAllRestaurants() {
+	$.ajax({
+		type : 'GET',
+		url : getOneRestaurantURL,
+		dataType : "json", // data type of response
+		success : function(data) {
+			allRestaurantsPrint(data);
+		}
+	});
+}
+
+function allRestaurantsPrint(data) {
+	// JAX-RS serializes an empty list as null, and a 'collection of one' as an
+	// object (not an 'array of one')
+	$('#allRestaurantsData').empty();
+	var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
+	$.each(list,function(index, restaurant) {
+						var tr = $('<tr></tr>');
+						tr.append('<td>' + restaurant.restaurantName + '</td>'+ 
+										'<td>' + restaurant.sumOfVotes/restaurant.totalNumberOfVoters + '</td>'
+						);
+						$('#allRestaurantsData').append(tr);
+					});
+}
+
+
+//*********************************************************************************
 // LOGOUT
 $(document).on('click', '#logoutButton', function(e) {
 	e.preventDefault();
@@ -596,11 +682,11 @@ function formToJSONNewProvider(providerNickId, providerMail, providerName,
 	});
 }
 
-function formToJSONNewBeverage(beveragesDescription, beveragesName,
+function formToJSONNewBeverage(beveragesName, beveragesDescription,
 		beveragesPrice) {
 	return JSON.stringify({
-		"beveragesDescription" : beveragesDescription,
 		"beveragesName" : beveragesName,
+		"beveragesDescription" : beveragesDescription,
 		"beveragesPrice" : beveragesPrice,
 	});
 }

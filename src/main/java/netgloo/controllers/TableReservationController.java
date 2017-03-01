@@ -36,6 +36,7 @@ import netgloo.models.Menu;
 import netgloo.models.OrderedBeverage;
 import netgloo.models.OrderedMeal;
 import netgloo.models.Restaurant;
+import netgloo.models.RestaurantManager;
 import netgloo.models.TableReservation;
 import netgloo.models.TableReservationPom;
 import netgloo.models.User;
@@ -326,6 +327,17 @@ public class TableReservationController {
 			ArrayList<Restaurant> fs = (ArrayList<Restaurant>) restaurantDao.findAll();
 		return fs;
 	}
+	
+	//--------getOneRestaurant
+		@RequestMapping(value = "/getOneRestaurant", method = RequestMethod.GET)
+		public Restaurant getOneRestaurant(HttpServletRequest request) {
+				
+			RestaurantManager rmkkk = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
+			Restaurant restaurant = rmkkk.getRestaurantId();
+			
+				//ArrayList<Restaurant> fs = (ArrayList<Restaurant>) restaurantDao.findOne(null);
+			return restaurant;
+		}
 
 	public void sendMail(TableReservation tableReservation, User user) throws MessagingException {
 		StringBuffer sb = new StringBuffer();

@@ -37,17 +37,18 @@ public class BeveragesController {
 	public String createSystemManager(@RequestBody BeveragesPom b1, HttpServletRequest request) {
 
 		try {
-			
+
 			RestaurantManager rmkkk = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
 			Restaurant restaurant = rmkkk.getRestaurantId();
-			
-			//Restaurant restaurant = restDao.findByRestaurantId(Long.parseLong(b1.getRestaurantId()));
+
+			// Restaurant restaurant =
+			// restDao.findByRestaurantId(Long.parseLong(b1.getRestaurantId()));
 
 			Beverages beverages = null;
 			// String user_reg_date = new
 			// SimpleDateFormat("dd-MMM-yyyy").format(new Date());
 			beverages = new Beverages(restaurant, b1.getBeveragesId(), b1.getBeveragesDescription(),
-					b1.getBeveragesName(), b1.getBeveragesPrice(),0,0);
+					b1.getBeveragesName(), b1.getBeveragesPrice(), 0, 0);
 			bavDao.save(beverages);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -55,27 +56,12 @@ public class BeveragesController {
 		}
 		return "OK";
 	}
-	
+
 	@RequestMapping(value = "/getBeverages", method = RequestMethod.GET)
-	public ArrayList<Beverages> getBeverages(@RequestBody Beverages b, HttpServletRequest request) {
-		System.out.println("JE LI RAVNO OVO?");
-		listOfBeverages.clear();
-		try {
-			System.out.println("BARBE IMAL RIBE?");
-			
-			RestaurantManager rmkkk = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
-			Restaurant restaurant = rmkkk.getRestaurantId();
-			
-			Beverages beverages = b;
-			
-			ArrayList<Beverages> fs = (ArrayList<Beverages>) bavDao.findAllByRestaurantId(restaurant); 
-			for (int i = 0; i < fs.size(); i++) {
-					//listOfBeverages.add(fs.get(i).beverages);
-					listOfBeverages.add(i, null);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public ArrayList<Beverages> getBeverages(HttpServletRequest request) {
+		RestaurantManager rmkkk = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
+		Restaurant restaurant = rmkkk.getRestaurantId();
+		ArrayList<Beverages> listOfBeverages = (ArrayList<Beverages>) bavDao.findAllByRestaurantId(restaurant);
 
 		return listOfBeverages;
 	}
