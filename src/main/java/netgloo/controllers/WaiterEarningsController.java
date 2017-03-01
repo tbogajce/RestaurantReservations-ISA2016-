@@ -15,6 +15,7 @@ import netgloo.dao.RestaurantDao;
 import netgloo.dao.WaiterEarningsDao;
 import netgloo.models.DatesForWSImitation;
 import netgloo.models.Menu;
+import netgloo.models.REOFL;
 import netgloo.models.Restaurant;
 import netgloo.models.RestaurantManager;
 import netgloo.models.WEOFL;
@@ -79,6 +80,66 @@ public class WaiterEarningsController {
 			ex.printStackTrace();
 			System.out.println("--------------EXCEPTION ... ---------------------");
 			return weoflList;
+		}
+	}
+	
+	@RequestMapping(value = "/getRestaurantEarnings", method = RequestMethod.POST)
+	public REOFL getRestaurantEarnings(HttpServletRequest request) {
+
+		ArrayList<WaiterEarnings> waiterEarningsList = new ArrayList<WaiterEarnings>();
+
+		ArrayList<WEOFL> weoflList = new ArrayList<WEOFL>();
+		
+		ArrayList<REOFL> reoflList = new ArrayList<REOFL>();
+		REOFL primerak2 = null;
+		weoflList.clear();
+		float suma = 0;
+
+		try {
+			
+			RestaurantManager rmkkk = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
+			Restaurant restaurant = rmkkk.getRestaurantId();
+
+			if (restaurant != null) {
+				System.out.println("WE restaurant != null");
+				waiterEarningsList = weDao.findAllByRestaurant(restaurant);
+
+				for (WaiterEarnings we : waiterEarningsList) {
+					System.out.println("RESTORAN ID: " + restaurant.getRestaurantId());
+					System.out.println("WaiterEarnings we : waiterEarningsList");
+					if (restaurant.getRestaurantId().equals(we.getRestaurant().getRestaurantId())) {
+
+						System.out.println("USAO U RE IF!");
+
+						WEOFL primerak = new WEOFL(we.getWaiter().getUserId().getUserName(),
+								we.getWaiter().getUserId().getUserSurname(), we.getDateOfEarning().toString(),
+								we.getEarned());
+
+						System.out.println("XX: " + we.getWaiter().getUserId().getUserName() + " "
+								+ we.getWaiter().getUserId().getUserSurname() + " "
+								+ we.getDateOfEarning().toString() + " " + we.getEarned());
+						suma+=we.getEarned();
+						System.out.println("OVO JE BROJ: " + we.getEarned());
+						System.out.println("OVO JE SUMA " + suma);
+						
+						weoflList.add(primerak);
+						
+						
+					}
+					
+					primerak2 = new REOFL(restaurant.getRestaurantName(), suma);
+					primerak2.setRestaurantEarned(suma);
+					reoflList.add(primerak2);
+				}
+
+			}
+
+			return primerak2;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println("--------------EXCEPTION ... ---------------------");
+			return primerak2;
 		}
 	}
 

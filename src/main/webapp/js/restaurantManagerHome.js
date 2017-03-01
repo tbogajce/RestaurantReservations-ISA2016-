@@ -11,6 +11,7 @@ var logoutURL = "restaurantManagerController/logoutRestaurantManager";
 var beveragesURL = "beveragesController/getBeverages";
 var menuURL = "menuController/getMenu";
 var weURL = "waiterEarningsController/getWaiterEarnings";
+var reURL = "waiterEarningsController/getRestaurantEarnings";
 var getWS = "workingShiftController/getWorkingShifts2";
 var getOneRestaurantURL = "tableReservation/getOneRestaurant";
 
@@ -31,6 +32,7 @@ $(function() {
 		$("#workShiftDataForm").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
+		$("#reListForm").fadeOut(100);
 		$("#seating-config-div").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
 		$("#add-new-area-form").fadeOut(100);
@@ -61,6 +63,7 @@ $(function() {
 		$("#add-new-employee-form").fadeOut(100);
 		$("#ws-date-pick-form").fadeOut(100);
 		$("#workShiftDataForm").fadeOut(100);
+		$("#reListForm").fadeOut(100);
 		$("#add-new-segment-form").fadeOut(100);
 		$("#weListForm").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
@@ -94,6 +97,7 @@ $(function() {
 		$("#restaurantRatingForm").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-segment-form").fadeOut(100);
+		$("#reListForm").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
 		$("#weListForm").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
@@ -130,6 +134,7 @@ $(function() {
 		$("#add-new-provider-form").fadeOut(100);
 		$("#menuListForm").fadeOut(100);
 		$("#add-new-segment-form").fadeOut(100);
+		$("#reListForm").fadeOut(100);
 		$("#restaurantRatingForm").fadeOut(100);
 		$("#area-pick-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
@@ -174,6 +179,7 @@ $(function() {
 		$("#workShiftDataForm").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
 		$("#area-pick-form").fadeOut(100);
+		$("#reListForm").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#seating-config-div").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
@@ -201,6 +207,7 @@ $(function() {
 		$("#beveragesListForm").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
 		$("#add-new-segment-form").fadeOut(100);
+		$("#reListForm").fadeOut(100);
 		$("#seating-config-div").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#menuListForm").fadeOut(100);
@@ -232,8 +239,11 @@ $(function() {
 		// e.preventDefault();
 		
 		printAllRestaurants();
+		printRE();
 		printWE();
+		
 		$("#restaurantRatingForm").delay(300).fadeIn(100);
+		$("#reListForm").delay(300).fadeIn(100);
 		$("#weListForm").delay(300).fadeIn(100);
 		$("#greetings").fadeOut(100);
 		$("#beveragesListForm").fadeOut(100);
@@ -274,6 +284,7 @@ $(function() {
 		$("#add-new-employee-form").fadeOut(100);
 		$("#menuListForm").fadeOut(100);
 		$("#ws-date-pick-form").fadeOut(100);
+		$("#reListForm").fadeOut(100);
 		$("#workShiftDataForm").fadeOut(100);
 		$("#weListForm").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
@@ -304,6 +315,7 @@ $(function() {
 		$("#greetings").fadeOut(100);
 		$("#beveragesListForm").fadeOut(100);
 		$("#menuListForm").fadeOut(100);
+		$("#reListForm").fadeOut(100);
 		$("#weListForm").fadeOut(100);
 		$("#ws-date-pick-form").fadeOut(100);
 		$("#seating-config-div").fadeOut(100);
@@ -764,6 +776,34 @@ function wePrint(data) {
 					});
 }
 
+//Waiter earnings
+function printRE() {
+	console.log("USAO U RE LISTU");
+	$.ajax({
+		type : 'POST',
+		url : reURL,
+		dataType : "json", // data type of response
+		success : function(data) {
+			rePrint(data);
+		}
+	});
+}
+
+function rePrint(data) {
+	// JAX-RS serializes an empty list as null, and a 'collection of one' as an
+	// object (not an 'array of one')
+	console.log("PRINTA RE LISTU");
+	
+	$('#reData').empty();
+	var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
+	$.each(list,function(index, re) {
+						var tr = $('<tr></tr>');
+						tr.append('<td>' + re.restaurantName + '</td>'+ 
+										'<td>' + re.restaurantEarned + '</td>' + 
+										'<td>');
+						$('#reData').append(tr);
+					});
+}
 
 
 //*********************************************************************************
