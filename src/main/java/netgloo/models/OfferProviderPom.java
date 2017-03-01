@@ -7,6 +7,12 @@ public class OfferProviderPom {
 	public OfferProviderPom() {
 		super();
 	}
+	
+	public OfferProviderPom(String offerProviderId) {
+		super();
+		this.offerProviderId = offerProviderId;
+	}
+
 	public OfferProviderPom(String offerProviderId, String note, String price) {
 		super();
 		this.offerProviderId = offerProviderId;

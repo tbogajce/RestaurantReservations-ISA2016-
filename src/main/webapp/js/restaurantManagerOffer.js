@@ -1,7 +1,7 @@
 var getAllYourOffer = "offers/getAllYourOffer";
 var createOfferManager = "offers/createOfferManager";
-var pendingOffersURL = "offers/pendingOffers"
-
+var pendingOffersURL = "offers/pendingOffers";
+var acceptOfferURL = "offers/acceptOffer";
 
 $( document ).ready(function() {
 	$('#yourOffersPanel').show();
@@ -53,7 +53,9 @@ function allYourOfferPrint(data) {
 						var tr = $('<tr></tr>');
 						tr.append('<td>' + offerManager.offerManagerId + '</td>'+ 
 										'<td>' + offerManager.deadline + '</td>' +
-										'<td>' + offerManager.note + '</td>');
+										'<td>' + offerManager.note + '</td>' +
+										'<td>' + offerManager.finished + '</td>'
+						);
 						$('#yourOffersData').append(tr);
 					});
 }
@@ -111,11 +113,37 @@ function printPendingOffers(data) {
 						tr.append('<td>' + offerProvider.offerProviderId + '</td>'+ 
 										'<td>' + offerProvider.note + '</td>' +
 										'<td>' + offerProvider.price + '</td>' +
-										'<td>' + '<form class="editOffer" > ' + 
-										'<input type="hidden" name="friendMail" value=' + offerProvider.offerProviderId +'> '+
+										'<td>' + '<form class="acceptOffer" > ' + 
+										'<input type="hidden" name="offerProviderId" value=' + offerProvider.offerProviderId +'> '+
 										'<input type="submit" class="btn btn-primary btn-sm" role="button" value="Accept offer"> '
 										+ '</form></td>'
 						);
 						$('#pendingOffersData').append(tr);
 					});
+}
+
+$(document).on('click', '.acceptOffer', function(e) {
+	e.preventDefault();
+	console.log('klik na accept');
+	var offerProviderId=$(this).find("input[type=hidden]").val();
+	console.log(offerProviderId);
+	$.ajax({
+		type : 'POST',
+		url : acceptOfferURL,
+		contentType : 'application/json',
+		dataType : "text",
+		data : formToJSONAccept(offerProviderId),
+		success : function(data) {
+			location.reload(true);
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("AJAX ERROR: " + errorThrown);
+		}
+	});
+});
+
+function formToJSONAccept(offerProviderId) {
+	return JSON.stringify({
+		"offerProviderId" : offerProviderId,
+	});
 }

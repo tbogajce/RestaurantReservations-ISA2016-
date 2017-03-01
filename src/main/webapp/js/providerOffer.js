@@ -140,6 +140,14 @@ function printOfferData(data) {
 						} else {
 							isAccepted="Pending"
 						}
+						var urlAccepted = "'<input type=\"submit\" class=\"btn btn-primary btn-sm\" role=\"button\" value=\"Edit\" disabled>'";
+						var urlPending = "'<input type=\"submit\" class=\"btn btn-primary btn-sm\" role=\"button\" value=\"Edit\">'";
+						if(isAccepted=="Accepted") {
+							url = "'<input type=\"submit\" class=\"btn btn-primary btn-sm\" role=\"button\" value=\"Edit\" disabled>'";
+						} else {
+							url= "'<input type=\"submit\" class=\"btn btn-primary btn-sm\" role=\"button\" value=\"Edit\">'";
+						}
+						
 						var tr = $('<tr></tr>');
 						tr.append('<td>' + offerProvider.offerProviderId + '</td>'+ 
 										'<td>' + offerProvider.note + '</td>' +
@@ -147,7 +155,7 @@ function printOfferData(data) {
 										'<td>' + isAccepted + '</td>' +
 										'<td>' + '<form class="editOffer" > ' + 
 										'<input type="hidden" name="friendMail" value=' + offerProvider.offerProviderId +'> '+
-										'<input type="submit" class="btn btn-primary btn-sm" role="button" value="Edit"> '
+										url
 										+ '</form></td>'
 						);
 						$('#yourOfferData').append(tr);

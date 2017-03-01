@@ -28,16 +28,20 @@ public class OfferManager {
 	
 	@Column(nullable=false)
 	private String deadline;
+	
+	@Column(nullable=true)
+	private Boolean finished;;
 
 	public OfferManager() {
 		super();
 	}
 
-	public OfferManager(RestaurantManager restaurantManagerNickId, String note, String deadline) {
+	public OfferManager(RestaurantManager restaurantManagerNickId, String note, String deadline, Boolean finished) {
 		super();
 		this.restaurantManagerNickId = restaurantManagerNickId;
 		this.note = note;
 		this.deadline = deadline;
+		this.finished = finished;
 	}
 
 	public Integer getOfferManagerId() {
@@ -70,6 +74,14 @@ public class OfferManager {
 
 	public void setDeadline(String deadline) {
 		this.deadline = deadline;
+	}
+
+	public Boolean getFinished() {
+		return finished;
+	}
+
+	public void setFinished(Boolean finished) {
+		this.finished = finished;
 	}
 	
 	
