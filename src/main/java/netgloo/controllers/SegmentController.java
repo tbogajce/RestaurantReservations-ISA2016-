@@ -1,6 +1,7 @@
 package netgloo.controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,9 +40,12 @@ public class SegmentController {
 		System.out.println("SEGMENT KRENUO");
 		try {
 
+			
+			
 			RestaurantManager rmkkk = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
 			Restaurant restaurant = rmkkk.getRestaurantId();
-			Area area = areaDao.findByRestaurant(restaurant);
+			List<Area> listArea = (List<Area>) areaDao.findAll();
+			Area area = listArea.get(0);
 			System.out.println("USAO U KREIRANJE Segment");
 			
 			// Area svi = (Area)
