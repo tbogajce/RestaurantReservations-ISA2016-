@@ -405,6 +405,64 @@ public class TableReservationController {
 		// restaurantDao.findOne(null);
 		return restaurant;
 	}
+	
+	@RequestMapping(value = "/check", method = RequestMethod.POST, headers = {
+	"content-type=application/json" })
+public String check(@RequestBody TableReservationPom tableReservationPom,
+	HttpServletRequest request) {
+
+try {
+	User user = (User) request.getSession().getAttribute("user");
+	Restaurant restaurant = restaurantDao
+			.findByRestaurantId(Long.parseLong(tableReservationPom.getRestaurantId()));
+	DiningTable diningTable = dinningTableDao
+			.findByGeneralTableID(Long.parseLong(tableReservationPom.getDiningTableId()));
+
+
+	//ULAZNI PODACI
+	String startDateString = tableReservationPom.getDate();
+	String timeString = tableReservationPom.getTime();
+	java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf(startDateString + " " + timeString + ":00");
+
+
+	
+	ArrayList<TableReservation> fs = (ArrayList<TableReservation>) tableReservationDao.findAll();
+	for(TableReservation tr : fs) {
+		//ISKLJUCIVO AKO SE RADI O ISTOM DATUMU, KAO I ISTOM STOLU
+		if(tr.getDate().equals(startDateString) && tr.getDiningTableId().getGeneralTableID().equals(diningTable.getGeneralTableID())) {
+			//TIMESTAMP IZ BAZE ZA SVAKI POJEDINACNO +-1
+			System.out.println("********************************************");
+			java.sql.Timestamp timestamp2 = java.sql.Timestamp.valueOf(tr.getDate() + " " + tr.getTime() + ":00");
+			
+			
+			int hour = 1; // 1 sat
+			Calendar cal = Calendar.getInstance();
+			cal.setTimeInMillis(timestamp2.getTime());
+			cal.add(Calendar.HOUR, -hour);
+			Timestamp down = new Timestamp(cal.getTime().getTime());
+			System.out.println("OVO JE VRIJEME PRIJE" + down);
+			
+			Calendar cal2 = Calendar.getInstance();
+			cal2.setTimeInMillis(timestamp2.getTime());
+			cal2.add(Calendar.HOUR, hour);
+			Timestamp up = new Timestamp(cal2.getTime().getTime());
+			System.out.println("OVO JE VRIJEME POSLE" + up);
+			System.out.println("********************************************");
+			System.out.println("********************************************");
+			if(timestamp.after(down) && timestamp.before(up)) {
+				return "NO";
+			}
+			
+		}
+	}
+
+
+} catch (Exception e) {
+	e.printStackTrace();
+}
+
+return "OK";
+}
 
 	public void sendMail(TableReservation tableReservation, User user) throws MessagingException {
 		StringBuffer sb = new StringBuffer();

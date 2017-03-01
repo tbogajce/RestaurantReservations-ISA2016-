@@ -4,6 +4,7 @@ var restaurantReservation = "tableReservation/restaurantReservation";
 var getAllRestaurantsFun = "tableReservation/getAllRestaurants";
 var restaurantAreas = "tableReservation/getAllAreas"
 var areaTablesURL = "tableReservation/getTablePrint"
+var checkURL="tableReservation/check"
 
 
 $( document ).ready(function() {
@@ -13,6 +14,18 @@ $( document ).ready(function() {
 	$('#historyVisitsPanel').hide();
 	$('#allRestaurantsPanel').hide();
 	restaurantCombo22();
+	document.getElementById("reserveButton").disabled = true;
+	
+	$('#hours').keyup(function () { 
+		document.getElementById("reserveButton").disabled = true;
+	});
+	$('#time').keyup(function () { 
+		document.getElementById("reserveButton").disabled = true;
+	});
+	$('#date').change(function () { 
+		document.getElementById("reserveButton").disabled = true;
+	});
+	
 });
 
 $(document).on('click', '#reservationButton', function(e) {
@@ -22,6 +35,7 @@ $(document).on('click', '#reservationButton', function(e) {
 	$('#historyVisitsPanel').hide();
 	$('#allRestaurantsPanel').hide();
 	restaurantCombo22();
+	document.getElementById("reserveButton").disabled = true;
 
 });
 
@@ -63,13 +77,86 @@ $(document).on('change', '.selectRestaurant', function(e) {
 	//getTables();
 	getAreas();
 	getAreaTables();
-
+	document.getElementById("reserveButton").disabled = true;
 });
 
 $(document).on('change', '.selectArea', function(e) {
 	getAreaTables();
+	document.getElementById("reserveButton").disabled = true;
 
 });
+//-----------------CHECK AVAILABILITY
+
+$(document).on('click', '#checkButton', function(e) {
+	e.preventDefault();
+	console.log('klik na check availability');
+	var restaurantId=$('.selectRestaurant').find(":selected").val();
+	var date = document.getElementById("date").value;
+	var time = document.getElementById("time").value;
+	var hours = document.getElementById("hours").value;
+	var diningTableId = document.getElementById("tableId").value;
+	console.log(restaurantId + " " + date + " " + time + " " + hours + " " + diningTableId)
+	$.ajax({
+		type : 'POST',
+		url : checkURL,
+		contentType : 'application/json',
+		dataType : "text",
+		data : formToJSONReservation(restaurantId, date, time, hours, diningTableId),
+		success : function(data) {
+			if(data=="OK") {
+				
+				document.getElementById("reserveButton").disabled = false;
+				toastr.options = {
+						"closeButton" : true,
+						"debug" : false,
+						"newestOnTop" : false,
+						"progressBar" : false,
+						"positionClass" : "toast-top-right",
+						"preventDuplicates" : false,
+						"onclick" : null,
+						"showDuration" : "300",
+						"hideDuration" : "1000",
+						"timeOut" : "5000",
+						"extendedTimeOut" : "1000",
+						"showEasing" : "swing",
+						"hideEasing" : "linear",
+						"showMethod" : "fadeIn",
+						"hideMethod" : "fadeOut"
+					}
+					toastr.info('For requested date and time, table is free.');
+			} else if(data=="NO") {
+				
+				document.getElementById("reserveButton").disabled = true;
+				toastr.options = {
+						"closeButton" : true,
+						"debug" : false,
+						"newestOnTop" : false,
+						"progressBar" : false,
+						"positionClass" : "toast-top-right",
+						"preventDuplicates" : false,
+						"onclick" : null,
+						"showDuration" : "300",
+						"hideDuration" : "1000",
+						"timeOut" : "5000",
+						"extendedTimeOut" : "1000",
+						"showEasing" : "swing",
+						"hideEasing" : "linear",
+						"showMethod" : "fadeIn",
+						"hideMethod" : "fadeOut"
+					}
+					toastr.info('For requested date and time, table is occupied.');
+			}
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("AJAX ERROR: " + errorThrown);
+		}
+	});
+});
+
+
+
+
+//-----------------END CHECK AVAILABILITY
 
 function restaurantCombo22() {
 			console.log('ubacivanje restorana');
@@ -325,7 +412,7 @@ $(document)
 
 function printTables(data)
 {
-	console.log(data);
+
 	//data = $.parseJSON(data);
 	//console.log(data)
 	var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
@@ -340,9 +427,7 @@ function printTables(data)
 	});
 	
 	
-	console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-	console.log(areaSizeX);
-	console.log(areaSizeY);
+
 	
 	var listx=[];
 	
@@ -402,11 +487,7 @@ function printTables(data)
 
 */
 						
-						console.log("-----------");
-						console.log(isOccupied);
-						console.log(positionX);
-						console.log(positionY);
-						console.log(tableID);
+
 						//console.log(guestsOrder)
 						
 						//var tr = $('<tr></tr>');
@@ -464,9 +545,9 @@ function printTables(data)
 					listx.some(function(thingy)
 					{
 						var x = thingy.positionX;
-						console.log("x = "+x);
+						
 						var y = thingy.positionY;
-						console.log("y = "+y);
+						
 						
 						if(x==i && y==j)
 							{
@@ -493,23 +574,7 @@ function printTables(data)
 					if(naslo==true)
 						{
 						
-						if(oc==true)
-							{
-							
-								
-								
-									var tekstic = '<td height="60",width="60", bgcolor="#FF0000">'
-										+'<input type="hidden" id="tableID" name="tableID" value="'+id+'" >'
-										+'<input type="hidden" id="oc" name="oc" value="'+oc+'" >'
-										+'<input type="hidden" id="areaID" name="areaID" value="'+areaID+'" >'
-
-										//+'<input type="hidden" id="guestsOrderx" name="guestsOrderx" value="'+guestsOrderx+'" >'
-										+'<input type="button" name="tab-submit" id="tab-submit" tabindex="7" role="button" class="form-control btn btn-success" value="'+resTID+'">'
-										+'</td>';
-								
-							}
-						else
-							{
+					
 							var tekstic = '<td height="60",width="60", bgcolor="#7FFF00"><form id="tableForm" action="" method="post" role="form" class="tableForm" >'
 								+'<input type="hidden" id="tableID" name="tableID" value="'+id+'" >'
 								+'<input type="hidden" id="oc" name="oc" value="'+oc+'" >'
@@ -517,12 +582,12 @@ function printTables(data)
 
 								+'<input type="submit" name="tab-submit" id="tab-submit" tabindex="7" role="button" class="form-control btn btn-success" value="'+resTID+'">'
 								+'</form></td>';
-							}
+							
 						
 						
 						
 							//var text= ' <td>Thingy</td>'
-							console.log("jednako");
+
 							tr.append(tekstic)
 						}
 					else
@@ -538,8 +603,7 @@ function printTables(data)
 	
 	
 	
-	console.log("XXXX4");
-	console.log(listx);
+
 }
 
 $(document).on('click', '.tableForm',function(e) {
@@ -552,3 +616,5 @@ $(document).on('click', '.tableForm',function(e) {
 	$("input[name=tableId]").val(idStola);
 	
 });
+
+
