@@ -373,9 +373,17 @@ public class TableReservationController {
 			Beverages beverage = beveragesDao.findByBeveragesId(Long.parseLong(inviteFriendPom.getBeverageId()));
 
 			OrderedMeal orderedMeal = new OrderedMeal(guestsOrder, null, menu, 1, null, null, null, null, null);
+			orderedMeal.setIsAccepted(false);
+			orderedMeal.setIsCanceled(false);
+			orderedMeal.setIsDone(false);
 			OrderedBeverage orderedBeverage = new OrderedBeverage(guestsOrder, null, beverage, 1, null, null, null,
 					null, null);
-
+			
+			orderedBeverage.setIsAccepted(false);
+			orderedBeverage.setIsCanceled(false);
+			orderedBeverage.setIsDone(false);
+			
+			
 			orderedMealDao.save(orderedMeal);
 			orderedBeverageDao.save(orderedBeverage);
 
