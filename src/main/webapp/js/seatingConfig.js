@@ -8,6 +8,7 @@ var addTableRM = "restaurantManagerController/addTableRM";
 
 var areaSpaceX=0;
 var areaSpaceY=0;
+var areaIDx =0;
 
 function formatToAreaImmitation(areaID)
 {
@@ -97,8 +98,8 @@ $(document).on('submit','.areaForm',function(e)
 
 	$('#seeTableOrdersDiv').hide();
 	var e = document.getElementById("areaSelect");
-	var areaID = e.options[e.selectedIndex].value;
-
+	var  areaID = e.options[e.selectedIndex].value;
+	areaIDx = areaID;
 
 	$.ajax(
 			{
@@ -149,6 +150,8 @@ function printTables(data)
 	console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 
 	var listx=[];
+	
+	var areaID =0;
 
 
 	$.each(
@@ -302,7 +305,7 @@ function printTables(data)
 			{
 				var tekstic = '<td height="60",width="60", bgcolor="#696969"><form id="addTable" action="" method="post" role="form" class="addTable" >'
 					
-					+'<input type="hidden" id="areaID" name="areaID" value="'+areaID+'" >'
+					+'<input type="hidden" id="areaID" name="areaID" value="'+areaIDx+'" >'
 					+'<input type="hidden" id="x" name="x" value="'+i+'" >'
 					+'<input type="hidden" id="y" name="y" value="'+j+'" >'
 					+'<input type="submit" name="tab-submit" id="tab-submit" tabindex="7" role="button" class="form-control btn btn-success" value="New">'

@@ -2,6 +2,8 @@ var restaurantCombo = "tableReservation/getRestaurantCombo";
 var restaurantTables = "tableReservation/restaurantTables";
 var restaurantReservation = "tableReservation/restaurantReservation";
 var getAllRestaurantsFun = "tableReservation/getAllRestaurants";
+var restaurantAreas = "tableReservation/getAllAreas"
+var areaTablesURL = "tableReservation/getTablePrint"
 
 
 $( document ).ready(function() {
@@ -58,7 +60,14 @@ $(document).on('click', '#allRestaurantsButton', function(e) {
 
 
 $(document).on('change', '.selectRestaurant', function(e) {
-	getTables();
+	//getTables();
+	getAreas();
+	getAreaTables();
+
+});
+
+$(document).on('change', '.selectArea', function(e) {
+	getAreaTables();
 
 });
 
@@ -78,7 +87,8 @@ function restaurantCombo22() {
 						var li = $('<option value="'+restaurant.restaurantId+'">' + restaurant.restaurantName + ' </option>');
 						$(selectRestaurant).append(li);
 					});
-					getTables();
+					//getTables();
+					getAreas();
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
 					alert("AJAX ERROR: " + errorThrown);
@@ -86,24 +96,69 @@ function restaurantCombo22() {
 			});
 }
 
-function getTables(){
-	console.log("vrati broj stolova restorana");
+//function getTables(){
+//	console.log("vrati broj stolova restorana");
+//	var restaurantId=$('.selectRestaurant').find(":selected").val();
+//	console.log(restaurantId);
+//	$.ajax({
+//		type : 'POST',
+//		url : restaurantTables,
+//		contentType : 'application/json',
+//		dataType : "json",
+//		data : formToJSONTable(restaurantId),
+//		success : function(data) {
+//			$(".selectDiningTable").empty();
+//			var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
+//			var selectRestaurant = $(".selectDiningTable");
+//			$.each(list, function(index, diningTable) {
+//				var li = $('<option value="'+diningTable.generalTableID+'">' + diningTable.numberOfSeats + ' </option>');
+//				$(selectRestaurant).append(li);
+//			});
+//		},
+//		error : function(XMLHttpRequest, textStatus, errorThrown) {
+//			alert("AJAX ERROR: " + errorThrown);
+//		}
+//	});
+//}
+
+function getAreas(){
+	console.log("vrati AREA");
 	var restaurantId=$('.selectRestaurant').find(":selected").val();
 	console.log(restaurantId);
 	$.ajax({
 		type : 'POST',
-		url : restaurantTables,
+		url : restaurantAreas,
 		contentType : 'application/json',
 		dataType : "json",
 		data : formToJSONTable(restaurantId),
 		success : function(data) {
-			$(".selectDiningTable").empty();
+			$(".selectArea").empty();
 			var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
-			var selectRestaurant = $(".selectDiningTable");
-			$.each(list, function(index, diningTable) {
-				var li = $('<option value="'+diningTable.generalTableID+'">' + diningTable.numberOfSeats + ' </option>');
+			var selectRestaurant = $(".selectArea");
+			$.each(list, function(index, area) {
+				var li = $('<option value="'+area.areaID+'">' + area.areaName + ' </option>');
 				$(selectRestaurant).append(li);
 			});
+			getAreaTables();
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("AJAX ERROR: " + errorThrown);
+		}
+	});
+}
+
+function getAreaTables(){
+	console.log("vrati stolove od AREA");
+	var areaID=$('.selectArea').find(":selected").val();
+	console.log(areaID);
+	$.ajax({
+		type : 'POST',
+		url : areaTablesURL,
+		contentType : 'application/json',
+		dataType : "json",
+		data : formToJSONArea(areaID),
+		success : function(data) {
+			printTables(data);
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			alert("AJAX ERROR: " + errorThrown);
@@ -117,13 +172,19 @@ function formToJSONTable(restaurantId) {
 	});
 }
 
+function formToJSONArea(areaID) {
+	return JSON.stringify({
+		"areaID" : areaID,
+	});
+}
+
 $(document).on('submit', '.formReservation', function(e) {
 	e.preventDefault();
 	var restaurantId=$('.selectRestaurant').find(":selected").val();
 	var date = $(this).find("input[name=date]").val();
 	var time = $(this).find("input[name=time]").val();
 	var hours = $(this).find("input[name=hours]").val();
-	var diningTableId =$('.selectDiningTable').find(":selected").val();	
+	var diningTableId =$(this).find("input[name=tableId]").val();
 	console.log(restaurantId + " " + date + " " + time + " " + hours + " " + diningTableId)
 	$.ajax({
 		type : 'POST',
@@ -259,3 +320,235 @@ $(document)
 									});
 				});
 // --------------------------kraj tabela------------------------------------
+
+
+
+function printTables(data)
+{
+	console.log(data);
+	//data = $.parseJSON(data);
+	//console.log(data)
+	var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
+	
+	var areaSizeX;
+	var areaSizeY;
+	
+	$.each(list,function(index,wsofl)
+	{
+		areaSizeX=wsofl.areaSizeX;
+		areaSizeY=wsofl.areaSizeY;
+	});
+	
+	
+	console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+	console.log(areaSizeX);
+	console.log(areaSizeY);
+	
+	var listx=[];
+	
+	
+	$.each(
+					list,
+					function(index, wsofl) {
+						
+						var isOccupied = wsofl.occupied;
+						var positionX = wsofl.positionX;
+						var positionY = wsofl.positionY;
+						var tableID = wsofl.generalTableID;
+						var resTableID = wsofl.resTableID;
+						var aID = wsofl.areaID;
+	//					var waiter = wsofl.waiterID;
+//						var guestOID = wsofl.guestOrderID;
+						//var guestsOrder = wsofl.guestsOrder;
+						
+						var singleTable = {};
+							singleTable['isOccupied']=isOccupied;
+							singleTable['positionX']=positionX;
+							singleTable['positionY']=positionY;
+							singleTable['tableID']=tableID;
+							singleTable['resTableID'] = resTableID;
+							singleTable['areaID'] = aID;
+			//				singleTable['waiter']= waiter;
+		//					singleTable['guestOID']= guestOID;
+							//singleTable['guestsOrder'] = guestsOrder;
+							
+							
+							listx.push(singleTable);
+						
+						
+/*
+						var listOfObjects = [];
+						var a = ["car", "bike", "scooter"];
+						a.forEach(function(entry) {
+						    var singleObj = {}
+						    singleObj['type'] = 'vehicle';
+						    singleObj['value'] = entry;
+						    listOfObjects.push(singleObj);
+						});
+
+						console.log(listOfObjects);
+*/
+						
+/*
+						var list = [
+						    { date: '12/1/2011', reading: 3, id: 20055 },
+						    { date: '13/1/2011', reading: 5, id: 20053 },
+						    { date: '14/1/2011', reading: 6, id: 45652 }
+						];
+
+						and then access it:
+
+						alert(list[1].date);
+
+*/
+						
+						console.log("-----------");
+						console.log(isOccupied);
+						console.log(positionX);
+						console.log(positionY);
+						console.log(tableID);
+						//console.log(guestsOrder)
+						
+						//var tr = $('<tr></tr>');
+						//tr.append()
+						
+						/*
+						console.log("XXXX2");
+						console.log(wsofl.name);
+						var tr = $('<tr></tr>');
+						tr.append(		'<td>'
+										+ wsofl.name
+										+ '</td>'
+										+ '<td>'
+										+ wsofl.lastName
+										+ '</td>'
+										+ '<td>'
+										+ wsofl.start
+										+ '</td>'
+										+ '<td>'
+										+ wsofl.finish
+										+ '</td>'
+								);
+						
+						$('#workShiftData').append(tr);
+						console.log("XXXX3");
+						//brojac = brojac + 1;
+						*/
+	});
+	
+	
+	/*for (i = 0; i < cars.length; i++) {
+    text += cars[i] + "<br>";
+}*/
+	
+	$('#tablesData').empty();
+	
+	for( var i = 0; i< areaSizeX; i++)
+		{
+			var tr = $('<tr></tr>');
+			for(var j = 0; j<areaSizeY; j++)
+				{
+				
+					var naslo=false;
+					var id;
+					var oc;
+					//var w;
+				//	var g;
+					//var guestsOrderx;
+					
+					
+					// OVO JE ID STOLA U RESTORANU ....
+					//podsjecanje : svaki sto ima svoj generalni ID ali isto tako ima i ID koji sluzi samo estetski za prikaz u restoranu ... cisto da ne bi pisalo za neki restoran da ima sto broj 7765 ili tako nesto... znaci ovo je estetika samo i nema nikakvu vecu funkcionalnost
+					
+					var resTID;
+					listx.some(function(thingy)
+					{
+						var x = thingy.positionX;
+						console.log("x = "+x);
+						var y = thingy.positionY;
+						console.log("y = "+y);
+						
+						if(x==i && y==j)
+							{
+								naslo=true;
+								id= thingy.tableID
+								oc =  thingy.isOccupied;
+								resTID = thingy.resTableID;
+								areaID = thingy.areaID;
+							//	w= thingy.waiter;
+						//		g= thingy.guestOID;
+								
+								//guestsOrderx = thingy.guestsOrder;
+								return true;
+								
+								
+							}
+						else
+							{
+								naslo=false;
+								
+							}
+					});
+					
+					if(naslo==true)
+						{
+						
+						if(oc==true)
+							{
+							
+								
+								
+									var tekstic = '<td height="60",width="60", bgcolor="#FF0000">'
+										+'<input type="hidden" id="tableID" name="tableID" value="'+id+'" >'
+										+'<input type="hidden" id="oc" name="oc" value="'+oc+'" >'
+										+'<input type="hidden" id="areaID" name="areaID" value="'+areaID+'" >'
+
+										//+'<input type="hidden" id="guestsOrderx" name="guestsOrderx" value="'+guestsOrderx+'" >'
+										+'<input type="button" name="tab-submit" id="tab-submit" tabindex="7" role="button" class="form-control btn btn-success" value="'+resTID+'">'
+										+'</td>';
+								
+							}
+						else
+							{
+							var tekstic = '<td height="60",width="60", bgcolor="#7FFF00"><form id="tableForm" action="" method="post" role="form" class="tableForm" >'
+								+'<input type="hidden" id="tableID" name="tableID" value="'+id+'" >'
+								+'<input type="hidden" id="oc" name="oc" value="'+oc+'" >'
+								+'<input type="hidden" id="areaID" name="areaID" value="'+areaID+'" >'
+
+								+'<input type="submit" name="tab-submit" id="tab-submit" tabindex="7" role="button" class="form-control btn btn-success" value="'+resTID+'">'
+								+'</form></td>';
+							}
+						
+						
+						
+							//var text= ' <td>Thingy</td>'
+							console.log("jednako");
+							tr.append(tekstic)
+						}
+					else
+						{
+							tr.append('<td bgcolor="#696969", height="60",width="60"></td>')
+						}
+				
+				
+				}
+			$('#tablesData').append(tr);
+		
+		}
+	
+	
+	
+	console.log("XXXX4");
+	console.log(listx);
+}
+
+$(document).on('click', '.tableForm',function(e) {
+	e.preventDefault();
+	console.log("KLIKNUO NA BUTTON")
+	var idStola = $(this).find("input[name=tableID]").val();
+	console.log(idStola);
+	var idStola = $(this).find("input[name=tableID]").val();
+	$('#tableId').val(idStola);
+	$("input[name=tableId]").val(idStola);
+	
+});
