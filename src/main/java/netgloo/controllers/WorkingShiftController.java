@@ -163,16 +163,10 @@ public class WorkingShiftController {
 		return "OK";
 	}
 
-	@RequestMapping(value = "/getWS", method = RequestMethod.GET)
-	public ArrayList<WSOFL> getWS(@RequestBody DatesForWSImitation dfwsi, HttpServletRequest request) {
-		/*
-		 * RestaurantManager rmkkk = (RestaurantManager)
-		 * request.getSession().getAttribute("restaurantManager"); Restaurant
-		 * restaurant = rmkkk.getRestaurantId(); ArrayList<WorkingShift> ws =
-		 * (ArrayList<WorkingShift>) wsDao.findByRestaurant(restaurant);
-		 * 
-		 * return ws;
-		 */
+
+	@RequestMapping(value = "/getWorkingShifts2", method = RequestMethod.POST, headers = {
+			"content-type=application/json" })
+	public ArrayList<WSOFL> getWorkingShifts2(@RequestBody DatesForWSImitation dfwsi, HttpServletRequest request) {
 
 		ArrayList<WorkingShift> workingShiftsList = new ArrayList<WorkingShift>();
 
@@ -188,65 +182,6 @@ public class WorkingShiftController {
 			eDate = eDate + " 00:00:00";
 
 			System.out.println("STRING DATUM: " + sDate);
-
-			Timestamp sTS = Timestamp.valueOf(sDate);
-			Timestamp eTS = Timestamp.valueOf(eDate);
-
-			System.out.println("TIMESTAMP DATE: " + sTS);
-
-			Employee emp = (Employee) request.getSession().getAttribute("employee");
-
-			if (emp != null) {
-				workingShiftsList = wsDao.findByRestaurant(emp.getRestaurantId());
-
-				for (WorkingShift ws : workingShiftsList) {
-					if (ws.getWorker().getEmployeeRole().equals(emp.getEmployeeRole())
-							&& ws.getShiftBeginningTime().after(sTS) && ws.getShiftEndTime().before(eTS)) {
-
-						WSOFL primjerak = new WSOFL(ws.getWorker().getUserId().getUserName(),
-								ws.getWorker().getUserId().getUserSurname(), ws.getShiftBeginningTime().toString(),
-								ws.getShiftEndTime().toString());
-						System.out.println("XX: " + ws.getWorker().getUserId().getUserName() + " "
-								+ ws.getWorker().getUserId().getUserSurname() + " : "
-								+ ws.getShiftBeginningTime().toString() + " to " + ws.getShiftEndTime().toString());
-						wsoflList.add(primjerak);
-					}
-				}
-
-			}
-
-			return wsoflList;
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			System.out.println("--------------EXCEPTION ... ---------------------");
-			return wsoflList;
-		}
-	}
-
-	@RequestMapping(value = "/getWorkingShifts2", method = RequestMethod.POST, headers = {
-			"content-type=application/json" })
-	public ArrayList<WSOFL> getWorkingShifts2(@RequestBody DatesForWSImitation dfwsi, HttpServletRequest request) {
-
-		System.out.println("DOSLO DO OVDE ..................");
-
-		ArrayList<Employee> employeesInRestaurant = new ArrayList<Employee>();
-
-		ArrayList<Employee> employeesInRestaurantWithSameRole = new ArrayList<Employee>();
-
-		ArrayList<WorkingShift> workingShiftsList = new ArrayList<WorkingShift>();
-
-		ArrayList<WSOFL> wsoflList = new ArrayList<WSOFL>();
-
-		wsoflList.clear();
-
-		try {
-
-			String sDate = dfwsi.getStartDate();
-			sDate = sDate + " 01:00:00";
-			String eDate = dfwsi.getEndDate();
-			eDate = eDate + " 01:00:00";
-
-			System.out.println("STRING DATUM: " + sDate);
 			System.out.println("STRING DATUM: " + eDate);
 			Timestamp sTS = Timestamp.valueOf(sDate);
 			Timestamp eTS = Timestamp.valueOf(eDate);
@@ -254,14 +189,37 @@ public class WorkingShiftController {
 			System.out.println("TIMESTAMP DATE: " + sTS);
 			System.out.println("TIMESTAMP DATE: " + eTS);
 
-			Employee emp = (Employee) request.getSession().getAttribute("employee");
 
-			if (emp != null) {
-				workingShiftsList = wsDao.findByRestaurant(emp.getRestaurantId());
+			RestaurantManager rmkkk = (RestaurantManager) request.getSession().getAttribute("restaurantManager");
+			Restaurant restaurant = rmkkk.getRestaurantId();
+
+			if (restaurant != null) {
+				System.out.println("restaurant != null");
+				workingShiftsList = wsDao.findByRestaurant(restaurant);
 
 				for (WorkingShift ws : workingShiftsList) {
-					if (ws.getWorker().getEmployeeRole().equals(emp.getEmployeeRole())
+					System.out.println("RESTORAN WS: " + ws.getRestaurant().getRestaurantId());
+					System.out.println("RESTORAN PR: " + restaurant.getRestaurantId());
+					System.out.println("WorkingShift ws : workingShiftsList");
+
+					System.out.println("WS BT: " + ws.getShiftBeginningTime());
+					System.out.println("WS ET: " + ws.getShiftEndTime());
+
+					System.out.println("TS DATE: " + sTS);
+					System.out.println("TS DATE: " + eTS);
+
+					if (ws.getShiftBeginningTime().after(sTS)) {
+						System.out.println("PRVO VRIJEME JE OK");
+					}
+					if (ws.getShiftEndTime().before(eTS)) {
+						System.out.println("DRUGO VRIJEME JE OK");
+					}
+
+
+					if (restaurant.getRestaurantId() == ws.getRestaurant().getRestaurantId()
 							&& ws.getShiftBeginningTime().after(sTS) && ws.getShiftEndTime().before(eTS)) {
+
+						System.out.println("USAO U IF!");
 
 						WSOFL primjerak = new WSOFL(ws.getWorker().getUserId().getUserName(),
 								ws.getWorker().getUserId().getUserSurname(), ws.getShiftBeginningTime().toString(),
@@ -277,27 +235,6 @@ public class WorkingShiftController {
 
 			return wsoflList;
 
-			/*
-			 * employeesInRestaurant =
-			 * empDao.findByRestaurantId(emp.getRestaurantId());
-			 * 
-			 * for(Employee emx : employeesInRestaurant) {
-			 * if(emx.getEmployeeRole().equals(emp.getEmployeeRole())) {
-			 * wsDao.findBy } }
-			 * 
-			 */
-
-			// wsDao.
-
-			/*
-			 * User user = userDao.findByEmail(user1.getEmail()); String email =
-			 * String.valueOf(user.getEmail()); String pass =
-			 * String.valueOf(user.getUser_password()); if
-			 * (email.equals(user1.getEmail()) &&
-			 * pass.equals(user1.getPassword())) {
-			 * request.getSession().setAttribute("user", user); return
-			 * user.getUser_role(); }
-			 */
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			System.out.println("--------------EXCEPTION ... ---------------------");
