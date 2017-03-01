@@ -1,16 +1,19 @@
 var getAllYourOffer = "offers/getAllYourOffer";
 var createOfferManager = "offers/createOfferManager";
+var pendingOffersURL = "offers/pendingOffers"
 
 
 $( document ).ready(function() {
 	$('#yourOffersPanel').show();
 	$('#createOfferPanel').hide();
+	$('#pendingOffersPanel').hide();
 	printAllYourOffer();
 });
 
 $(document).on('click', '#yourOffersButton', function(e) {
 	$('#yourOffersPanel').show();
 	$('#createOfferPanel').hide();
+	$('#pendingOffersPanel').hide();
 	printAllYourOffer();
 
 });
@@ -18,7 +21,16 @@ $(document).on('click', '#yourOffersButton', function(e) {
 $(document).on('click', '#createOfferButton', function(e) {
 	$('#yourOffersPanel').hide();
 	$('#createOfferPanel').show();
+	$('#pendingOffersPanel').hide();
 
+});
+
+$(document).on('click', '#pendingOffersButton', function(e) {
+	$('#yourOffersPanel').hide();
+	$('#createOfferPanel').hide();
+	$('#pendingOffersPanel').show();
+	
+	getPendingOffers();
 });
 
 function printAllYourOffer() {
@@ -75,4 +87,35 @@ function formToJSONCreateOffer(deadline, note) {
 		"deadline" : deadline,
 		"note" : note,
 	});
+}
+
+//------------GET PENDING OFFERS
+function getPendingOffers() {
+	$.ajax({
+		type : 'GET',
+		url : pendingOffersURL,
+		dataType : "json", // data type of response
+		success : function(data) {
+			printPendingOffers(data);
+		}
+	});
+}
+
+function printPendingOffers(data) {
+	// JAX-RS serializes an empty list as null, and a 'collection of one' as an
+	// object (not an 'array of one')
+	$('#pendingOffersData').empty();
+	var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
+	$.each(list,function(index, offerProvider) {
+						var tr = $('<tr></tr>');
+						tr.append('<td>' + offerProvider.offerProviderId + '</td>'+ 
+										'<td>' + offerProvider.note + '</td>' +
+										'<td>' + offerProvider.price + '</td>' +
+										'<td>' + '<form class="editOffer" > ' + 
+										'<input type="hidden" name="friendMail" value=' + offerProvider.offerProviderId +'> '+
+										'<input type="submit" class="btn btn-primary btn-sm" role="button" value="Accept offer"> '
+										+ '</form></td>'
+						);
+						$('#pendingOffersData').append(tr);
+					});
 }

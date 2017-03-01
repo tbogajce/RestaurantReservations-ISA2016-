@@ -60,6 +60,7 @@
 			<ul class="nav nav-pills nav-stacked">
 				<li><a href="#" id="allOffersButton">Offers</a></li>
 				<li><a href="#" id="makeOfferButton">Make offer</a></li>
+				<li><a href="#" id="yourOffersButton">Your offers</a></li>
 			</ul>
 		</div>
 
@@ -174,6 +175,57 @@
 				</div>
 				<!-------------------------------- END prvo prikazi tabelu kupac --------------------------------------->
 			</div>
+			
+			
+						<div class="panel panel-default" id="yourOffersPanel"> 
+				<div class="panel-heading">YOUR OFFERS</div>
+				<div class="panel-body">
+					<!------------------------------------ prvo prikazi tabelu kupac --------------------------------------------->
+				<div class="container" style="width:90%">
+
+						<hr>
+
+						<div class="row">
+							<div class="panel panel-primary filterable">
+								<div class="panel-heading">
+									<h3 class="panel-title">OFFERS: </h3>
+									<div class="pull-right" style="margin-top: -19px;">
+										<button class="btn btn-default btn-xs btn-filter">Filter</button>
+									</div>
+
+								</div>
+								<form class="clearForm" action="" method="post">
+									<table class="table">
+										<thead class="thead">
+											<tr class="filters">
+												<th><input type="text" class="form-control"
+													placeholder="ID offer" disabled></th>
+												<th><input type="text" class="form-control"
+													placeholder="Note" disabled></th>
+												<th><input type="text" class="form-control"
+													placeholder="Price" disabled></th>
+												<th><input type="text" class="form-control"
+													placeholder="Status" disabled></th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody id="yourOfferData">
+											<!-- your offers list -->
+										</tbody>
+									</table>
+
+
+
+
+								</form>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-------------------------------- END prvo prikazi tabelu kupac --------------------------------------->
+			</div> 
 			
 			
 			<!-- END FRIEND REQUESTS -->

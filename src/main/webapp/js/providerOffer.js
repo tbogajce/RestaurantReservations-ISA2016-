@@ -1,23 +1,37 @@
 var getAllOffer="offers/getAllOfferProvider"
 var makeOfferProvider = "offers/makeOfferProvider"
+var offerData = "offers/offerData";
 
 $( document ).ready(function() {
 	$('#allOffersPanel').show();
 	$('#makeOfferPanel').hide();
+	$('#yourOffersPanel').hide();
 	printAllYourOffer();
 });
 
 $(document).on('click', '#allOffersButton', function(e) {
 	$('#allOffersPanel').show();
 	$('#makeOfferPanel').hide();
+	$('#yourOffersPanel').hide();
 	printAllYourOffer();
 });
 
 $(document).on('click', '#makeOfferButton', function(e) {
 	$('#allOffersPanel').hide();
 	$('#makeOfferPanel').show();
+	$('#yourOffersPanel').hide();
 	
 	selectAllOffer();
+	
+});
+
+$(document).on('click', '#yourOffersButton', function(e) {
+	$('#allOffersPanel').hide();
+	$('#makeOfferPanel').hide();
+	$('#yourOffersPanel').show();
+	
+	yourOfferData();
+
 	
 });
 
@@ -100,4 +114,42 @@ function formToJSONMakeOffer(offerProviderId, note, price) {
 		"note" : note,
 		"price" : price,
 	});
+}
+
+//----------YOUR OFFER DATA
+function yourOfferData() {
+	$.ajax({
+		type : 'GET',
+		url : offerData,
+		dataType : "json", // data type of response
+		success : function(data) {
+			printOfferData(data);
+		}
+	});
+}
+
+function printOfferData(data) {
+	// JAX-RS serializes an empty list as null, and a 'collection of one' as an
+	// object (not an 'array of one')
+	$('#yourOfferData').empty();
+	var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
+	$.each(list,function(index, offerProvider) {
+						var isAccepted; 
+						if(offerProvider.isAccepted) {
+							isAccepted="Accepted";
+						} else {
+							isAccepted="Pending"
+						}
+						var tr = $('<tr></tr>');
+						tr.append('<td>' + offerProvider.offerProviderId + '</td>'+ 
+										'<td>' + offerProvider.note + '</td>' +
+										'<td>' + offerProvider.price + '</td>' +
+										'<td>' + isAccepted + '</td>' +
+										'<td>' + '<form class="editOffer" > ' + 
+										'<input type="hidden" name="friendMail" value=' + offerProvider.offerProviderId +'> '+
+										'<input type="submit" class="btn btn-primary btn-sm" role="button" value="Edit"> '
+										+ '</form></td>'
+						);
+						$('#yourOfferData').append(tr);
+					});
 }
