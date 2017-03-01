@@ -23,15 +23,22 @@ $(document).on('click', '#create-new-sc', function(e) {
 	// e.preventDefault();
 	//console.log("USLO JE U OVO BAREM 1...")
 	e.preventDefault();
-
+	
 	$("#seating-config-div").delay(300).fadeIn(100);
 	$("#greetings").fadeOut(100);
 	$("#beveragesListForm").fadeOut(100);
+	$("#menuListForm").fadeOut(100);
+	$("#ws-date-pick-form").fadeOut(100);
+	$("#workShiftDataForm").fadeOut(100);
+	$("#add-new-area-form").fadeOut(100);
 	$("#add-new-employee-form").fadeOut(100);
+	$("#area-pick-form").fadeOut(100);
 	$("#add-new-provider-form").fadeOut(100);
-	$("#add-new-shift-form").fadeOut(100);
+	$("#restaurantRatingForm").fadeOut(100);
 	$("#add-new-beverage-form").fadeOut(100);
 	$("#add-new-menu-form").fadeOut(100);
+	$("#add-new-shift-form").fadeOut(100);
+	$("#add-new-segment-form").fadeOut(100);
 	$("#edit-info-form").fadeOut(100);
 	$('#create-new-employee').removeClass('active');
 	$('#create-new-provider').removeClass('active');

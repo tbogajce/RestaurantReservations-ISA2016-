@@ -10,6 +10,8 @@ var newSegmentURL = "segmentController/createNewSegment";
 var logoutURL = "restaurantManagerController/logoutRestaurantManager";
 var beveragesURL = "beveragesController/getBeverages";
 var menuURL = "menuController/getMenu";
+var wsURL = "workingShiftController/getWS";
+var getWS = "workingShiftController/getWorkingShifts2";
 var getOneRestaurantURL = "tableReservation/getOneRestaurant";
 
 $(function() {
@@ -21,8 +23,11 @@ $(function() {
 		$("#greetings").fadeOut(100);
 		$("#beveragesListForm").fadeOut(100);
 		$("#menuListForm").fadeOut(100);
+		$("#seating-config-div").fadeOut(100);
 		$("#restaurantRatingForm").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
+		$("#ws-date-pick-form").fadeOut(100);
+		$("#workShiftDataForm").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
 		$("#seating-config-div").fadeOut(100);
@@ -53,9 +58,12 @@ $(function() {
 		$("#menuListForm").fadeOut(100);
 		$("#restaurantRatingForm").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
+		$("#ws-date-pick-form").fadeOut(100);
+		$("#workShiftDataForm").fadeOut(100);
 		$("#add-new-segment-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#area-pick-form").fadeOut(100);
+		$("#seating-config-div").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
 		$("#add-new-area-form").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
@@ -90,6 +98,9 @@ $(function() {
 		$("#add-new-area-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
 		$("#seating-config-div").fadeOut(100);
+		$("#ws-date-pick-form").fadeOut(100);
+		$("#workShiftDataForm").fadeOut(100);
+		$("#seating-config-div").fadeOut(100);
 		$("#beveragesListForm").fadeOut(100);
 		$('#create-new-employee').removeClass('active');
 		$('#create-new-beverage').removeClass('active');
@@ -120,8 +131,11 @@ $(function() {
 		$("#area-pick-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
 		$("#seating-config-div").fadeOut(100);
+		$("#seating-config-div").fadeOut(100);
 		$("#edit-info-form").fadeOut(100);
 		$("#add-new-area-form").fadeOut(100);
+		$("#ws-date-pick-form").fadeOut(100);
+		$("#workShiftDataForm").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
 		$('#create-new-employee').removeClass('active');
 		$('#create-new-provider').removeClass('active');
@@ -149,7 +163,10 @@ $(function() {
 		$("#restaurantRatingForm").fadeOut(100);
 		$("#add-new-segment-form").fadeOut(100);
 		$("#add-new-area-form").fadeOut(100);
+		$("#seating-config-div").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
+		$("#ws-date-pick-form").fadeOut(100);
+		$("#workShiftDataForm").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
 		$("#area-pick-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
@@ -171,11 +188,15 @@ $(function() {
 	$('#create-new-shift').click(function(e) {
 		// e.preventDefault();
 		$("#add-new-shift-form").delay(300).fadeIn(100);
-
+		$("#ws-date-pick-form").delay(300).fadeIn(100);
+		$("#workShiftDataForm").delay(300).fadeIn(100);
+		//printWS();
+		
 		$("#greetings").fadeOut(100);
 		$("#beveragesListForm").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
 		$("#add-new-segment-form").fadeOut(100);
+		$("#seating-config-div").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#menuListForm").fadeOut(100);
 		$("#restaurantRatingForm").fadeOut(100);
@@ -211,9 +232,12 @@ $(function() {
 		$("#add-new-segment-form").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
 		$("#menuListForm").fadeOut(100);
+		$("#seating-config-div").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#add-new-area-form").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
+		$("#ws-date-pick-form").fadeOut(100);
+		$("#workShiftDataForm").fadeOut(100);
 		$("#add-new-shift-form").fadeOut(100);
 		$("#area-pick-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
@@ -241,8 +265,11 @@ $(function() {
 		$("#add-new-segment-form").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
 		$("#menuListForm").fadeOut(100);
+		$("#ws-date-pick-form").fadeOut(100);
+		$("#workShiftDataForm").fadeOut(100);
 		$("#add-new-provider-form").fadeOut(100);
 		$("#area-pick-form").fadeOut(100);
+		$("#seating-config-div").fadeOut(100);
 		$("#add-new-beverage-form").fadeOut(100);
 		$("#add-new-menu-form").fadeOut(100);
 		$("#restaurantRatingForm").fadeOut(100);
@@ -268,6 +295,9 @@ $(function() {
 		$("#greetings").fadeOut(100);
 		$("#beveragesListForm").fadeOut(100);
 		$("#menuListForm").fadeOut(100);
+		$("#ws-date-pick-form").fadeOut(100);
+		$("#seating-config-div").fadeOut(100);
+		$("#workShiftDataForm").fadeOut(100);
 		$("#add-new-area-form").fadeOut(100);
 		$("#add-new-employee-form").fadeOut(100);
 		$("#area-pick-form").fadeOut(100);
@@ -376,7 +406,6 @@ $(document).on('submit', '.newProviderForm', function(e) {
 
 // *********************************************************************************
 // RADNIK
-
 $(document).on(
 		'submit',
 		'.newEmployeeForm',
@@ -537,8 +566,6 @@ function menuPrint(data) {
 					});
 }
 
-
-
 // *********************************************************************************
 //AREA
 $(document).on('submit', '.newAreaForm', function(e) {
@@ -605,6 +632,97 @@ $(document).on('submit', '.newShiftForm', function(e) {
 		}
 	});
 });
+
+/*function printWS() {
+	console.log("USAO U WS LISTU");
+	$.ajax({
+		type : 'GET',
+		url : wsURL,
+		dataType : "json", // data type of response
+		success : function(data) {
+			wsPrint(data);
+		}
+	});
+}
+
+function wsPrint(data) {
+	// JAX-RS serializes an empty list as null, and a 'collection of one' as an
+	// object (not an 'array of one')
+	console.log("PRINTA WS LISTU");
+	
+	$('#wsData').empty();
+	var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
+	$.each(list,function(index, ws) {
+						var tr = $('<tr></tr>');
+						tr.append('<td>' + ws.note + '</td>'+ 
+										'<td>' + ws.shiftBeginningTime + '</td>' +
+										'<td>' + ws.shiftEndTime + '</td>' + 
+										'<td>' + ws.worker + '</td>' + 
+										'<td>');
+						$('#wsData').append(tr);
+					});
+}*/
+
+
+$(document).on('submit','.wsDateForm',function(e)
+		{
+			e.preventDefault();
+			var startingDate = $(this).find("input[name=startingDate]").val();
+			var endingDate = $(this).find("input[name=endingDate]").val();
+			
+			$.ajax(
+					{
+						type:'POST',
+						url:getWS,
+						contentType : 'application/json',
+						dataType : "text",
+						data : formToJSONWSRequest(startingDate,endingDate),
+						success : function(data)
+						{
+							console.log("XXXX1");
+							workingShiftPrint(data);
+						}
+						
+				});
+				
+});
+
+function workingShiftPrint(data)
+{
+	$('#workShiftDataForm').show();
+	$('#workShiftData').empty();
+	//$('#workShiftData').show();
+	//var brojac = 0;
+	console.log(data);
+	data = $.parseJSON(data);
+	var list = data == null ? [] : (data instanceof Array ? data : [ data ]);
+	$.each(
+					list,
+					function(index, wsofl) {
+						
+						console.log("XXXX2");
+						console.log(wsofl.name);
+						var tr = $('<tr></tr>');
+						tr.append(		'<td>'
+										+ wsofl.name
+										+ '</td>'
+										+ '<td>'
+										+ wsofl.lastName
+										+ '</td>'
+										+ '<td>'
+										+ wsofl.start
+										+ '</td>'
+										+ '<td>'
+										+ wsofl.finish
+										+ '</td>'
+								);
+						
+						$('#workShiftData').append(tr);
+						console.log("XXXX3");
+						//brojac = brojac + 1;
+	});
+	console.log("XXXX4");
+}
 
 // *********************************************************************************
 ///GET ALL RESTAURANTS
@@ -738,4 +856,14 @@ function formToJSONNewSegment(segmentName, segmentSpace, note) {
 		"segmentSpace" : segmentSpace,
 		"note" : note,
 	});
+}
+
+function formToJSONWSRequest(startingDate, endingDate)
+{
+	return JSON.stringify(
+			{
+				"startDate" : startingDate,
+				"endDate" : endingDate
+			}
+	);
 }
